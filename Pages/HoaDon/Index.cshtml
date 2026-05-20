@@ -1,0 +1,96 @@
+@page
+@model QLNT.Pages_HoaDon.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HoaDon[0].Thang)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HoaDon[0].Nam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HoaDon[0].TienPhong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HoaDon[0].TienDien)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HoaDon[0].TienNuoc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HoaDon[0].TienDichVu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HoaDon[0].TongTien)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HoaDon[0].NgayLap)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HoaDon[0].TrangThai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HoaDon[0].GhiChu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HoaDon[0].HopDong)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.HoaDon) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Thang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TienPhong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TienDien)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TienNuoc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TienDichVu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TongTien)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayLap)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrangThai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GhiChu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HopDong.HopDongId)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.HoaDonId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.HoaDonId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.HoaDonId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,62 @@
+@page
+@model QLNT.Pages_TaiKhoan.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>TaiKhoan</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TaiKhoan.TaiKhoanId" />
+            <div class="form-group">
+<span class="text-danger">*</span>
+                <label asp-for="TaiKhoan.TenDangNhap" class="control-label"></label>
+                <input asp-for="TaiKhoan.TenDangNhap" class="form-control" aria-required="true"/>
+                <span asp-validation-for="TaiKhoan.TenDangNhap" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+<span class="text-danger">*</span>
+                <label asp-for="TaiKhoan.MatKhau" class="control-label"></label>
+                <input asp-for="TaiKhoan.MatKhau" class="form-control" aria-required="true"/>
+                <span asp-validation-for="TaiKhoan.MatKhau" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaiKhoan.HoTen" class="control-label"></label>
+                <input asp-for="TaiKhoan.HoTen" class="form-control" />
+                <span asp-validation-for="TaiKhoan.HoTen" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaiKhoan.Email" class="control-label"></label>
+                <input asp-for="TaiKhoan.Email" class="form-control" />
+                <span asp-validation-for="TaiKhoan.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaiKhoan.VaiTro" class="control-label"></label>
+                <input asp-for="TaiKhoan.VaiTro" class="form-control" />
+                <span asp-validation-for="TaiKhoan.VaiTro" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="TaiKhoan.TrangThai" /> @Html.DisplayNameFor(model => model.TaiKhoan.TrangThai)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

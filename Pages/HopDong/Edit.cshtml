@@ -1,0 +1,69 @@
+@page
+@model QLNT.Pages_HopDong.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>HopDong</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="HopDong.HopDongId" />
+            <div class="form-group">
+<span class="text-danger">*</span>
+                <label asp-for="HopDong.PhongId" class="control-label"></label>
+                <select asp-for="HopDong.PhongId" class="form-control" asp-items="ViewBag.PhongId" aria-required="true"></select>
+                <span asp-validation-for="HopDong.PhongId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+<span class="text-danger">*</span>
+                <label asp-for="HopDong.NguoiThueId" class="control-label"></label>
+                <select asp-for="HopDong.NguoiThueId" class="form-control" asp-items="ViewBag.NguoiThueId" aria-required="true"></select>
+                <span asp-validation-for="HopDong.NguoiThueId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+<span class="text-danger">*</span>
+                <label asp-for="HopDong.NgayBatDau" class="control-label"></label>
+                <input asp-for="HopDong.NgayBatDau" class="form-control" aria-required="true"/>
+                <span asp-validation-for="HopDong.NgayBatDau" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HopDong.NgayKetThuc" class="control-label"></label>
+                <input asp-for="HopDong.NgayKetThuc" class="form-control" />
+                <span asp-validation-for="HopDong.NgayKetThuc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+<span class="text-danger">*</span>
+                <label asp-for="HopDong.TienCoc" class="control-label"></label>
+                <input asp-for="HopDong.TienCoc" class="form-control" aria-required="true"/>
+                <span asp-validation-for="HopDong.TienCoc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HopDong.TrangThai" class="control-label"></label>
+                <input asp-for="HopDong.TrangThai" class="form-control" />
+                <span asp-validation-for="HopDong.TrangThai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HopDong.GhiChu" class="control-label"></label>
+                <input asp-for="HopDong.GhiChu" class="form-control" />
+                <span asp-validation-for="HopDong.GhiChu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

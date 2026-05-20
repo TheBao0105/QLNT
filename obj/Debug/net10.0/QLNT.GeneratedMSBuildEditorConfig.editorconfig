@@ -1,0 +1,199 @@
+is_global = true
+build_property.TargetFramework = net10.0
+build_property.TargetFramework = net10.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v10.0
+build_property.RootNamespace = QLNT
+build_property.RootNamespace = QLNT
+build_property.ProjectDir = C:\Users\Asus\QLNT\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Asus\QLNT
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 10.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/Asus/QLNT/Pages/DichVu/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGljaFZ1XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/DichVu/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGljaFZ1XERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/DichVu/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGljaFZ1XERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/DichVu/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGljaFZ1XEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/DichVu/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGljaFZ1XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/HoaDon/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9hRG9uXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/HoaDon/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9hRG9uXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/HoaDon/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9hRG9uXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/HoaDon/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9hRG9uXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/HoaDon/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9hRG9uXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/HopDong/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9wRG9uZ1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/HopDong/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9wRG9uZ1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/HopDong/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9wRG9uZ1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/HopDong/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9wRG9uZ1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/HopDong/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9wRG9uZ1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/NguoiThue/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmd1b2lUaHVlXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/NguoiThue/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmd1b2lUaHVlXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/NguoiThue/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmd1b2lUaHVlXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/NguoiThue/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmd1b2lUaHVlXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/NguoiThue/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmd1b2lUaHVlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/Phong/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGhvbmdcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/Phong/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGhvbmdcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/Phong/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGhvbmdcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/Phong/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGhvbmdcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/Phong/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGhvbmdcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/TaiKhoan/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFpS2hvYW5cQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/TaiKhoan/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFpS2hvYW5cRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/TaiKhoan/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFpS2hvYW5cRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/TaiKhoan/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFpS2hvYW5cRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/TaiKhoan/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFpS2hvYW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/ThanhToan/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGhhbmhUb2FuXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/ThanhToan/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGhhbmhUb2FuXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/ThanhToan/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGhhbmhUb2FuXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/ThanhToan/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGhhbmhUb2FuXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/ThanhToan/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGhhbmhUb2FuXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Asus/QLNT/Pages/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-fregw1cq3r

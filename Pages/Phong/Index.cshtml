@@ -1,0 +1,60 @@
+@page
+@model QLNT.Pages_Phong.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Phong[0].TenPhong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phong[0].GiaPhong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phong[0].DienTich)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phong[0].TrangThai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phong[0].GhiChu)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Phong) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenPhong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiaPhong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DienTich)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrangThai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GhiChu)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.PhongId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.PhongId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.PhongId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

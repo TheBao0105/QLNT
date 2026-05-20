@@ -1,0 +1,72 @@
+@page
+@model QLNT.Pages_HopDong.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HopDong[0].NgayBatDau)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HopDong[0].NgayKetThuc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HopDong[0].TienCoc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HopDong[0].TrangThai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HopDong[0].GhiChu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HopDong[0].Phong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HopDong[0].NguoiThue)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.HopDong) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayBatDau)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayKetThuc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TienCoc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrangThai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GhiChu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phong.TenPhong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NguoiThue.HoTen)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.HopDongId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.HopDongId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.HopDongId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
