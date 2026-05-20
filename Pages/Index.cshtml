@@ -1,10 +1,86 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Trang chủ";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-4">
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold">Hệ thống quản lý nhà trọ</h1>
+        <p class="lead">Quản lý phòng, người thuê, hợp đồng, hóa đơn và thanh toán</p>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h4 class="card-title">Quản lý phòng</h4>
+                    <p class="card-text">Thêm, sửa, xóa và xem danh sách phòng trọ.</p>
+                    <a asp-page="/Phong/Index" class="btn btn-primary">Vào quản lý</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h4 class="card-title">Người thuê</h4>
+                    <p class="card-text">Quản lý thông tin người thuê phòng.</p>
+                    <a asp-page="/NguoiThue/Index" class="btn btn-primary">Vào quản lý</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h4 class="card-title">Hợp đồng</h4>
+                    <p class="card-text">Quản lý hợp đồng thuê phòng.</p>
+                    <a asp-page="/HopDong/Index" class="btn btn-primary">Vào quản lý</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h4 class="card-title">Hóa đơn</h4>
+                    <p class="card-text">Lập và quản lý hóa đơn tiền phòng.</p>
+                    <a asp-page="/HoaDon/Index" class="btn btn-success">Vào quản lý</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h4 class="card-title">Thanh toán</h4>
+                    <p class="card-text">Theo dõi các khoản thanh toán của người thuê.</p>
+                    <a asp-page="/ThanhToan/Index" class="btn btn-success">Vào quản lý</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h4 class="card-title">Dịch vụ</h4>
+                    <p class="card-text">Quản lý điện, nước, internet và các dịch vụ khác.</p>
+                    <a asp-page="/DichVu/Index" class="btn btn-warning">Vào quản lý</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h4 class="card-title">Tài khoản</h4>
+                    <p class="card-text">Quản lý tài khoản đăng nhập hệ thống.</p>
+                    <a asp-page="/TaiKhoan/Index" class="btn btn-dark">Vào quản lý</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
