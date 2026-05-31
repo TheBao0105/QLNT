@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using QLNT;
 using QLNT.Data;
 
 namespace QLNT.Pages_NguoiThue
@@ -30,7 +29,7 @@ namespace QLNT.Pages_NguoiThue
                 return NotFound();
             }
 
-            var nguoithue =  await _context.NguoiThues.FirstOrDefaultAsync(m => m.NguoiThueId == id);
+            var nguoithue = await _context.NguoiThues.FirstOrDefaultAsync(m => m.NguoiThueId == id);
             if (nguoithue == null)
             {
                 return NotFound();

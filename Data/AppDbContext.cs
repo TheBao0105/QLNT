@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using QLNT;
+using QLNT.Data;
 
 namespace QLNT.Data;
 
 public class AppDbContext : DbContext
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    public AppDbContext(DbContextOptions<AppDbContext> options)
+        : base(options)
     {
     }
 
