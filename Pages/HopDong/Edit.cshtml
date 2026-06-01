@@ -15,21 +15,23 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="HopDong.HopDongId" />
             <div class="form-group">
-<span class="text-danger">*</span>
+                <span class="text-danger">*</span>
                 <label asp-for="HopDong.PhongId" class="control-label"></label>
-                <select asp-for="HopDong.PhongId" class="form-control" asp-items="ViewBag.PhongId" aria-required="true"></select>
+                <select asp-for="HopDong.PhongId" class="form-control" asp-items="ViewBag.PhongId"
+                        aria-required="true"></select>
                 <span asp-validation-for="HopDong.PhongId" class="text-danger"></span>
             </div>
             <div class="form-group">
-<span class="text-danger">*</span>
+                <span class="text-danger">*</span>
                 <label asp-for="HopDong.NguoiThueId" class="control-label"></label>
-                <select asp-for="HopDong.NguoiThueId" class="form-control" asp-items="ViewBag.NguoiThueId" aria-required="true"></select>
+                <select asp-for="HopDong.NguoiThueId" class="form-control" asp-items="ViewBag.NguoiThueId"
+                        aria-required="true"></select>
                 <span asp-validation-for="HopDong.NguoiThueId" class="text-danger"></span>
             </div>
             <div class="form-group">
-<span class="text-danger">*</span>
+                <span class="text-danger">*</span>
                 <label asp-for="HopDong.NgayBatDau" class="control-label"></label>
-                <input asp-for="HopDong.NgayBatDau" class="form-control" aria-required="true"/>
+                <input asp-for="HopDong.NgayBatDau" class="form-control" aria-required="true" />
                 <span asp-validation-for="HopDong.NgayBatDau" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -38,10 +40,16 @@
                 <span asp-validation-for="HopDong.NgayKetThuc" class="text-danger"></span>
             </div>
             <div class="form-group">
-<span class="text-danger">*</span>
+                <span class="text-danger">*</span>
                 <label asp-for="HopDong.TienCoc" class="control-label"></label>
-                <input asp-for="HopDong.TienCoc" class="form-control" aria-required="true"/>
+                <input asp-for="HopDong.TienCoc" class="form-control" aria-required="true" />
                 <span asp-validation-for="HopDong.TienCoc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="HopDong.GiaThue" class="control-label"></label>
+                <input asp-for="HopDong.GiaThue" class="form-control" aria-required="true" />
+                <span asp-validation-for="HopDong.GiaThue" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="HopDong.TrangThai" class="control-label"></label>
@@ -65,5 +73,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

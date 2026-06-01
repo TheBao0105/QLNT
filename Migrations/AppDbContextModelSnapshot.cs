@@ -110,6 +110,9 @@ namespace QLNT.Migrations
                     b.Property<string>("GhiChu")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("GiaThue")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime>("NgayBatDau")
                         .HasColumnType("datetime2");
 

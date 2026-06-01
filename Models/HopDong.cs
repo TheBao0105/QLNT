@@ -14,12 +14,17 @@ public class HopDong
     public int NguoiThueId { get; set; }
 
     [Required]
+    [DataType(DataType.Date)]
     public DateTime NgayBatDau { get; set; }
 
+    [DataType(DataType.Date)]
     public DateTime? NgayKetThuc { get; set; }
 
     [Required]
     public decimal TienCoc { get; set; }
+
+    [Required]
+    public decimal GiaThue { get; set; }
 
     [StringLength(100)]
     public string? TrangThai { get; set; } = "Còn hiệu lực";

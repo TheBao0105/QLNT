@@ -21,6 +21,10 @@ namespace QLNT.Pages_Phong
 
         public IActionResult OnGet()
         {
+            Phong = new Phong
+            {
+                TrangThai = "Trống"
+            };
             return Page();
         }
 
@@ -33,6 +37,11 @@ namespace QLNT.Pages_Phong
             if (!ModelState.IsValid)
             {
                 return Page();
+            }
+
+            if (string.IsNullOrWhiteSpace(Phong.TrangThai))
+            {
+                Phong.TrangThai = "Trống";
             }
 
             _context.Phongs.Add(Phong);

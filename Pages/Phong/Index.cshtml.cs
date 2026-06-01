@@ -13,17 +13,46 @@ namespace QLNT.Pages_Phong
     public class IndexModel : PageModel
     {
         private readonly QLNT.Data.AppDbContext _context;
+        private const int PageSize = 5;
 
         public IndexModel(QLNT.Data.AppDbContext context)
         {
             _context = context;
         }
 
-        public IList<Phong> Phong { get;set; } = default!;
+        public string CurrentFilter { get; set; } = string.Empty;
+        public string? StatusFilter { get; set; }
+        public PaginatedList<Phong> Phong { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(string currentFilter, string searchString, string? statusFilter, int? pageIndex)
         {
-            Phong = await _context.Phongs.ToListAsync();
+            if (searchString != null)
+            {
+                pageIndex = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            CurrentFilter = searchString;
+            StatusFilter = statusFilter;
+
+            IQueryable<Phong> phongIQ = from p in _context.Phongs
+                                        select p;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                phongIQ = phongIQ.Where(p => p.TenPhong.Contains(searchString) || (p.TrangThai ?? string.Empty).Contains(searchString));
+            }
+
+            if (!string.IsNullOrEmpty(StatusFilter))
+            {
+                phongIQ = phongIQ.Where(p => (p.TrangThai ?? string.Empty) == StatusFilter);
+            }
+
+            phongIQ = phongIQ.OrderBy(p => p.TenPhong);
+            Phong = await PaginatedList<Phong>.CreateAsync(phongIQ.AsNoTracking(), pageIndex ?? 1, PageSize);
         }
     }
 }

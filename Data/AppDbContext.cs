@@ -37,6 +37,10 @@ public class AppDbContext : DbContext
             .HasColumnType("decimal(18,2)");
 
         modelBuilder.Entity<HopDong>()
+            .Property(h => h.GiaThue)
+            .HasColumnType("decimal(18,2)");
+
+        modelBuilder.Entity<HopDong>()
             .HasOne(h => h.Phong)
             .WithMany(p => p.HopDongs)
             .HasForeignKey(h => h.PhongId);

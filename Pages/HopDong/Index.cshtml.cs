@@ -13,19 +13,23 @@ namespace QLNT.Pages_HopDong
     public class IndexModel : PageModel
     {
         private readonly QLNT.Data.AppDbContext _context;
+        private const int PageSize = 5;
 
         public IndexModel(QLNT.Data.AppDbContext context)
         {
             _context = context;
         }
 
-        public IList<HopDong> HopDong { get;set; } = default!;
+        public PaginatedList<HopDong> HopDong { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int? pageIndex)
         {
-            HopDong = await _context.HopDongs
+            var query = _context.HopDongs
                 .Include(h => h.NguoiThue)
-                .Include(h => h.Phong).ToListAsync();
+                .Include(h => h.Phong)
+                .OrderBy(h => h.NgayBatDau);
+
+            HopDong = await PaginatedList<HopDong>.CreateAsync(query.AsNoTracking(), pageIndex ?? 1, PageSize);
         }
     }
 }
