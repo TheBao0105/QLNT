@@ -30,13 +30,13 @@ namespace QLNT.Pages_HoaDon
                 return NotFound();
             }
 
-            var hoadon =  await _context.HoaDons.FirstOrDefaultAsync(m => m.HoaDonId == id);
+            var hoadon = await _context.HoaDons.FirstOrDefaultAsync(m => m.HoaDonId == id);
             if (hoadon == null)
             {
                 return NotFound();
             }
             HoaDon = hoadon;
-           ViewData["HopDongId"] = new SelectList(_context.HopDongs, "HopDongId", "HopDongId");
+            ViewData["HopDongId"] = new SelectList(_context.HopDongs, "HopDongId", "HopDongId");
             return Page();
         }
 

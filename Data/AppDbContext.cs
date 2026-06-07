@@ -76,6 +76,15 @@ public class AppDbContext : DbContext
             .WithMany(hd => hd.HoaDons)
             .HasForeignKey(h => h.HopDongId);
 
+        modelBuilder.Entity<HoaDon>()
+        .HasMany(h => h.ThanhToans)
+        .WithOne(t => t.HoaDon)
+        .HasForeignKey(t => t.HoaDonId);
+
+        modelBuilder.Entity<HoaDon>()
+            .Property(h => h.HanThanhToan)
+            .HasColumnType("datetime");
+
         // ThanhToan
         modelBuilder.Entity<ThanhToan>()
             .Property(t => t.SoTien)

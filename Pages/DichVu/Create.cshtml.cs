@@ -21,6 +21,10 @@ namespace QLNT.Pages_DichVu
 
         public IActionResult OnGet()
         {
+            DichVu = new DichVu();
+            {
+                DichVu.TrangThai = "Đang sử dụng";
+            }
             return Page();
         }
 
@@ -33,6 +37,11 @@ namespace QLNT.Pages_DichVu
             if (!ModelState.IsValid)
             {
                 return Page();
+            }
+
+            if (string.IsNullOrWhiteSpace(DichVu.TrangThai))
+            {
+                DichVu.TrangThai = "Đang sử dụng";
             }
 
             _context.DichVus.Add(DichVu);

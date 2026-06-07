@@ -17,4 +17,5 @@ public class DichVu
     public string? DonViTinh { get; set; }
 
     public string? GhiChu { get; set; }
+    public string TrangThai { get; set; } = "Đang sử dụng";
 }

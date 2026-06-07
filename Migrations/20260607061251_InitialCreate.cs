@@ -20,7 +20,8 @@ namespace QLNT.Migrations
                     TenDichVu = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     DonGia = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DonViTinh = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    GhiChu = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    GhiChu = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrangThai = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,8 +55,9 @@ namespace QLNT.Migrations
                     TenPhong = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     GiaPhong = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DienTich = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    TrangThai = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    GhiChu = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    TrangThai = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    GhiChu = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Giathue = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -91,7 +93,8 @@ namespace QLNT.Migrations
                     NgayBatDau = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NgayKetThuc = table.Column<DateTime>(type: "datetime2", nullable: true),
                     TienCoc = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TrangThai = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    GiaThue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TrangThai = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     GhiChu = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -118,16 +121,28 @@ namespace QLNT.Migrations
                     HoaDonId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     HopDongId = table.Column<int>(type: "int", nullable: false),
+                    TenPhong = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Thang = table.Column<int>(type: "int", nullable: false),
                     Nam = table.Column<int>(type: "int", nullable: false),
                     TienPhong = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TienDien = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ChiSoDienCu = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ChiSoDienMoi = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DonGiaDien = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    SoDienTieuThu = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TienNuoc = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ChiSoNuocCu = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ChiSoNuocMoi = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DonGiaNuoc = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    SoNuocTieuThu = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TienDichVu = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TongTien = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     NgayLap = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TrangThai = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    GhiChu = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    DaThanhtoan = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    GhiChu = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HanThanhToan = table.Column<DateTime>(type: "datetime", nullable: true),
+                    NgayThanhToan = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -149,6 +164,7 @@ namespace QLNT.Migrations
                     HoaDonId = table.Column<int>(type: "int", nullable: false),
                     NgayThanhToan = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SoTien = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TienDichVu = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     PhuongThuc = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     GhiChu = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },

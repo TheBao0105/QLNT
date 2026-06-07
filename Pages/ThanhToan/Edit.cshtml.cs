@@ -30,13 +30,13 @@ namespace QLNT.Pages_ThanhToan
                 return NotFound();
             }
 
-            var thanhtoan =  await _context.ThanhToans.FirstOrDefaultAsync(m => m.ThanhToanId == id);
+            var thanhtoan = await _context.ThanhToans.FirstOrDefaultAsync(m => m.ThanhToanId == id);
             if (thanhtoan == null)
             {
                 return NotFound();
             }
             ThanhToan = thanhtoan;
-           ViewData["HoaDonId"] = new SelectList(_context.HoaDons, "HoaDonId", "HoaDonId");
+            ViewData["HoaDonId"] = new SelectList(_context.HoaDons, "HoaDonId", "HoaDonId");
             return Page();
         }
 

@@ -1,96 +1,221 @@
 @page
 @model QLNT.Pages_HoaDon.IndexModel
+@using QLNT
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Quản lý Hóa đơn & Thanh toán";
+    var dichVus = ViewData["DichVus"] as List<DichVu> ?? new List<DichVu>();
 }
 
-<h1>Index</h1>
+<h1>Quản lý Hóa đơn & Thanh toán</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="mb-3">Tạo mới hóa đơn tháng</h5>
+
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="HoaDonMoi.HopDongId">
+                    Hợp đồng / phòng đang thuê
+                </label>
+
+                <select asp-for="HoaDonMoi.HopDongId" class="form-control" asp-items="ViewBag.HopDongId">
+                    <option value="">-- Chọn hợp đồng phòng đang thuê --</option>
+                </select>
+
+                <span asp-validation-for="HoaDonMoi.HopDongId" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="HoaDonMoi.Thang">Tháng</label>
+                    <input asp-for="HoaDonMoi.Thang" class="form-control" />
+                    <span asp-validation-for="HoaDonMoi.Thang" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="HoaDonMoi.Nam">Năm</label>
+                    <input asp-for="HoaDonMoi.Nam" class="form-control" />
+                    <span asp-validation-for="HoaDonMoi.Nam" class="text-danger"></span>
+                </div>
+            </div>
+
+            <h6 class="mt-3">Chỉ số điện</h6>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="HoaDonMoi.ChiSoDienCu">Chỉ số điện cũ</label>
+                    <input asp-for="HoaDonMoi.ChiSoDienCu" class="form-control" />
+                    <span asp-validation-for="HoaDonMoi.ChiSoDienCu" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label asp-for="HoaDonMoi.ChiSoDienMoi">Chỉ số điện mới</label>
+                    <input asp-for="HoaDonMoi.ChiSoDienMoi" class="form-control" />
+                    <span asp-validation-for="HoaDonMoi.ChiSoDienMoi" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Đơn giá điện</label>
+                    <input value="3500" class="form-control" readonly />
+                </div>
+            </div>
+
+            <h6 class="mt-3">Chỉ số nước</h6>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="HoaDonMoi.ChiSoNuocCu">Chỉ số nước cũ</label>
+                    <input asp-for="HoaDonMoi.ChiSoNuocCu" class="form-control" />
+                    <span asp-validation-for="HoaDonMoi.ChiSoNuocCu" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label asp-for="HoaDonMoi.ChiSoNuocMoi">Chỉ số nước mới</label>
+                    <input asp-for="HoaDonMoi.ChiSoNuocMoi" class="form-control" />
+                    <span asp-validation-for="HoaDonMoi.ChiSoNuocMoi" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Đơn giá nước</label>
+                    <input value="15000" class="form-control" readonly />
+                </div>
+            </div>
+
+            <h6 class="mt-3">Dịch vụ tháng này</h6>
+
+            <div class="form-group mb-3">
+                @foreach (var dv in dichVus)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="DichVuIds" value="@dv.DichVuId"
+                               id="dv_@dv.DichVuId" />
+
+                        <label class="form-check-label" for="dv_@dv.DichVuId">
+                            @dv.TenDichVu - @dv.DonGia.ToString("N0") VNĐ/tháng
+                        </label>
+                    </div>
+                }
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="HoaDonMoi.GhiChu">Ghi chú</label>
+                <input asp-for="HoaDonMoi.GhiChu" class="form-control" />
+                <span asp-validation-for="HoaDonMoi.GhiChu" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Lưu hóa đơn
+            </button>
+
+            <button type="reset" class="btn btn-secondary">
+                Hủy
+            </button>
+        </form>
+    </div>
+</div>
+
+<table class="table table-bordered table-hover">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.HoaDon[0].Thang)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HoaDon[0].Nam)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HoaDon[0].TienPhong)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HoaDon[0].TienDien)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HoaDon[0].TienNuoc)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HoaDon[0].TienDichVu)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HoaDon[0].TongTien)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HoaDon[0].NgayLap)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HoaDon[0].TrangThai)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HoaDon[0].GhiChu)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HoaDon[0].HopDong)
-            </th>
-            <th></th>
+            <th>Tháng/Năm</th>
+            <th>Phòng</th>
+            <th>Khách thuê</th>
+            <th>Tiền phòng</th>
+            <th>Điện</th>
+            <th>Nước</th>
+            <th>Dịch vụ</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
         </tr>
     </thead>
+
     <tbody>
-@foreach (var item in Model.HoaDon) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Thang)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nam)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TienPhong)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TienDien)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TienNuoc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TienDichVu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TongTien)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayLap)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TrangThai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GhiChu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HopDong.HopDongId)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.HoaDonId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.HoaDonId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.HoaDonId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.HoaDonList)
+        {
+            var thanhToan = item.ThanhToans?
+                .OrderByDescending(t => t.NgayThanhToan)
+                .FirstOrDefault();
+
+            <tr>
+                <td>@item.Thang/@item.Nam</td>
+
+                <td>@item.HopDong?.Phong?.TenPhong</td>
+
+                <td>@item.HopDong?.NguoiThue?.HoTen</td>
+
+                <td>@item.TienPhong.ToString("N0") VNĐ</td>
+
+                <td>
+                    @item.SoDienTieuThu kWh
+                    <br />
+                    <small>@item.TienDien.ToString("N0") VNĐ</small>
+                </td>
+
+                <td>
+                    @item.SoNuocTieuThu m³
+                    <br />
+                    <small>@item.TienNuoc.ToString("N0") VNĐ</small>
+                </td>
+
+                <td>@item.TienDichVu.ToString("N0") VNĐ</td>
+
+                <td>
+                    <strong>@item.TongTien.ToString("N0") VNĐ</strong>
+                </td>
+
+                <td>
+                    @if (item.TrangThai == "Đã thanh toán")
+                    {
+                        <span class="text-success fw-bold">Đã thanh toán</span>
+
+                        @if (thanhToan != null)
+                        {
+                            <br />
+                            <small>
+                                @thanhToan.PhuongThuc - @thanhToan.NgayThanhToan.ToString("dd/MM/yyyy")
+                            </small>
+                        }
+                    }
+                    else
+                    {
+                        <span class="text-warning fw-bold">Chưa thanh toán</span>
+                    }
+                </td>
+
+                <td>
+                    @if (item.TrangThai != "Đã thanh toán")
+                    {
+                        <a asp-page="/ThanhToan/Create" asp-route-hoaDonId="@item.HoaDonId" class="btn btn-primary btn-sm">
+                            Thanh toán
+                        </a>
+                    }
+
+                    <a asp-page="./Edit" asp-route-id="@item.HoaDonId" class="btn btn-sm btn-primary">
+                        Sửa
+                    </a>
+
+                    <a asp-page="./Delete" asp-route-id="@item.HoaDonId" class="btn btn-sm btn-danger">
+                        Xóa
+                    </a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

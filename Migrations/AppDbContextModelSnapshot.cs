@@ -45,6 +45,10 @@ namespace QLNT.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("TrangThai")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("DichVuId");
 
                     b.ToTable("DichVus");
@@ -58,8 +62,32 @@ namespace QLNT.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HoaDonId"));
 
+                    b.Property<decimal>("ChiSoDienCu")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ChiSoDienMoi")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ChiSoNuocCu")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ChiSoNuocMoi")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("DaThanhtoan")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("DonGiaDien")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("DonGiaNuoc")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("GhiChu")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("HanThanhToan")
+                        .HasColumnType("datetime");
 
                     b.Property<int>("HopDongId")
                         .HasColumnType("int");
@@ -69,6 +97,19 @@ namespace QLNT.Migrations
 
                     b.Property<DateTime>("NgayLap")
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("NgayThanhToan")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("SoDienTieuThu")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("SoNuocTieuThu")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("TenPhong")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Thang")
                         .HasColumnType("int");
@@ -129,6 +170,7 @@ namespace QLNT.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("TrangThai")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -195,12 +237,16 @@ namespace QLNT.Migrations
                     b.Property<decimal>("GiaPhong")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal>("Giathue")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("TenPhong")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("TrangThai")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -272,6 +318,9 @@ namespace QLNT.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<decimal>("SoTien")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TienDichVu")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ThanhToanId");

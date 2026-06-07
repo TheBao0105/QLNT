@@ -32,6 +32,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Phong[0].PhongId)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Phong[0].TenPhong)
             </th>
             <th>
@@ -54,75 +57,77 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TenPhong)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.GiaPhong)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DienTich)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TrangThai)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.GhiChu)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.PhongId">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.PhongId">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.PhongId">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    @Html.DisplayFor(modelItem => item.PhongId)
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenPhong)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GiaPhong)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DienTich)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrangThai)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GhiChu)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.PhongId">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.PhongId">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.PhongId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-<nav aria-label="Page navigation">
-    <ul class="pagination">
-        @if (Model.Phong.HasPreviousPage)
-        {
-            <li class="page-item">
-                <a class="page-link" asp-page="./Index" asp-route-pageIndex="@(Model.Phong.PageIndex - 1)"
-                   asp-route-currentFilter="@Model.CurrentFilter" asp-route-statusFilter="@Model.StatusFilter">Previous</a>
-            </li>
-        }
-        else
-        {
-            <li class="page-item disabled">
-                <span class="page-link">Previous</span>
-            </li>
-        }
-
-        @for (int i = 1; i <= Model.Phong.TotalPages; i++)
-        {
-            if (i == Model.Phong.PageIndex)
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @if (Model.Phong.HasPreviousPage)
             {
-                <li class="page-item active">
-                    <span class="page-link">@i</span>
+                <li class="page-item">
+                    <a class="page-link" asp-page="./Index" asp-route-pageIndex="@(Model.Phong.PageIndex - 1)"
+                       asp-route-currentFilter="@Model.CurrentFilter" asp-route-statusFilter="@Model.StatusFilter">Previous</a>
                 </li>
             }
             else
             {
-                <li class="page-item">
-                    <a class="page-link" asp-page="./Index" asp-route-pageIndex="@i"
-                       asp-route-currentFilter="@Model.CurrentFilter" asp-route-statusFilter="@Model.StatusFilter">@i</a>
+                <li class="page-item disabled">
+                    <span class="page-link">Previous</span>
                 </li>
             }
-        }
 
-        @if (Model.Phong.HasNextPage)
-        {
-            <li class="page-item">
-                <a class="page-link" asp-page="./Index" asp-route-pageIndex="@(Model.Phong.PageIndex + 1)"
-                   asp-route-currentFilter="@Model.CurrentFilter" asp-route-statusFilter="@Model.StatusFilter">Next</a>
-            </li>
-        }
-        else
-        {
-            <li class="page-item disabled">
-                <span class="page-link">Next</span>
-            </li>
-        }
-    </ul>
-</nav>
+            @for (int i = 1; i <= Model.Phong.TotalPages; i++)
+            {
+                if (i == Model.Phong.PageIndex)
+                {
+                    <li class="page-item active">
+                        <span class="page-link">@i</span>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-page="./Index" asp-route-pageIndex="@i"
+                           asp-route-currentFilter="@Model.CurrentFilter" asp-route-statusFilter="@Model.StatusFilter">@i</a>
+                    </li>
+                }
+            }
+
+            @if (Model.Phong.HasNextPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="./Index" asp-route-pageIndex="@(Model.Phong.PageIndex + 1)"
+                       asp-route-currentFilter="@Model.CurrentFilter" asp-route-statusFilter="@Model.StatusFilter">Next</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled">
+                    <span class="page-link">Next</span>
+                </li>
+            }
+        </ul>
+    </nav>

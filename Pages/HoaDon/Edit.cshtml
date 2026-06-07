@@ -15,27 +15,28 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="HoaDon.HoaDonId" />
             <div class="form-group">
-<span class="text-danger">*</span>
+                <span class="text-danger">*</span>
                 <label asp-for="HoaDon.HopDongId" class="control-label"></label>
-                <select asp-for="HoaDon.HopDongId" class="form-control" asp-items="ViewBag.HopDongId" aria-required="true"></select>
+                <select asp-for="HoaDon.HopDongId" class="form-control" asp-items="ViewBag.HopDongId"
+                        aria-required="true"></select>
                 <span asp-validation-for="HoaDon.HopDongId" class="text-danger"></span>
             </div>
             <div class="form-group">
-<span class="text-danger">*</span>
+                <span class="text-danger">*</span>
                 <label asp-for="HoaDon.Thang" class="control-label"></label>
-                <input asp-for="HoaDon.Thang" class="form-control" aria-required="true"/>
+                <input asp-for="HoaDon.Thang" class="form-control" aria-required="true" />
                 <span asp-validation-for="HoaDon.Thang" class="text-danger"></span>
             </div>
             <div class="form-group">
-<span class="text-danger">*</span>
+                <span class="text-danger">*</span>
                 <label asp-for="HoaDon.Nam" class="control-label"></label>
-                <input asp-for="HoaDon.Nam" class="form-control" aria-required="true"/>
+                <input asp-for="HoaDon.Nam" class="form-control" aria-required="true" />
                 <span asp-validation-for="HoaDon.Nam" class="text-danger"></span>
             </div>
             <div class="form-group">
-<span class="text-danger">*</span>
+                <span class="text-danger">*</span>
                 <label asp-for="HoaDon.TienPhong" class="control-label"></label>
-                <input asp-for="HoaDon.TienPhong" class="form-control" aria-required="true"/>
+                <input asp-for="HoaDon.TienPhong" class="form-control" aria-required="true" />
                 <span asp-validation-for="HoaDon.TienPhong" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -85,5 +86,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -21,8 +21,8 @@ namespace QLNT.Pages_HopDong
 
         public IActionResult OnGet()
         {
-        ViewData["NguoiThueId"] = new SelectList(_context.NguoiThues, "NguoiThueId", "HoTen");
-        ViewData["PhongId"] = new SelectList(_context.Phongs, "PhongId", "TenPhong");
+            ViewData["NguoiThueId"] = new SelectList(_context.NguoiThues, "NguoiThueId", "HoTen");
+            ViewData["PhongId"] = new SelectList(_context.Phongs, "PhongId", "TenPhong");
             return Page();
         }
 

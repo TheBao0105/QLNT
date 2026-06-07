@@ -27,7 +27,7 @@ public class HopDong
     public decimal GiaThue { get; set; }
 
     [StringLength(100)]
-    public string? TrangThai { get; set; } = "Còn hiệu lực";
+    public string TrangThai { get; set; } = "Còn hiệu lực";
 
     public string? GhiChu { get; set; }
 

@@ -16,9 +16,10 @@ public class Phong
     public decimal? DienTich { get; set; }
 
     [StringLength(100)]
-    public string? TrangThai { get; set; } = "Trống";
+    public string TrangThai { get; set; } = "Trống";
 
     public string? GhiChu { get; set; }
+    public decimal Giathue { get; set; }
 
     // Quan hệ: 1 phòng có nhiều hợp đồng
     public ICollection<HopDong> HopDongs { get; set; } = new List<HopDong>();

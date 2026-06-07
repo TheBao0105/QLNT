@@ -1,87 +1,94 @@
 @page
-@model QLNT.Pages_HoaDon.CreateModel
+@model QLNT.Pages_HoaDon.IndexModel
 
-        @{
-        ViewData["Title"] = "Create";
-        }
-        
-        <h1>Create</h1>
-        
-    <h4>HoaDon</h4>
-    <hr />
-    <div class="row">
-    <div class="col-md-4">
-    <form method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="HoaDon.HopDongId" class="control-label"></label>
-                <select asp-for="HoaDon.HopDongId" class ="form-control" asp-items="ViewBag.HopDongId" aria-required="true"></select>
-            </div>
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="HoaDon.Thang" class="control-label"></label>
-                <input asp-for="HoaDon.Thang" class="form-control" aria-required="true"/>
-                <span asp-validation-for="HoaDon.Thang" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="HoaDon.Nam" class="control-label"></label>
-                <input asp-for="HoaDon.Nam" class="form-control" aria-required="true"/>
-                <span asp-validation-for="HoaDon.Nam" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="HoaDon.TienPhong" class="control-label"></label>
-                <input asp-for="HoaDon.TienPhong" class="form-control" aria-required="true"/>
-                <span asp-validation-for="HoaDon.TienPhong" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HoaDon.TienDien" class="control-label"></label>
-                <input asp-for="HoaDon.TienDien" class="form-control" />
-                <span asp-validation-for="HoaDon.TienDien" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HoaDon.TienNuoc" class="control-label"></label>
-                <input asp-for="HoaDon.TienNuoc" class="form-control" />
-                <span asp-validation-for="HoaDon.TienNuoc" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HoaDon.TienDichVu" class="control-label"></label>
-                <input asp-for="HoaDon.TienDichVu" class="form-control" />
-                <span asp-validation-for="HoaDon.TienDichVu" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HoaDon.TongTien" class="control-label"></label>
-                <input asp-for="HoaDon.TongTien" class="form-control" />
-                <span asp-validation-for="HoaDon.TongTien" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HoaDon.NgayLap" class="control-label"></label>
-                <input asp-for="HoaDon.NgayLap" class="form-control" />
-                <span asp-validation-for="HoaDon.NgayLap" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HoaDon.TrangThai" class="control-label"></label>
-                <input asp-for="HoaDon.TrangThai" class="form-control" />
-                <span asp-validation-for="HoaDon.TrangThai" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HoaDon.GhiChu" class="control-label"></label>
-                <input asp-for="HoaDon.GhiChu" class="form-control" />
-                <span asp-validation-for="HoaDon.GhiChu" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@{
+    ViewData["Title"] = "Quản lý Hóa đơn & Thanh toán";
 }
+
+<h1>Quản lý Hóa đơn & Thanh toán</h1>
+
+<p class="text-end">
+    <a asp-page="Create" class="btn btn-primary">
+        + Tạo hóa đơn
+    </a>
+</p>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Tháng/Năm</th>
+            <th>Phòng</th>
+            <th>Khách thuê</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.HoaDonList)
+        {
+            var thanhToan = item.ThanhToans
+                .OrderByDescending(t => t.NgayThanhToan)
+                .FirstOrDefault();
+
+            <tr>
+                <td>
+                    @item.Thang/@item.Nam
+                </td>
+
+                <td>
+                    @item.TenPhong
+                </td>
+
+                <td>
+                    @item.HopDong?.NguoiThue?.HoTen
+                </td>
+
+                <td>
+                    @item.TongTien.ToString("N0") VNĐ
+                </td>
+
+                <td>
+                    @if (item.TrangThai == "Đã thanh toán")
+                    {
+                        <span class="text-success fw-bold">Đã thanh toán</span>
+
+                        @if (thanhToan != null)
+                        {
+                            <br />
+                            <small>
+                                @thanhToan.PhuongThuc - @thanhToan.NgayThanhToan.ToString("dd/MM/yyyy")
+                            </small>
+                        }
+                    }
+                    else
+                    {
+                        <span class="text-warning fw-bold">Chưa thanh toán</span>
+                    }
+                </td>
+
+                <td>
+                    @if (item.TrangThai != "Đã thanh toán")
+                    {
+                        <a asp-page="/ThanhToan/Create" asp-route-hoaDonId="@item.HoaDonId" class="btn btn-sm btn-success">
+                            Thanh toán
+                        </a>
+                    }
+
+                    <a asp-page="./Edit" asp-route-id="@item.HoaDonId" class="btn btn-sm btn-primary">
+                        Sửa
+                    </a>
+
+                    <a asp-page="./Details" asp-route-id="@item.HoaDonId" class="btn btn-sm btn-info">
+                        Chi tiết
+                    </a>
+
+                    <a asp-page="./Delete" asp-route-id="@item.HoaDonId" class="btn btn-sm btn-danger">
+                        Xóa
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

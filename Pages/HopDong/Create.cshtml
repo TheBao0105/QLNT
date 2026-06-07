@@ -50,7 +50,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="HopDong.TrangThai" class="control-label"></label>
-                <input asp-for="HopDong.TrangThai" class="form-control" />
+                <select asp-for="HopDong.TrangThai" class="form-control">
+                    <option value="">-- Chọn trạng thái --</option>
+                    <option value="Đang hiệu lực">Đang hiệu lực</option>
+                    <option value="Hết hạn">Hết hạn</option>
+                    <option value="Đã hủy">Đã hủy</option>
+                </select>
                 <span asp-validation-for="HopDong.TrangThai" class="text-danger"></span>
             </div>
             <div class="form-group">

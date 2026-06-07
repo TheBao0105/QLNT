@@ -14,7 +14,7 @@ public class ThanhToan
 
     [Required]
     public decimal SoTien { get; set; }
-
+    public decimal TienDichVu { get; set; }
     [StringLength(100)]
     public string? PhuongThuc { get; set; }
 
