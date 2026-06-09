@@ -1,0 +1,55 @@
+@page
+@model QLNT.Pages_NguoiThue.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>NguoiThue</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NguoiThue.HoTen)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NguoiThue.HoTen)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NguoiThue.SoDienThoai)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NguoiThue.SoDienThoai)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NguoiThue.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NguoiThue.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NguoiThue.CCCD)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NguoiThue.CCCD)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NguoiThue.NgaySinh)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NguoiThue.NgaySinh)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NguoiThue.DiaChi)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NguoiThue.DiaChi)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.NguoiThue.NguoiThueId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

@@ -1,0 +1,16 @@
+@page
+@model QLNT.Pages.TaiKhoan.DangNhapModel
+
+<h2>Đăng nhập</h2>
+
+<form method="post">
+    <input asp-for="Email" class="form-control" placeholder="Email" />
+    <br />
+
+    <input asp-for="MatKhau" type="password" class="form-control" placeholder="Mật khẩu" />
+    <br />
+
+    <button type="submit" class="btn btn-success">Đăng nhập</button>
+</form>
+
+<p style="color:red">@Model.ThongBao</p>

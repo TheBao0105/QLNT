@@ -1,0 +1,126 @@
+@page
+@model QLNT.Pages_NguoiThue.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<form method="get" class="mb-3 row g-2 align-items-center">
+    <div class="col-auto">
+        <input type="text" name="searchString" value="@Model.CurrentFilter" class="form-control"
+               placeholder="Tìm tên, số điện thoại hoặc CCCD" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+    </div>
+</form>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NguoiThue[0].HoTen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NguoiThue[0].SoDienThoai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NguoiThue[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NguoiThue[0].CCCD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NguoiThue[0].NgaySinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NguoiThue[0].DiaChi)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.NguoiThue)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoTen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoDienThoai)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CCCD)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgaySinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiaChi)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.NguoiThueId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.NguoiThueId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.NguoiThueId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        @if (Model.NguoiThue.HasPreviousPage)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-page="./Index" asp-route-pageIndex="@(Model.NguoiThue.PageIndex - 1)"
+                   asp-route-currentFilter="@Model.CurrentFilter">Previous</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+            </li>
+        }
+
+        @for (var i = 1; i <= Model.NguoiThue.TotalPages; i++)
+        {
+            if (i == Model.NguoiThue.PageIndex)
+            {
+                <li class="page-item active">
+                    <span class="page-link">@i</span>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="./Index" asp-route-pageIndex="@i"
+                       asp-route-currentFilter="@Model.CurrentFilter">@i</a>
+                </li>
+            }
+        }
+
+        @if (Model.NguoiThue.HasNextPage)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-page="./Index" asp-route-pageIndex="@(Model.NguoiThue.PageIndex + 1)"
+                   asp-route-currentFilter="@Model.CurrentFilter">Next</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled">
+                <span class="page-link">Next</span>
+            </li>
+        }
+    </ul>
+</nav>

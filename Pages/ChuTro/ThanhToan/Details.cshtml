@@ -1,0 +1,49 @@
+@page
+@model QLNT.Pages_ThanhToan.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ThanhToan</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ThanhToan.NgayThanhToan)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ThanhToan.NgayThanhToan)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ThanhToan.SoTien)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ThanhToan.SoTien)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ThanhToan.PhuongThuc)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ThanhToan.PhuongThuc)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ThanhToan.GhiChu)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ThanhToan.GhiChu)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ThanhToan.HoaDon)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ThanhToan.HoaDon.HoaDonId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.ThanhToan.ThanhToanId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

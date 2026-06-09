@@ -1,0 +1,48 @@
+@page
+@model QLNT.Pages.ChuTro.QuanLyNhaTro.IndexModel
+
+@{
+    ViewData["Title"] = "Quản lý nhà trọ";
+}
+
+<h2>Quản lý nhà trọ</h2>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h4>@Model.NhaTro?.TenNhaTro</h4>
+
+        <p><strong>Địa chỉ:</strong> @Model.NhaTro?.DiaChi</p>
+        <p><strong>Số tầng:</strong> @Model.NhaTro?.SoTang</p>
+        <p><strong>Số phòng:</strong> @Model.NhaTro?.SoPhong</p>
+        <p><strong>Mã trọ:</strong> <span class="badge bg-primary">@Model.NhaTro?.MaTro</span></p>
+        <p><strong>Mô tả:</strong> @Model.NhaTro?.MoTa</p>
+    </div>
+</div>
+
+<h4>Chức năng quản lý</h4>
+
+<div class="d-flex flex-wrap gap-3 mt-3">
+    <a class="btn btn-primary" href="/ChuTro/QLPhong">
+        Quản lý phòng
+    </a>
+
+    <a class="btn btn-success" href="/ChuTro/QLNguoiThue">
+        Quản lý người thuê
+    </a>
+
+    <a class="btn btn-warning" href="/ChuTro/QLHopDong">
+        Quản lý hợp đồng
+    </a>
+
+    <a class="btn btn-info" href="/ChuTro/QLHoaDon">
+        Quản lý hóa đơn
+    </a>
+
+    <a class="btn btn-secondary" href="/ChuTro/DichVu">
+        Quản lý dịch vụ
+    </a>
+
+    <a class="btn btn-dark" href="/ChuTro/ThanhToan">
+        Thanh toán
+    </a>
+</div>

@@ -1,0 +1,49 @@
+@page
+@model QLNT.Pages.TaiKhoan.DangKiModel
+
+@{
+    ViewData["Title"] = "Đăng ký";
+}
+
+<h2>Đăng ký tài khoản</h2>
+
+@if (!string.IsNullOrEmpty(Model.VaiTro))
+{
+    <div class="alert alert-info">
+        Vai trò đang đăng ký:
+        <strong>
+            @(Model.VaiTro == "ChuTro" ? "Chủ trọ" : "Người thuê")
+        </strong>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning">
+        Bạn chưa chọn vai trò. Vui lòng quay lại trang chủ để chọn Chủ trọ hoặc Người thuê.
+    </div>
+}
+
+<form method="post">
+    <input type="hidden" asp-for="VaiTro" />
+
+    <div class="mb-3">
+        <label>Họ tên</label>
+        <input asp-for="HoTen" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Email</label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Mật khẩu</label>
+        <input asp-for="MatKhau" type="password" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Đăng ký
+    </button>
+</form>
+
+<p class="text-danger mt-3">@Model.ThongBao</p>

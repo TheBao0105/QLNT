@@ -1,0 +1,30 @@
+﻿@page
+@model QLNT.Pages.IndexModel
+
+@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 75vh;">
+    <div class="text-center">
+        <h1 class="mb-3">Web Quản Lý Nhà Trọ</h1>
+
+        <p class="text-muted mb-5">
+            Vui lòng chọn vai trò của bạn để tiếp tục
+        </p>
+
+        <div class="d-flex justify-content-center gap-4">
+            <a class="btn btn-primary btn-lg px-5 py-3"
+               asp-page="/TaiKhoan/DangKi"
+               asp-route-vaiTro="ChuTro">
+                Chủ trọ
+            </a>
+
+            <a class="btn btn-success btn-lg px-5 py-3"
+               asp-page="/TaiKhoan/DangKi"
+               asp-route-vaiTro="NguoiThue">
+                Người thuê
+            </a>
+        </div>
+    </div>
+</div>

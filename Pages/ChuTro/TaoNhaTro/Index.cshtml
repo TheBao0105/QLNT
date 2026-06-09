@@ -1,0 +1,60 @@
+@page
+@model QLNT.Pages.ChuTro.TaoNhaTro.IndexModel
+
+@{
+    ViewData["Title"] = "Tạo nhà trọ";
+}
+
+<h2>Tạo nhà trọ</h2>
+
+<p class="text-muted">
+    Nhập thông tin nhà trọ. Sau khi tạo, hệ thống sẽ tự sinh mã trọ cố định để người thuê tham gia.
+</p>
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="NhaTro.TenNhaTro" class="form-label">Tên nhà trọ</label>
+        <input asp-for="NhaTro.TenNhaTro" class="form-control" />
+        <span asp-validation-for="NhaTro.TenNhaTro" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NhaTro.DiaChi" class="form-label">Địa chỉ</label>
+        <input asp-for="NhaTro.DiaChi" class="form-control" />
+        <span asp-validation-for="NhaTro.DiaChi" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NhaTro.SoTang" class="form-label">Số tầng</label>
+        <input asp-for="NhaTro.SoTang" class="form-control" type="number" min="1" />
+        <span asp-validation-for="NhaTro.SoTang" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NhaTro.SoPhong" class="form-label">Số phòng</label>
+        <input asp-for="NhaTro.SoPhong" class="form-control" type="number" min="1" />
+        <span asp-validation-for="NhaTro.SoPhong" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NhaTro.MoTa" class="form-label">Mô tả</label>
+        <textarea asp-for="NhaTro.MoTa" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="NhaTro.MoTa" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">
+        Tạo nhà trọ
+    </button>
+
+    <a asp-page="/ChuTro/Index" class="btn btn-secondary">
+        Quay lại
+    </a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

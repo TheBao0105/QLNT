@@ -1,0 +1,211 @@
+is_global = true
+build_property.TargetFramework = net10.0
+build_property.TargetFramework = net10.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v10.0
+build_property.RootNamespace = QLNT
+build_property.RootNamespace = QLNT
+build_property.ProjectDir = C:\Users\Lenovo\app.net\QLNT-dev\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Lenovo\app.net\QLNT-dev
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 10.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/DichVu/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXERpY2hWdVxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/DichVu/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXERpY2hWdVxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/DichVu/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXERpY2hWdVxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/DichVu/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXERpY2hWdVxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/DichVu/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXERpY2hWdVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLHoaDon/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMSG9hRG9uXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLHoaDon/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMSG9hRG9uXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLHoaDon/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMSG9hRG9uXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLHoaDon/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMSG9hRG9uXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLHoaDon/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMSG9hRG9uXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLHopDong/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMSG9wRG9uZ1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLHopDong/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMSG9wRG9uZ1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLHopDong/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMSG9wRG9uZ1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLHopDong/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMSG9wRG9uZ1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLHopDong/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMSG9wRG9uZ1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLNguoiThue/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMTmd1b2lUaHVlXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLNguoiThue/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMTmd1b2lUaHVlXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLNguoiThue/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMTmd1b2lUaHVlXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLNguoiThue/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMTmd1b2lUaHVlXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLNguoiThue/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMTmd1b2lUaHVlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLNhaTro/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMTmhhVHJvXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLPhong/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMUGhvbmdcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLPhong/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMUGhvbmdcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLPhong/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMUGhvbmdcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLPhong/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMUGhvbmdcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/QLPhong/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFFMUGhvbmdcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/TaoNhaTro/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFRhb05oYVRyb1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/ThanhToan/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFRoYW5oVG9hblxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/ThanhToan/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFRoYW5oVG9hblxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/ThanhToan/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFRoYW5oVG9hblxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/ThanhToan/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFRoYW5oVG9hblxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/ChuTro/ThanhToan/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2h1VHJvXFRoYW5oVG9hblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/NguoiThue/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmd1b2lUaHVlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/NguoiThue/ThamGiaTro/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmd1b2lUaHVlXFRoYW1HaWFUcm9cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/TaiKhoan/DangKi.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFpS2hvYW5cRGFuZ0tpLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/TaiKhoan/DangNhap.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFpS2hvYW5cRGFuZ05oYXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/TrangMoDau/Main.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVHJhbmdNb0RhdVxNYWluLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/app.net/QLNT-dev/Pages/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-fregw1cq3r
