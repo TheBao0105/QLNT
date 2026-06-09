@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using QLNT;
 using QLNT.Data;
 
@@ -12,36 +7,37 @@ namespace QLNT.Pages_DichVu
 {
     public class CreateModel : PageModel
     {
-        private readonly QLNT.Data.AppDbContext _context;
+        private readonly AppDbContext _context;
 
-        public CreateModel(QLNT.Data.AppDbContext context)
+        public CreateModel(AppDbContext context)
         {
             _context = context;
         }
 
+        [BindProperty]
+        public DichVu DichVu { get; set; } = new DichVu();
+
         public IActionResult OnGet()
         {
-            DichVu = new DichVu();
-            {
-                DichVu.TrangThai = "Đang sử dụng";
-            }
+            DichVu.TrangThai = "Đang sử dụng";
             return Page();
         }
 
-        [BindProperty]
-        public DichVu DichVu { get; set; } = default!;
-
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (DichVu.DonGia < 0)
             {
-                return Page();
+                ModelState.AddModelError("DichVu.DonGia", "Đơn giá không được nhỏ hơn 0.");
             }
 
             if (string.IsNullOrWhiteSpace(DichVu.TrangThai))
             {
                 DichVu.TrangThai = "Đang sử dụng";
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return Page();
             }
 
             _context.DichVus.Add(DichVu);

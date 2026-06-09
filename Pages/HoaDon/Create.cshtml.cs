@@ -15,7 +15,7 @@ namespace QLNT.Pages_HoaDon
         {
             _context = context;
         }
-
+        public IList<HopDong> DanhSachHopDong { get; set; } = new List<HopDong>();
         [BindProperty]
         public HoaDon HoaDon { get; set; } = default!;
 
@@ -29,6 +29,7 @@ namespace QLNT.Pages_HoaDon
 
         {
             await LoadSelectListAsync();
+            await LoadDanhSachHopDongAsync();
 
             HoaDon = new HoaDon
             {
@@ -40,7 +41,15 @@ namespace QLNT.Pages_HoaDon
 
             return Page();
         }
-
+        private async Task LoadDanhSachHopDongAsync()
+        {
+            DanhSachHopDong = await _context.HopDongs
+                .Include(h => h.Phong)
+                .Include(h => h.NguoiThue)
+                .Where(h => h.TrangThai == "Hiệu lực"
+                         || h.TrangThai == "Đang thuê")
+                .ToListAsync();
+        }
         public async Task<IActionResult> OnPostAsync()
         {
             await LoadSelectListAsync();
@@ -113,6 +122,7 @@ namespace QLNT.Pages_HoaDon
 
             if (!ModelState.IsValid)
             {
+                await LoadDanhSachHopDongAsync();
                 return Page();
             }
 

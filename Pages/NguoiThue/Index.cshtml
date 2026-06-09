@@ -2,79 +2,90 @@
 @model QLNT.Pages_NguoiThue.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh sách người thuê";
 }
 
-<h1>Index</h1>
+<h1>Danh sách người thuê</h1>
 
 <form method="get" class="mb-3 row g-2 align-items-center">
     <div class="col-auto">
         <input type="text" name="searchString" value="@Model.CurrentFilter" class="form-control"
                placeholder="Tìm tên, số điện thoại hoặc CCCD" />
     </div>
+
     <div class="col-auto">
-        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        <button type="submit" class="btn btn-primary">
+            Tìm kiếm
+        </button>
     </div>
 </form>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NguoiThue[0].HoTen)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NguoiThue[0].SoDienThoai)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NguoiThue[0].Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NguoiThue[0].CCCD)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NguoiThue[0].NgaySinh)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NguoiThue[0].DiaChi)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.NguoiThue)
-        {
+<div class="mb-3">
+    <a asp-page="Create" class="btn btn-primary">
+        Thêm người thuê
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HoTen)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SoDienThoai)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CCCD)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NgaySinh)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DiaChi)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.NguoiThueId">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.NguoiThueId">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.NguoiThueId">Delete</a>
-                </td>
+                <th>Họ tên</th>
+                <th>Số điện thoại</th>
+                <th>Email</th>
+                <th>CCCD</th>
+                <th>Ngày sinh</th>
+                <th>Địa chỉ</th>
+                <th>Thao tác</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.NguoiThue)
+            {
+                <tr>
+                    <td>@item.HoTen</td>
+
+                    <td>
+                        @(string.IsNullOrWhiteSpace(item.SoDienThoai) ? "Không có" : item.SoDienThoai)
+                    </td>
+
+                    <td>
+                        @(string.IsNullOrWhiteSpace(item.Email) ? "Không có" : item.Email)
+                    </td>
+
+                    <td>
+                        @(string.IsNullOrWhiteSpace(item.CCCD) ? "Không có" : item.CCCD)
+                    </td>
+
+                    <td>
+                        @(item.NgaySinh.HasValue ? item.NgaySinh.Value.ToString("dd/MM/yyyy") : "Không có")
+                    </td>
+
+                    <td>
+                        @(string.IsNullOrWhiteSpace(item.DiaChi) ? "Không có" : item.DiaChi)
+                    </td>
+
+                    <td>
+                        <div class="action-buttons">
+                            <a asp-page="./Edit" asp-route-id="@item.NguoiThueId" class="btn btn-primary">
+                                Sửa
+                            </a>
+
+                            <a asp-page="./Details" asp-route-id="@item.NguoiThueId" class="btn btn-primary">
+                                Chi tiết
+                            </a>
+
+                            <a asp-page="./Delete" asp-route-id="@item.NguoiThueId" class="btn btn-danger">
+                                Xóa
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 <nav aria-label="Page navigation">
     <ul class="pagination">

@@ -1,30 +1,27 @@
 @page
 @model QLNT.Pages_DichVu.IndexModel
+@using System.Globalization
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh sách dịch vụ";
+    var viVN = new CultureInfo("vi-VN");
 }
 
-<h1>Index</h1>
+<h1>Danh sách dịch vụ</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create" class="btn btn-primary">Thêm mới</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DichVu[0].TenDichVu)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DichVu[0].DonGia)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DichVu[0].DonViTinh)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DichVu[0].GhiChu)
-            </th>
+            <th>Tên dịch vụ</th>
+            <th>Đơn giá</th>
+            <th>Đơn vị tính</th>
+            <th>Trạng thái</th>
+            <th>Ghi chú</th>
+            <th>Thao tác</th>
             <th></th>
         </tr>
     </thead>
@@ -32,22 +29,24 @@
         @foreach (var item in Model.DichVu)
         {
             <tr>
+                <td>@Html.DisplayFor(modelItem => item.TenDichVu)</td>
+                <td>@item.DonGia.ToString("N0", viVN) VNĐ</td>
+                <td>@Html.DisplayFor(modelItem => item.DonViTinh)</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TenDichVu)
+                    @if (item.TrangThai == "Đang sử dụng")
+                    {
+                        <span class="badge bg-success">Đang sử dụng</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Ngừng sử dụng</span>
+                    }
                 </td>
+                <td>@Html.DisplayFor(modelItem => item.GhiChu)</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DonGia)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DonViTinh)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.GhiChu)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.DichVuId">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.DichVuId">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.DichVuId">Delete</a>
+                    <a asp-page="./Edit" asp-route-id="@item.DichVuId">Sửa</a> |
+                    <a asp-page="./Details" asp-route-id="@item.DichVuId">Chi tiết</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.DichVuId">Xóa</a>
                 </td>
             </tr>
         }

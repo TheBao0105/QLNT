@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLNT;
 using QLNT.Data;
@@ -13,9 +8,9 @@ namespace QLNT.Pages_DichVu
 {
     public class EditModel : PageModel
     {
-        private readonly QLNT.Data.AppDbContext _context;
+        private readonly AppDbContext _context;
 
-        public EditModel(QLNT.Data.AppDbContext context)
+        public EditModel(AppDbContext context)
         {
             _context = context;
         }
@@ -30,19 +25,29 @@ namespace QLNT.Pages_DichVu
                 return NotFound();
             }
 
-            var dichvu =  await _context.DichVus.FirstOrDefaultAsync(m => m.DichVuId == id);
+            var dichvu = await _context.DichVus.FirstOrDefaultAsync(m => m.DichVuId == id);
+
             if (dichvu == null)
             {
                 return NotFound();
             }
+
             DichVu = dichvu;
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            if (DichVu.DonGia < 0)
+            {
+                ModelState.AddModelError("DichVu.DonGia", "Đơn giá không được nhỏ hơn 0.");
+            }
+
+            if (string.IsNullOrWhiteSpace(DichVu.TrangThai))
+            {
+                DichVu.TrangThai = "Đang sử dụng";
+            }
+
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -60,10 +65,8 @@ namespace QLNT.Pages_DichVu
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                throw;
             }
 
             return RedirectToPage("./Index");

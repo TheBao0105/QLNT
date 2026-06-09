@@ -1,27 +1,26 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLNT;
 using QLNT.Data;
+using System.Globalization;
 
 namespace QLNT.Pages_Phong
 {
     public class EditModel : PageModel
     {
-        private readonly QLNT.Data.AppDbContext _context;
+        private readonly AppDbContext _context;
 
-        public EditModel(QLNT.Data.AppDbContext context)
+        public EditModel(AppDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
         public Phong Phong { get; set; } = default!;
+
+        [BindProperty]
+        public string GiaPhongText { get; set; } = "";
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,21 +29,43 @@ namespace QLNT.Pages_Phong
                 return NotFound();
             }
 
-            var phong =  await _context.Phongs.FirstOrDefaultAsync(m => m.PhongId == id);
+            var phong = await _context.Phongs.FirstOrDefaultAsync(m => m.PhongId == id);
+
             if (phong == null)
             {
                 return NotFound();
             }
+
             Phong = phong;
+            GiaPhongText = FormatVnd(Phong.GiaPhong);
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            ModelState.Remove("Phong.GiaPhong");
+
+            if (!TryParseVnd(GiaPhongText, out var giaPhong))
+            {
+                ModelState.AddModelError(nameof(GiaPhongText), "Giá phòng không đúng định dạng.");
+            }
+
+            if (giaPhong < 0)
+            {
+                ModelState.AddModelError(nameof(GiaPhongText), "Giá phòng không được nhỏ hơn 0.");
+            }
+
+            Phong.GiaPhong = giaPhong;
+
+            if (string.IsNullOrWhiteSpace(Phong.TrangThai))
+            {
+                Phong.TrangThai = "Trống";
+            }
+
             if (!ModelState.IsValid)
             {
+                GiaPhongText = FormatVnd(Phong.GiaPhong);
                 return Page();
             }
 
@@ -60,13 +81,41 @@ namespace QLNT.Pages_Phong
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                throw;
             }
 
             return RedirectToPage("./Index");
+        }
+
+        private string FormatVnd(decimal value)
+        {
+            return value.ToString("N0", new CultureInfo("vi-VN"));
+        }
+
+        private bool TryParseVnd(string? input, out decimal value)
+        {
+            value = 0;
+
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return true;
+            }
+
+            var clean = input
+                .Replace(".", "")
+                .Replace(",", "")
+                .Replace("VNĐ", "", StringComparison.OrdinalIgnoreCase)
+                .Replace("VND", "", StringComparison.OrdinalIgnoreCase)
+                .Replace("đ", "", StringComparison.OrdinalIgnoreCase)
+                .Trim();
+
+            return decimal.TryParse(
+                clean,
+                NumberStyles.Number,
+                CultureInfo.InvariantCulture,
+                out value
+            );
         }
 
         private bool PhongExists(int id)

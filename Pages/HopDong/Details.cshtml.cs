@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +8,9 @@ namespace QLNT.Pages_HopDong
 {
     public class DetailsModel : PageModel
     {
-        private readonly QLNT.Data.AppDbContext _context;
+        private readonly AppDbContext _context;
 
-        public DetailsModel(QLNT.Data.AppDbContext context)
+        public DetailsModel(AppDbContext context)
         {
             _context = context;
         }
@@ -28,16 +24,18 @@ namespace QLNT.Pages_HopDong
                 return NotFound();
             }
 
-            var hopdong = await _context.HopDongs.FirstOrDefaultAsync(m => m.HopDongId == id);
+            var hopdong = await _context.HopDongs
+                .Include(h => h.Phong)
+                .Include(h => h.NguoiThue)
+                .FirstOrDefaultAsync(m => m.HopDongId == id);
 
-            if (hopdong is not null)
+            if (hopdong == null)
             {
-                HopDong = hopdong;
-
-                return Page();
+                return NotFound();
             }
 
-            return NotFound();
+            HopDong = hopdong;
+            return Page();
         }
     }
 }

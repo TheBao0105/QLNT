@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +8,9 @@ namespace QLNT.Pages_DichVu
 {
     public class DetailsModel : PageModel
     {
-        private readonly QLNT.Data.AppDbContext _context;
+        private readonly AppDbContext _context;
 
-        public DetailsModel(QLNT.Data.AppDbContext context)
+        public DetailsModel(AppDbContext context)
         {
             _context = context;
         }
@@ -30,14 +26,13 @@ namespace QLNT.Pages_DichVu
 
             var dichvu = await _context.DichVus.FirstOrDefaultAsync(m => m.DichVuId == id);
 
-            if (dichvu is not null)
+            if (dichvu == null)
             {
-                DichVu = dichvu;
-
-                return Page();
+                return NotFound();
             }
 
-            return NotFound();
+            DichVu = dichvu;
+            return Page();
         }
     }
 }

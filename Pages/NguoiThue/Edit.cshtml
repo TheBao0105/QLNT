@@ -5,51 +5,75 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Sửa thông tin người thuê</h1>
 
-<h4>NguoiThue</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="NguoiThue.NguoiThueId" />
-            <div class="form-group">
-<span class="text-danger">*</span>
-                <label asp-for="NguoiThue.HoTen" class="control-label"></label>
-                <input asp-for="NguoiThue.HoTen" class="form-control" aria-required="true"/>
-                <span asp-validation-for="NguoiThue.HoTen" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NguoiThue.SoDienThoai" class="control-label"></label>
-                <input asp-for="NguoiThue.SoDienThoai" class="form-control" />
-                <span asp-validation-for="NguoiThue.SoDienThoai" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NguoiThue.Email" class="control-label"></label>
-                <input asp-for="NguoiThue.Email" class="form-control" />
-                <span asp-validation-for="NguoiThue.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NguoiThue.CCCD" class="control-label"></label>
-                <input asp-for="NguoiThue.CCCD" class="form-control" />
-                <span asp-validation-for="NguoiThue.CCCD" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NguoiThue.NgaySinh" class="control-label"></label>
-                <input asp-for="NguoiThue.NgaySinh" class="form-control" />
-                <span asp-validation-for="NguoiThue.NgaySinh" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NguoiThue.DiaChi" class="control-label"></label>
-                <input asp-for="NguoiThue.DiaChi" class="form-control" />
-                <span asp-validation-for="NguoiThue.DiaChi" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+<div class="form-card">
+    <h4>Thông tin người thuê</h4>
+    <hr />
+
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <input type="hidden" asp-for="NguoiThue.NguoiThueId" />
+
+        <div class="form-group">
+            <label asp-for="NguoiThue.HoTen" class="control-label">
+                Họ tên <span class="required">*</span>
+            </label>
+            <input asp-for="NguoiThue.HoTen" class="form-control" />
+            <span asp-validation-for="NguoiThue.HoTen" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="NguoiThue.SoDienThoai" class="control-label">
+                Số điện thoại
+            </label>
+            <input asp-for="NguoiThue.SoDienThoai" class="form-control" />
+            <span asp-validation-for="NguoiThue.SoDienThoai" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="NguoiThue.Email" class="control-label">
+                Email
+            </label>
+            <input asp-for="NguoiThue.Email" class="form-control" />
+            <span asp-validation-for="NguoiThue.Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="NguoiThue.CCCD" class="control-label">
+                CCCD
+            </label>
+            <input asp-for="NguoiThue.CCCD" class="form-control" />
+            <span asp-validation-for="NguoiThue.CCCD" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="NguoiThue.NgaySinh" class="control-label">
+                Ngày sinh
+            </label>
+            <input asp-for="NguoiThue.NgaySinh" type="date" class="form-control" />
+            <span asp-validation-for="NguoiThue.NgaySinh" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="NguoiThue.DiaChi" class="control-label">
+                Địa chỉ
+            </label>
+            <input asp-for="NguoiThue.DiaChi" class="form-control" />
+            <span asp-validation-for="NguoiThue.DiaChi" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-primary">
+                Lưu
+            </button>
+
+            <a asp-page="./Index" class="btn btn-secondary">
+                Quay lại
+            </a>
+        </div>
+    </form>
 </div>
 
 <div>
@@ -57,5 +81,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

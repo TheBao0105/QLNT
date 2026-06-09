@@ -20,8 +20,35 @@ public class IndexModel : PageModel
     public int PhongDangThue { get; set; }
     public int PhongTrong { get; set; }
 
+    public int HopDongHieuLuc { get; set; }
     public async Task OnGetAsync()
     {
+        var today = DateTime.Today;
+
+        TongPhong = await _context.Phongs.CountAsync();
+
+        HopDongHieuLuc = await _context.HopDongs
+            .CountAsync(h =>
+                h.NgayBatDau.Date <= today &&
+                (h.NgayKetThuc == null || h.NgayKetThuc.Value.Date >= today)
+            );
+
+        PhongDangThue = await _context.HopDongs
+            .Where(h =>
+                h.NgayBatDau.Date <= today &&
+                (h.NgayKetThuc == null || h.NgayKetThuc.Value.Date >= today)
+            )
+            .Select(h => h.PhongId)
+            .Distinct()
+            .CountAsync();
+
+        PhongTrong = TongPhong - PhongDangThue;
+
+        if (PhongTrong < 0)
+        {
+            PhongTrong = 0;
+        }
+
         if (TongPhong > 0)
         {
             TyLeThue = (int)Math.Round((double)PhongDangThue / TongPhong * 100);
@@ -30,7 +57,6 @@ public class IndexModel : PageModel
         {
             TyLeThue = 0;
         }
-        var today = DateTime.Today;
         var firstDayOfMonth = new DateTime(today.Year, today.Month, 1);
 
         Stats = new DashboardViewModel

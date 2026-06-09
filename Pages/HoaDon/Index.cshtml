@@ -24,11 +24,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group mb-3">
-                <label asp-for="HoaDonMoi.HopDongId">
+                <label asp-for="HoaDonMoi.HopDongId" class="control-label fw-bold">
                     Hợp đồng / phòng đang thuê
                 </label>
 
-                <select asp-for="HoaDonMoi.HopDongId" class="form-control" asp-items="ViewBag.HopDongId">
+                <select asp-for="HoaDonMoi.HopDongId" class="form-select" asp-items="ViewBag.HopDongId">
                     <option value="">-- Chọn hợp đồng phòng đang thuê --</option>
                 </select>
 

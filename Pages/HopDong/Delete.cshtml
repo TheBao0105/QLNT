@@ -1,64 +1,47 @@
 @page
 @model QLNT.Pages_HopDong.DeleteModel
+@using System.Globalization
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Xóa hợp đồng";
+    var viVN = new CultureInfo("vi-VN");
 }
 
-<h1>Delete</h1>
+<h1>Xóa hợp đồng</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Bạn có chắc muốn xóa hợp đồng này không?</h3>
 <div>
-    <h4>HopDong</h4>
+    <h4>Hợp đồng</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.HopDong.NgayBatDau)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.HopDong.NgayBatDau)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.HopDong.NgayKetThuc)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.HopDong.NgayKetThuc)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.HopDong.TienCoc)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.HopDong.TienCoc)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.HopDong.TrangThai)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.HopDong.TrangThai)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.HopDong.GhiChu)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.HopDong.GhiChu)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.HopDong.Phong)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.HopDong.Phong.TenPhong)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.HopDong.NguoiThue)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.HopDong.NguoiThue.HoTen)
-        </dd>
+        <dt class="col-sm-2">Ngày bắt đầu</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.HopDong.NgayBatDau)</dd>
+
+        <dt class="col-sm-2">Ngày kết thúc</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.HopDong.NgayKetThuc)</dd>
+
+        <dt class="col-sm-2">Tiền cọc</dt>
+        <dd class="col-sm-10">@Model.HopDong.TienCoc.ToString("N0", viVN) VNĐ</dd>
+
+        <dt class="col-sm-2">Giá thuê</dt>
+        <dd class="col-sm-10">@Model.HopDong.GiaThue.ToString("N0", viVN) VNĐ</dd>
+
+        <dt class="col-sm-2">Trạng thái</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.HopDong.TrangThai)</dd>
+
+        <dt class="col-sm-2">Ghi chú</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.HopDong.GhiChu)</dd>
+
+        <dt class="col-sm-2">Phòng</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.HopDong.Phong.TenPhong)</dd>
+
+        <dt class="col-sm-2">Người thuê</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.HopDong.NguoiThue.HoTen)</dd>
     </dl>
 
     <form method="post">
         <input type="hidden" asp-for="HopDong.HopDongId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
+        <input type="submit" value="Xóa" class="btn btn-danger" />
+        <a asp-page="./Index" class="btn btn-secondary">Quay lại</a>
     </form>
 </div>

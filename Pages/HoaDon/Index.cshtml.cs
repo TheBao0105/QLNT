@@ -23,7 +23,7 @@ namespace QLNT.Pages_HoaDon
 
         [BindProperty]
         public List<int> DichVuIds { get; set; } = new();
-
+        public IList<HopDong> DanhSachHopDong { get; set; } = new List<HopDong>();
         private const decimal DonGiaDien = 3500;
         private const decimal DonGiaNuoc = 15000;
 
@@ -49,10 +49,15 @@ namespace QLNT.Pages_HoaDon
             await LoadDataAsync();
 
             var hopDong = await _context.HopDongs
-                .Include(h => h.Phong)
-                .FirstOrDefaultAsync(h =>
-                    h.HopDongId == HoaDonMoi.HopDongId &&
-                    h.TrangThai == "Đang hiệu lực");
+     .Include(h => h.Phong)
+     .Include(h => h.NguoiThue)
+     .FirstOrDefaultAsync(h =>
+         h.HopDongId == HoaDonMoi.HopDongId &&
+         (
+             h.TrangThai == "Còn hạn" ||
+          h.TrangThai == "Đang thuê" ||
+          h.TrangThai == "Đang hiệu lực"
+         ));
 
             if (hopDong == null)
             {
@@ -140,15 +145,22 @@ namespace QLNT.Pages_HoaDon
                 .ToListAsync();
 
             var hopDongsDangThue = await _context.HopDongs
-                .Include(h => h.Phong)
-                .Where(h => h.TrangThai == "Đang hiệu lực")
-                .OrderBy(h => h.Phong.TenPhong)
-                .Select(h => new
-                {
-                    h.HopDongId,
-                    TenHienThi = h.Phong.TenPhong + " - " + h.GiaThue.ToString("N0") + " VNĐ"
-                })
-                .ToListAsync();
+      .Include(h => h.Phong)
+      .Include(h => h.NguoiThue)
+      .Where(h => h.TrangThai == "Còn hạn" || h.TrangThai == "Đang thuê" || h.TrangThai == "Đang hiệu lực")
+      .OrderBy(h => h.Phong.TenPhong)
+      .Select(h => new
+      {
+          h.HopDongId,
+          TenHienThi =
+              h.Phong.TenPhong
+              + " - "
+              + h.NguoiThue.HoTen
+              + " - "
+              + h.GiaThue.ToString("N0")
+              + " VNĐ"
+      })
+      .ToListAsync();
 
             ViewData["HopDongId"] = new SelectList(
                 hopDongsDangThue,

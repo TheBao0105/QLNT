@@ -1,46 +1,49 @@
 @page
 @model QLNT.Pages_DichVu.DeleteModel
+@using System.Globalization
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Xóa dịch vụ";
+    var viVN = new CultureInfo("vi-VN");
 }
 
-<h1>Delete</h1>
+<h1>Xóa dịch vụ</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Bạn có chắc muốn xóa dịch vụ này không?</h3>
+
 <div>
-    <h4>DichVu</h4>
+    <h4>Dịch vụ</h4>
     <hr />
+
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DichVu.TenDichVu)
-        </dt>
+        <dt class="col-sm-2">Tên dịch vụ</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.DichVu.TenDichVu)</dd>
+
+        <dt class="col-sm-2">Đơn giá</dt>
+        <dd class="col-sm-10">@Model.DichVu.DonGia.ToString("N0", viVN) VNĐ</dd>
+
+        <dt class="col-sm-2">Đơn vị tính</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.DichVu.DonViTinh)</dd>
+
+        <dt class="col-sm-2">Trạng thái</dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DichVu.TenDichVu)
+            @if (Model.DichVu.TrangThai == "Đang sử dụng")
+            {
+                <span class="badge bg-success">Đang sử dụng</span>
+            }
+            else
+            {
+                <span class="badge bg-secondary">Ngừng sử dụng</span>
+            }
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DichVu.DonGia)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DichVu.DonGia)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DichVu.DonViTinh)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DichVu.DonViTinh)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DichVu.GhiChu)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DichVu.GhiChu)
-        </dd>
+
+        <dt class="col-sm-2">Ghi chú</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.DichVu.GhiChu)</dd>
     </dl>
-    
+
     <form method="post">
         <input type="hidden" asp-for="DichVu.DichVuId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
+        <input type="submit" value="Xóa" class="btn btn-danger" />
+        <a asp-page="./Index" class="btn btn-secondary">Quay lại</a>
     </form>
 </div>

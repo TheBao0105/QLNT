@@ -13,7 +13,7 @@ public class Phong
     [Required]
     public decimal GiaPhong { get; set; }
 
-    public decimal? DienTich { get; set; }
+    public int? DienTich { get; set; }
 
     [StringLength(100)]
     public string TrangThai { get; set; } = "Trống";

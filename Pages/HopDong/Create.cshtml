@@ -2,80 +2,156 @@
 @model QLNT.Pages_HopDong.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Thêm hợp đồng";
 }
 
-<h1>Create</h1>
+<h1>Thêm hợp đồng</h1>
 
-<h4>HopDong</h4>
+<h4>Hợp đồng</h4>
 <hr />
+
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+
+            <div class="form-group mb-2">
                 <span class="text-danger">*</span>
-                <label asp-for="HopDong.PhongId" class="control-label"></label>
-                <select asp-for="HopDong.PhongId" class="form-control" asp-items="ViewBag.PhongId"
-                        aria-required="true"></select>
-            </div>
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="HopDong.NguoiThueId" class="control-label"></label>
-                <select asp-for="HopDong.NguoiThueId" class="form-control" asp-items="ViewBag.NguoiThueId"
-                        aria-required="true"></select>
-            </div>
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="HopDong.NgayBatDau" class="control-label"></label>
-                <input asp-for="HopDong.NgayBatDau" class="form-control" aria-required="true" />
-                <span asp-validation-for="HopDong.NgayBatDau" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HopDong.NgayKetThuc" class="control-label"></label>
-                <input asp-for="HopDong.NgayKetThuc" class="form-control" />
-                <span asp-validation-for="HopDong.NgayKetThuc" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="HopDong.TienCoc" class="control-label"></label>
-                <input asp-for="HopDong.TienCoc" class="form-control" aria-required="true" />
-                <span asp-validation-for="HopDong.TienCoc" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="HopDong.GiaThue" class="control-label"></label>
-                <input asp-for="HopDong.GiaThue" class="form-control" aria-required="true" />
-                <span asp-validation-for="HopDong.GiaThue" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HopDong.TrangThai" class="control-label"></label>
-                <select asp-for="HopDong.TrangThai" class="form-control">
-                    <option value="">-- Chọn trạng thái --</option>
-                    <option value="Đang hiệu lực">Đang hiệu lực</option>
-                    <option value="Hết hạn">Hết hạn</option>
-                    <option value="Đã hủy">Đã hủy</option>
+                <label asp-for="Input.PhongId" class="control-label">Phòng</label>
+
+                <select asp-for="Input.PhongId" class="form-control" id="phongSelect">
+                    <option value="">-- Chọn phòng --</option>
+
+                    @foreach (var phong in Model.DanhSachPhong)
+                    {
+                        if (phong.PhongId == Model.Input.PhongId)
+                        {
+                            <option value="@phong.PhongId" data-gia="@phong.GiaPhong" selected>
+                                @phong.TenPhong
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="@phong.PhongId" data-gia="@phong.GiaPhong">
+                                @phong.TenPhong
+                            </option>
+                        }
+                    }
                 </select>
-                <span asp-validation-for="HopDong.TrangThai" class="text-danger"></span>
+
+                <span asp-validation-for="Input.PhongId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="HopDong.GhiChu" class="control-label"></label>
-                <input asp-for="HopDong.GhiChu" class="form-control" />
-                <span asp-validation-for="HopDong.GhiChu" class="text-danger"></span>
+
+            <div class="form-group mb-2">
+                <span class="text-danger">*</span>
+                <label asp-for="Input.NguoiThueId" class="control-label">Người thuê</label>
+
+                <select asp-for="Input.NguoiThueId" class="form-control" asp-items="Model.NguoiThueSelectList">
+                    <option value="">-- Chọn người thuê --</option>
+                </select>
+
+                <span asp-validation-for="Input.NguoiThueId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+
+            <div class="form-group mb-2">
+                <span class="text-danger">*</span>
+                <label asp-for="Input.NgayBatDau" class="control-label">Ngày bắt đầu</label>
+                <input asp-for="Input.NgayBatDau" type="date" class="form-control" />
+                <span asp-validation-for="Input.NgayBatDau" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="Input.NgayKetThuc" class="control-label">Ngày kết thúc</label>
+                <input asp-for="Input.NgayKetThuc" type="date" class="form-control" />
+                <span asp-validation-for="Input.NgayKetThuc" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <span class="text-danger">*</span>
+                <label class="control-label">Tiền cọc</label>
+
+                <div class="input-group">
+                    <input asp-for="TienCocText" type="text" class="form-control" id="tienCocInput" readonly />
+                    <span class="input-group-text">VNĐ</span>
+                </div>
+
+                <span asp-validation-for="TienCocText" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <span class="text-danger">*</span>
+                <label class="control-label">Giá thuê</label>
+
+                <div class="input-group">
+                    <input asp-for="GiaThueText" type="text" class="form-control" id="giaThueInput" readonly />
+                    <span class="input-group-text">VNĐ</span>
+                </div>
+
+                <span asp-validation-for="GiaThueText" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label class="control-label">Trạng thái</label>
+                <input asp-for="TrangThaiText" class="form-control" readonly />
+                <option>
+                    @if (Model.TrangThaiText == "Đang thuê")
+                    {
+                        <span class="badge bg-success">Đang thuê</span>
+                    }
+                    else if (Model.TrangThaiText == "Sắp hết hạn")
+                    {
+                        <span class="badge bg-warning">Sắp hết hạn</span>
+                    }
+                    else if (Model.TrangThaiText == "Đã hết hạn")
+                    {
+                        <span class="badge bg-danger">Đã hết hạn</span>
+                    }
+                </option>
+                <span asp-validation-for="TrangThaiText" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="Input.GhiChu" class="control-label">Ghi chú</label>
+                <input asp-for="Input.GhiChu" class="form-control" />
+                <span asp-validation-for="Input.GhiChu" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Thêm" class="btn btn-primary" />
+                <a asp-page="./Index" class="btn btn-secondary">Quay lại</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-page="Index">Back to List</a>
 </div>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        function formatVnd(value) {
+            value = String(value).replace(/\D/g, "");
+
+            if (value === "") {
+                return "";
+            }
+
+            return value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        function dongBoTienTheoPhong() {
+            const phongSelect = document.getElementById("phongSelect");
+            const selectedOption = phongSelect.options[phongSelect.selectedIndex];
+
+            const giaPhong = selectedOption.getAttribute("data-gia") || "";
+
+            document.getElementById("tienCocInput").value = formatVnd(giaPhong);
+            document.getElementById("giaThueInput").value = formatVnd(giaPhong);
+        }
+
+        document.getElementById("phongSelect").addEventListener("change", dongBoTienTheoPhong);
+
+        dongBoTienTheoPhong();
+    </script>
 }

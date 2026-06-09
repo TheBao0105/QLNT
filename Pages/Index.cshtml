@@ -44,34 +44,39 @@
                                 <span>Tình trạng hiện tại</span>
                             </div>
                             <div class="home-hero-card__stat">
-                                <span class="home-hero-card__value">@tyLeThue%</span>
+                                <span class="home-hero-card__value">@Model.TyLeThue%</span>
                                 <span class="home-hero-card__label">Tỷ lệ lấp đầy phòng</span>
                             </div>
-                            <div class="progress home-progress mb-3" role="progressbar" aria-valuenow="@tyLeThue"
+
+                            <div class="progress home-progress mb-3" role="progressbar" aria-valuenow="@Model.TyLeThue"
                                  aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: @tyLeThue%"></div>
+                                <div class="progress-bar" style="width: @Model.TyLeThue%"></div>
                             </div>
+
                             <ul class="home-hero-card__list">
                                 <li>
                                     <span class="dot dot--success"></span>
-                                    @s.PhongDangThue phòng đang thuê
+                                    @Model.PhongDangThue phòng đang thuê
                                 </li>
+
                                 <li>
                                     <span class="dot dot--info"></span>
-                                    @s.PhongTrong phòng trống
+                                    @Model.PhongTrong phòng trống
                                 </li>
+
                                 <li>
                                     <span class="dot dot--warning"></span>
-                                    @s.HopDongDangHieuLuc hợp đồng hiệu lực
+                                    @Model.HopDongHieuLuc hợp đồng hiệu lực
                                 </li>
                             </ul>
-                        </div>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        @if (s.HoaDonQuaHan > 0)
+    @* @if (s.HoaDonQuaHan > 0)
         {
             <div class="container mt-4">
                 <div class="alert alert-warning home-alert d-flex align-items-center gap-3 mb-0" role="alert">
@@ -83,158 +88,158 @@
                 </div>
             </div>
         }
-
-        <section class="container home-stats">
-            <div class="row g-3 g-md-4">
-                <div class="col-6 col-lg-3">
-                    <div class="home-stat-card home-stat-card--primary">
-                        <div class="home-stat-card__icon"><i class="bi bi-door-closed"></i></div>
-                        <div>
-                            <div class="home-stat-card__value">@s.TongPhong</div>
-                            <div class="home-stat-card__label">Tổng phòng</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-lg-3">
-                    <div class="home-stat-card home-stat-card--success">
-                        <div class="home-stat-card__icon"><i class="bi bi-people"></i></div>
-                        <div>
-                            <div class="home-stat-card__value">@s.TongNguoiThue</div>
-                            <div class="home-stat-card__label">Người thuê</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-lg-3">
-                    <div class="home-stat-card home-stat-card--danger">
-                        <div class="home-stat-card__icon"><i class="bi bi-receipt"></i></div>
-                        <div>
-                            <div class="home-stat-card__value">@s.HoaDonChuaThanhToan</div>
-                            <div class="home-stat-card__label">Hóa đơn chưa TT</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-lg-3">
-                    <div class="home-stat-card home-stat-card--revenue">
-                        <div class="home-stat-card__icon"><i class="bi bi-cash-stack"></i></div>
-                        <div>
-                            <div class="home-stat-card__value home-stat-card__value--sm">
-                                @s.DoanhThuThangNay.ToString("N0")
-                            </div>
-                            <div class="home-stat-card__label">Doanh thu tháng (VNĐ)</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="home-cta">
-            <div class="container">
-                <div class="home-cta__inner">
+ *@
+    <section class="container home-stats">
+        <div class="row g-3 g-md-4">
+            <div class="col-6 col-lg-3">
+                <div class="home-stat-card home-stat-card--primary">
+                    <div class="home-stat-card__icon"><i class="bi bi-door-closed"></i></div>
                     <div>
-                        <h2 class="home-cta__title">Bắt đầu ngay hôm nay</h2>
-                        <p class="home-cta__text mb-0">
-                            Cập nhật phòng trống, tạo hóa đơn tháng mới hoặc xem báo cáo doanh thu — tất cả trong vài cú
-                            nhấp.
-                        </p>
-                    </div>
-                    <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
-                        <a asp-page="/HoaDon/Create" class="btn btn-primary btn-lg">
-                            <i class="bi bi-plus-lg me-1"></i>Tạo hóa đơn
-                        </a>
-                        <a asp-page="/Phong/Create" class="btn btn-outline-primary btn-lg">
-                            <i class="bi bi-plus-lg me-1"></i>Thêm phòng
-                        </a>
+                        <div class="home-stat-card__value">@s.TongPhong</div>
+                        <div class="home-stat-card__label">Tổng phòng</div>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <section class="container home-modules">
-            <div class="home-section-header">
-                <h2 class="home-section-header__title">Chức năng hệ thống</h2>
-                <p class="home-section-header__sub">Chọn module để bắt đầu quản lý</p>
-            </div>
-
-            <p class="home-group-label">Quản lý cơ bản</p>
-            <div class="row g-3 g-md-4 mb-4">
-                <div class="col-md-6 col-xl-4">
-                    <a asp-page="/Phong/Index" class="home-module-card home-module-card--blue">
-                        <div class="home-module-card__icon"><i class="bi bi-door-open-fill"></i></div>
-                        <div class="home-module-card__body">
-                            <h3>Quản lý phòng</h3>
-                            <p>Thêm, sửa, theo dõi trạng thái và thông tin từng phòng trọ.</p>
-                            <span class="home-module-card__link">Vào quản lý <i class="bi bi-arrow-right"></i></span>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-6 col-xl-4">
-                    <a asp-page="/NguoiThue/Index" class="home-module-card home-module-card--teal">
-                        <div class="home-module-card__icon"><i class="bi bi-person-vcard-fill"></i></div>
-                        <div class="home-module-card__body">
-                            <h3>Người thuê</h3>
-                            <p>Lưu trữ hồ sơ, liên hệ và lịch sử thuê của từng khách.</p>
-                            <span class="home-module-card__link">Vào quản lý <i class="bi bi-arrow-right"></i></span>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-6 col-xl-4">
-                    <a asp-page="/HopDong/Index" class="home-module-card home-module-card--indigo">
-                        <div class="home-module-card__icon"><i class="bi bi-file-earmark-text-fill"></i></div>
-                        <div class="home-module-card__body">
-                            <h3>Hợp đồng</h3>
-                            <p>Tạo và quản lý hợp đồng thuê, thời hạn và giá thuê.</p>
-                            <span class="home-module-card__link">Vào quản lý <i class="bi bi-arrow-right"></i></span>
-                        </div>
-                    </a>
+            <div class="col-6 col-lg-3">
+                <div class="home-stat-card home-stat-card--success">
+                    <div class="home-stat-card__icon"><i class="bi bi-people"></i></div>
+                    <div>
+                        <div class="home-stat-card__value">@s.TongNguoiThue</div>
+                        <div class="home-stat-card__label">Người thuê</div>
+                    </div>
                 </div>
             </div>
-
-            <p class="home-group-label">Tài chính</p>
-            <div class="row g-3 g-md-4 mb-4">
-                <div class="col-md-6 col-xl-4">
-                    <a asp-page="/HoaDon/Index" class="home-module-card home-module-card--green">
-                        <div class="home-module-card__icon"><i class="bi bi-receipt-cutoff"></i></div>
-                        <div class="home-module-card__body">
-                            <h3>Hóa đơn</h3>
-                            <p>Lập hóa đơn tiền phòng, dịch vụ và theo dõi trạng thái thanh toán.</p>
-                            <span class="home-module-card__link">Vào quản lý <i class="bi bi-arrow-right"></i></span>
-                        </div>
-                    </a>
+            <div class="col-6 col-lg-3">
+                <div class="home-stat-card home-stat-card--danger">
+                    <div class="home-stat-card__icon"><i class="bi bi-receipt"></i></div>
+                    <div>
+                        <div class="home-stat-card__value">@s.HoaDonChuaThanhToan</div>
+                        <div class="home-stat-card__label">Hóa đơn chưa TT</div>
+                    </div>
                 </div>
-
-                <div class="col-md-6 col-xl-4">
-                    <a asp-page="/DichVu/Index" class="home-module-card home-module-card--amber">
-                        <div class="home-module-card__icon"><i class="bi bi-lightning-charge-fill"></i></div>
-                        <div class="home-module-card__body">
-                            <h3>Dịch vụ</h3>
-                            <p>Điện, nước, internet và các khoản phí dịch vụ khác.</p>
-                            <span class="home-module-card__link">Vào quản lý <i class="bi bi-arrow-right"></i></span>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="home-stat-card home-stat-card--revenue">
+                    <div class="home-stat-card__icon"><i class="bi bi-cash-stack"></i></div>
+                    <div>
+                        <div class="home-stat-card__value home-stat-card__value--sm">
+                            @s.DoanhThuThangNay.ToString("N0")
                         </div>
+                        <div class="home-stat-card__label">Doanh thu tháng (VNĐ)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="home-cta">
+        <div class="container">
+            <div class="home-cta__inner">
+                <div>
+                    <h2 class="home-cta__title">Bắt đầu ngay hôm nay</h2>
+                    <p class="home-cta__text mb-0">
+                        Cập nhật phòng trống, tạo hóa đơn tháng mới hoặc xem báo cáo doanh thu — tất cả trong vài cú
+                        nhấp.
+                    </p>
+                </div>
+                <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
+                    <a asp-page="/HoaDon/Create" class="btn btn-primary btn-lg">
+                        <i class="bi bi-plus-lg me-1"></i>Tạo hóa đơn
+                    </a>
+                    <a asp-page="/Phong/Create" class="btn btn-outline-primary btn-lg">
+                        <i class="bi bi-plus-lg me-1"></i>Thêm phòng
                     </a>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <p class="home-group-label">Hệ thống</p>
-            <div class="row g-3 g-md-4">
-                <div class="col-md-6 col-xl-4">
-                    <a asp-page="/TaiKhoan/Index" class="home-module-card home-module-card--slate">
-                        <div class="home-module-card__icon"><i class="bi bi-shield-lock-fill"></i></div>
-                        <div class="home-module-card__body">
-                            <h3>Tài khoản</h3>
-                            <p>Quản lý tài khoản đăng nhập và phân quyền hệ thống.</p>
-                            <span class="home-module-card__link">Vào quản lý <i class="bi bi-arrow-right"></i></span>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-6 col-xl-4">
-                    <a asp-page="/Dashboard/Index" class="home-module-card home-module-card--violet">
-                        <div class="home-module-card__icon"><i class="bi bi-graph-up-arrow"></i></div>
-                        <div class="home-module-card__body">
-                            <h3>Dashboard</h3>
-                            <p>Báo cáo tổng hợp, thống kê chi tiết toàn bộ hoạt động.</p>
-                            <span class="home-module-card__link">Xem thống kê <i class="bi bi-arrow-right"></i></span>
-                        </div>
-                    </a>
-                </div>
+    <section class="container home-modules">
+        <div class="home-section-header">
+            <h2 class="home-section-header__title">Chức năng hệ thống</h2>
+            <p class="home-section-header__sub">Chọn module để bắt đầu quản lý</p>
+        </div>
+
+        <p class="home-group-label">Quản lý cơ bản</p>
+        <div class="row g-3 g-md-4 mb-4">
+            <div class="col-md-6 col-xl-4">
+                <a asp-page="/Phong/Index" class="home-module-card home-module-card--blue">
+                    <div class="home-module-card__icon"><i class="bi bi-door-open-fill"></i></div>
+                    <div class="home-module-card__body">
+                        <h3>Quản lý phòng</h3>
+                        <p>Thêm, sửa, theo dõi trạng thái và thông tin từng phòng trọ.</p>
+                        <span class="home-module-card__link">Vào quản lý <i class="bi bi-arrow-right"></i></span>
+                    </div>
+                </a>
             </div>
-        </section>
-    </div>
+            <div class="col-md-6 col-xl-4">
+                <a asp-page="/NguoiThue/Index" class="home-module-card home-module-card--teal">
+                    <div class="home-module-card__icon"><i class="bi bi-person-vcard-fill"></i></div>
+                    <div class="home-module-card__body">
+                        <h3>Người thuê</h3>
+                        <p>Lưu trữ hồ sơ, liên hệ và lịch sử thuê của từng khách.</p>
+                        <span class="home-module-card__link">Vào quản lý <i class="bi bi-arrow-right"></i></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <a asp-page="/HopDong/Index" class="home-module-card home-module-card--indigo">
+                    <div class="home-module-card__icon"><i class="bi bi-file-earmark-text-fill"></i></div>
+                    <div class="home-module-card__body">
+                        <h3>Hợp đồng</h3>
+                        <p>Tạo và quản lý hợp đồng thuê, thời hạn và giá thuê.</p>
+                        <span class="home-module-card__link">Vào quản lý <i class="bi bi-arrow-right"></i></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <p class="home-group-label">Tài chính</p>
+        <div class="row g-3 g-md-4 mb-4">
+            <div class="col-md-6 col-xl-4">
+                <a asp-page="/HoaDon/Index" class="home-module-card home-module-card--green">
+                    <div class="home-module-card__icon"><i class="bi bi-receipt-cutoff"></i></div>
+                    <div class="home-module-card__body">
+                        <h3>Hóa đơn</h3>
+                        <p>Lập hóa đơn tiền phòng, dịch vụ và theo dõi trạng thái thanh toán.</p>
+                        <span class="home-module-card__link">Vào quản lý <i class="bi bi-arrow-right"></i></span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+                <a asp-page="/DichVu/Index" class="home-module-card home-module-card--amber">
+                    <div class="home-module-card__icon"><i class="bi bi-lightning-charge-fill"></i></div>
+                    <div class="home-module-card__body">
+                        <h3>Dịch vụ</h3>
+                        <p>Điện, nước, internet và các khoản phí dịch vụ khác.</p>
+                        <span class="home-module-card__link">Vào quản lý <i class="bi bi-arrow-right"></i></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <p class="home-group-label">Hệ thống</p>
+        <div class="row g-3 g-md-4">
+            <div class="col-md-6 col-xl-4">
+                <a asp-page="/TaiKhoan/Index" class="home-module-card home-module-card--slate">
+                    <div class="home-module-card__icon"><i class="bi bi-shield-lock-fill"></i></div>
+                    <div class="home-module-card__body">
+                        <h3>Tài khoản</h3>
+                        <p>Quản lý tài khoản đăng nhập và phân quyền hệ thống.</p>
+                        <span class="home-module-card__link">Vào quản lý <i class="bi bi-arrow-right"></i></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <a asp-page="/Dashboard/Index" class="home-module-card home-module-card--violet">
+                    <div class="home-module-card__icon"><i class="bi bi-graph-up-arrow"></i></div>
+                    <div class="home-module-card__body">
+                        <h3>Dashboard</h3>
+                        <p>Báo cáo tổng hợp, thống kê chi tiết toàn bộ hoạt động.</p>
+                        <span class="home-module-card__link">Xem thống kê <i class="bi bi-arrow-right"></i></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+</div>

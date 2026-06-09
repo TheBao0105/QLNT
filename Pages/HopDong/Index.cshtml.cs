@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using QLNT;
@@ -12,10 +7,10 @@ namespace QLNT.Pages_HopDong
 {
     public class IndexModel : PageModel
     {
-        private readonly QLNT.Data.AppDbContext _context;
+        private readonly AppDbContext _context;
         private const int PageSize = 5;
 
-        public IndexModel(QLNT.Data.AppDbContext context)
+        public IndexModel(AppDbContext context)
         {
             _context = context;
         }
@@ -27,9 +22,30 @@ namespace QLNT.Pages_HopDong
             var query = _context.HopDongs
                 .Include(h => h.NguoiThue)
                 .Include(h => h.Phong)
-                .OrderBy(h => h.NgayBatDau);
+                .OrderByDescending(h => h.NgayBatDau);
 
-            HopDong = await PaginatedList<HopDong>.CreateAsync(query.AsNoTracking(), pageIndex ?? 1, PageSize);
+            HopDong = await PaginatedList<HopDong>.CreateAsync(
+                query.AsNoTracking(),
+                pageIndex ?? 1,
+                PageSize
+            );
+        }
+
+        public string TinhTrangThaiHopDong(DateTime ngayBatDau, DateTime? ngayKetThuc)
+        {
+            var today = DateTime.Today;
+
+            if (ngayBatDau.Date > today)
+            {
+                return "Chưa bắt đầu";
+            }
+
+            if (ngayKetThuc.HasValue && ngayKetThuc.Value.Date < today)
+            {
+                return "Hết hạn";
+            }
+
+            return "Còn hạn";
         }
     }
 }

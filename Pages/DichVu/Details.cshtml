@@ -1,43 +1,46 @@
 @page
 @model QLNT.Pages_DichVu.DetailsModel
+@using System.Globalization
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Chi tiết dịch vụ";
+    var viVN = new CultureInfo("vi-VN");
 }
 
-<h1>Details</h1>
+<h1>Chi tiết dịch vụ</h1>
 
 <div>
-    <h4>DichVu</h4>
+    <h4>Dịch vụ</h4>
     <hr />
+
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DichVu.TenDichVu)
-        </dt>
+        <dt class="col-sm-2">Tên dịch vụ</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.DichVu.TenDichVu)</dd>
+
+        <dt class="col-sm-2">Đơn giá</dt>
+        <dd class="col-sm-10">@Model.DichVu.DonGia.ToString("N0", viVN) VNĐ</dd>
+
+        <dt class="col-sm-2">Đơn vị tính</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.DichVu.DonViTinh)</dd>
+
+        <dt class="col-sm-2">Trạng thái</dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DichVu.TenDichVu)
+            @if (Model.DichVu.TrangThai == "Đang sử dụng")
+            {
+                <span class="badge bg-success">Đang sử dụng</span>
+            }
+            else
+            {
+                <span class="badge bg-secondary">Ngừng sử dụng</span>
+            }
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DichVu.DonGia)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DichVu.DonGia)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DichVu.DonViTinh)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DichVu.DonViTinh)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DichVu.GhiChu)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DichVu.GhiChu)
-        </dd>
+
+        <dt class="col-sm-2">Ghi chú</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.DichVu.GhiChu)</dd>
     </dl>
 </div>
+
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.DichVu.DichVuId">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Edit" asp-route-id="@Model.DichVu.DichVuId" class="btn btn-primary">Sửa</a>
+    <a asp-page="./Index" class="btn btn-secondary">Quay lại</a>
 </div>

@@ -7,6 +7,7 @@ public class HopDong
     [Key]
     public int HopDongId { get; set; }
 
+    public string TenPhong { get; set; } = "";
     [Required]
     public int PhongId { get; set; }
 
