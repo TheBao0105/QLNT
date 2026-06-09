@@ -1,0 +1,14 @@
+@page
+@model QLNT.Pages.Account.AccessDeniedModel
+@{
+    ViewData["Title"] = "Đã bị từ chối";
+}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="alert alert-warning mt-5">
+            <h4 class="alert-heading">Truy cập bị từ chối</h4>
+            <p>Bạn không có quyền truy cập vào trang này.</p>
+            <a asp-page="/Account/Login" class="btn btn-primary">Quay lại đăng nhập</a>
+        </div>
+    </div>
+</div>
