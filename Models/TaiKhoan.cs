@@ -24,4 +24,10 @@ public class TaiKhoan
     public string? VaiTro { get; set; } = "NhanVien";
 
     public bool TrangThai { get; set; } = true;
+
+    // Reset password token
+    [StringLength(10)]
+    public string? ResetToken { get; set; }
+
+    public DateTime? ResetTokenExpiry { get; set; }
 }

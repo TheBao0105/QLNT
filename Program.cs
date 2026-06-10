@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using QLNT.Data;
 using System.Security.Claims;
 using System.Text.Json;
+using QLNT.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -76,6 +77,7 @@ if (!string.IsNullOrWhiteSpace(googleClientId) && !string.IsNullOrWhiteSpace(goo
 
 builder.Services.AddAuthorization();
 builder.Services.AddRazorPages();
+builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
 
 var app = builder.Build();
 
