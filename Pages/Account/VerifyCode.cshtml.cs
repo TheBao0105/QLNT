@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace QLNT.Pages.Account;
 
+[AllowAnonymous]
 public class VerifyCodeModel : PageModel
 {
     private readonly AppDbContext _context;

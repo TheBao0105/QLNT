@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using QLNT.Services;
 
 namespace QLNT.Pages.Account;
 
+[AllowAnonymous]
 public class ForgotPasswordModel : PageModel
 {
     private readonly AppDbContext _context;

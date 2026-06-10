@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using QLNT.Data;
@@ -5,6 +6,7 @@ using QLNT.ViewModels;
 
 namespace QLNT.Pages;
 
+[Authorize]
 public class IndexModel : PageModel
 {
     private readonly AppDbContext _context;
