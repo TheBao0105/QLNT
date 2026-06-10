@@ -3,10 +3,10 @@
 @{
     ViewData["Title"] = "Đăng nhập";
 }
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card shadow-sm">
-            <div class="card-body">
+<div class="row justify-content-center py-5">
+    <div class="col-sm-10 col-md-8 col-lg-6">
+        <div class="card shadow-sm border-0 login-card">
+            <div class="card-body p-4">
                 <h2 class="card-title mb-4">Đăng nhập</h2>
 
                 <form method="post">
@@ -26,39 +26,52 @@
 
                     <input asp-for="ReturnUrl" type="hidden" />
 
-                    <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                    <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
                 </form>
 
-                <div class="mt-2 text-end">
+                <div class="mt-3 d-flex justify-content-between align-items-center">
                     <a asp-page="/Account/ForgotPassword" asp-route-returnUrl="@Model.ReturnUrl">Quên mật khẩu?</a>
+                    <a asp-page="/Account/Register" asp-route-returnUrl="@Model.ReturnUrl">Đăng ký</a>
                 </div>
 
-                <div class="mt-3 text-center">
-                    <p>Chưa có tài khoản? <a asp-page="/Account/Register" asp-route-returnUrl="@Model.ReturnUrl">Đăng
-                        ký</a></p>
-                    </div>
+                <div class="mt-4 text-center text-muted">hoặc</div>
 
-                    <div class="mt-3 text-center">hoặc</div>
+                <form method="post" class="mt-3">
+                    <input asp-for="ReturnUrl" type="hidden" />
+                    <button type="submit" asp-page-handler="ExternalLogin" asp-route-provider="Google"
+                            class="btn btn-outline-danger w-100 mb-2" disabled="@(Model.GoogleEnabled ? null : "disabled")">
+                        <i class="bi bi-google"></i> Đăng nhập với Google
+                    </button>
+                </form>
 
-                    <form method="post" class="mt-3">
-                        <input asp-for="ReturnUrl" type="hidden" />
-                        <button type="submit" asp-page-handler="ExternalLogin" asp-route-provider="Google"
-                                class="btn btn-outline-danger w-100 mb-2" disabled="@(Model.GoogleEnabled ? null : "disabled")">
-                            <i class="bi bi-google"></i> Đăng nhập với Google
-                        </button>
-                    </form>
-
-                    <form method="post" class="mt-3">
-                        <input asp-for="ReturnUrl" type="hidden" />
-                        <button type="submit" asp-page-handler="ExternalLogin" asp-route-provider="Facebook"
-                                class="btn btn-outline-primary w-100" disabled="@(Model.FacebookEnabled ? null : "disabled")">
-                            <i class="bi bi-facebook"></i> Đăng nhập với Facebook
-                        </button>
-                    </form>
-                </div>
+                <form method="post" class="mt-3">
+                    <input asp-for="ReturnUrl" type="hidden" />
+                    <button type="submit" asp-page-handler="ExternalLogin" asp-route-provider="Facebook"
+                            class="btn btn-outline-primary w-100" disabled="@(Model.FacebookEnabled ? null : "disabled")">
+                        <i class="bi bi-facebook"></i> Đăng nhập với Facebook
+                    </button>
+                </form>
             </div>
         </div>
+    </div>
+</div>
 
-        @section Scripts {
-            <partial name="_ValidationScriptsPartial" />
+@section Styles {
+    <style>
+        .login-card {
+            border-radius: 1rem;
         }
+
+        .login-card .card-title {
+            font-weight: 700;
+        }
+
+        .login-card .btn {
+            min-height: 44px;
+        }
+    </style>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
