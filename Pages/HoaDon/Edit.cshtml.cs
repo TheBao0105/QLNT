@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLNT;
 using QLNT.Data;
@@ -20,20 +19,14 @@ namespace QLNT.Pages_HoaDon
         [BindProperty]
         public HoaDon HoaDon { get; set; } = default!;
 
-        [BindProperty]
         public string TienPhongText { get; set; } = "";
-
-        [BindProperty]
         public string TienDienText { get; set; } = "";
-
-        [BindProperty]
         public string TienNuocText { get; set; } = "";
-
-        [BindProperty]
         public string TienDichVuText { get; set; } = "";
-
-        [BindProperty]
         public string TongTienText { get; set; } = "";
+
+        private const decimal DonGiaDien = 3500;
+        private const decimal DonGiaNuoc = 15000;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -42,111 +35,130 @@ namespace QLNT.Pages_HoaDon
                 return NotFound();
             }
 
-            var hoadon = await _context.HoaDons
-                .FirstOrDefaultAsync(m => m.HoaDonId == id);
+            var hoaDon = await _context.HoaDons
+                .Include(h => h.HopDong)
+                    .ThenInclude(hd => hd.Phong)
+                .Include(h => h.HopDong)
+                    .ThenInclude(hd => hd.NguoiThue)
+                .Include(h => h.ThanhToans)
+                .FirstOrDefaultAsync(h => h.HoaDonId == id.Value);
 
-            if (hoadon == null)
+            if (hoaDon == null)
             {
                 return NotFound();
             }
 
-            HoaDon = hoadon;
+            if (hoaDon.TrangThai == "Đã thanh toán")
+            {
+                TempData["Success"] = "Hóa đơn đã thanh toán, không nên sửa.";
+                return RedirectToPage("./Index");
+            }
 
+            HoaDon = hoaDon;
             FormatMoneyToText();
-            LoadSelectLists();
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            var hoaDonDb = await _context.HoaDons
+                .Include(h => h.HopDong)
+                    .ThenInclude(hd => hd.Phong)
+                .Include(h => h.HopDong)
+                    .ThenInclude(hd => hd.NguoiThue)
+                .Include(h => h.ThanhToans)
+                .FirstOrDefaultAsync(h => h.HoaDonId == HoaDon.HoaDonId);
+
+            if (hoaDonDb == null)
+            {
+                return NotFound();
+            }
+
+            if (hoaDonDb.TrangThai == "Đã thanh toán")
+            {
+                TempData["Success"] = "Hóa đơn đã thanh toán, không nên sửa.";
+                return RedirectToPage("./Index");
+            }
+
+            if (HoaDon.Thang < 1 || HoaDon.Thang > 12)
+            {
+                ModelState.AddModelError("HoaDon.Thang", "Tháng phải từ 1 đến 12.");
+            }
+
+            if (HoaDon.Nam < 2000)
+            {
+                ModelState.AddModelError("HoaDon.Nam", "Năm không hợp lệ.");
+            }
+
+            if (HoaDon.ChiSoDienMoi < HoaDon.ChiSoDienCu)
+            {
+                ModelState.AddModelError("HoaDon.ChiSoDienMoi", "Chỉ số điện mới phải lớn hơn hoặc bằng chỉ số điện cũ.");
+            }
+
+            if (HoaDon.ChiSoNuocMoi < HoaDon.ChiSoNuocCu)
+            {
+                ModelState.AddModelError("HoaDon.ChiSoNuocMoi", "Chỉ số nước mới phải lớn hơn hoặc bằng chỉ số nước cũ.");
+            }
+
+            ModelState.Remove("HoaDon.HopDong");
+            ModelState.Remove("HoaDon.ThanhToans");
+            ModelState.Remove("HoaDon.TenPhong");
             ModelState.Remove("HoaDon.TienPhong");
+            ModelState.Remove("HoaDon.DonGiaDien");
+            ModelState.Remove("HoaDon.SoDienTieuThu");
             ModelState.Remove("HoaDon.TienDien");
+            ModelState.Remove("HoaDon.DonGiaNuoc");
+            ModelState.Remove("HoaDon.SoNuocTieuThu");
             ModelState.Remove("HoaDon.TienNuoc");
             ModelState.Remove("HoaDon.TienDichVu");
             ModelState.Remove("HoaDon.TongTien");
-
-            if (!TryParseVnd(TienPhongText, out var tienPhong))
-            {
-                ModelState.AddModelError(nameof(TienPhongText), "Tiền phòng không đúng định dạng.");
-            }
-
-            if (!TryParseVnd(TienDienText, out var tienDien))
-            {
-                ModelState.AddModelError(nameof(TienDienText), "Tiền điện không đúng định dạng.");
-            }
-
-            if (!TryParseVnd(TienNuocText, out var tienNuoc))
-            {
-                ModelState.AddModelError(nameof(TienNuocText), "Tiền nước không đúng định dạng.");
-            }
-
-            if (!TryParseVnd(TienDichVuText, out var tienDichVu))
-            {
-                ModelState.AddModelError(nameof(TienDichVuText), "Tiền dịch vụ không đúng định dạng.");
-            }
-
-            if (tienPhong < 0)
-            {
-                ModelState.AddModelError(nameof(TienPhongText), "Tiền phòng không được nhỏ hơn 0.");
-            }
-
-            if (tienDien < 0)
-            {
-                ModelState.AddModelError(nameof(TienDienText), "Tiền điện không được nhỏ hơn 0.");
-            }
-
-            if (tienNuoc < 0)
-            {
-                ModelState.AddModelError(nameof(TienNuocText), "Tiền nước không được nhỏ hơn 0.");
-            }
-
-            if (tienDichVu < 0)
-            {
-                ModelState.AddModelError(nameof(TienDichVuText), "Tiền dịch vụ không được nhỏ hơn 0.");
-            }
-
-            HoaDon.TienPhong = tienPhong;
-            HoaDon.TienDien = tienDien;
-            HoaDon.TienNuoc = tienNuoc;
-            HoaDon.TienDichVu = tienDichVu;
-            HoaDon.TongTien = tienPhong + tienDien + tienNuoc + tienDichVu;
-
-            TongTienText = FormatVnd(HoaDon.TongTien);
+            ModelState.Remove("HoaDon.TrangThai");
 
             if (!ModelState.IsValid)
             {
-                LoadSelectLists();
+                HoaDon.HopDong = hoaDonDb.HopDong;
+                HoaDon.TienPhong = hoaDonDb.TienPhong;
+                HoaDon.TienDien = hoaDonDb.TienDien;
+                HoaDon.TienNuoc = hoaDonDb.TienNuoc;
+                HoaDon.TienDichVu = hoaDonDb.TienDichVu;
+                HoaDon.TongTien = hoaDonDb.TongTien;
+                FormatMoneyToText();
                 return Page();
             }
 
-            _context.Attach(HoaDon).State = EntityState.Modified;
+            hoaDonDb.Thang = HoaDon.Thang;
+            hoaDonDb.Nam = HoaDon.Nam;
+            hoaDonDb.NgayLap = HoaDon.NgayLap == default ? hoaDonDb.NgayLap : HoaDon.NgayLap;
+            hoaDonDb.HanThanhToan = HoaDon.HanThanhToan;
+            hoaDonDb.ChiSoDienCu = HoaDon.ChiSoDienCu;
+            hoaDonDb.ChiSoDienMoi = HoaDon.ChiSoDienMoi;
+            hoaDonDb.ChiSoNuocCu = HoaDon.ChiSoNuocCu;
+            hoaDonDb.ChiSoNuocMoi = HoaDon.ChiSoNuocMoi;
+            hoaDonDb.GhiChu = HoaDon.GhiChu;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HoaDonExists(HoaDon.HoaDonId))
-                {
-                    return NotFound();
-                }
+            hoaDonDb.DonGiaDien = DonGiaDien;
+            hoaDonDb.DonGiaNuoc = DonGiaNuoc;
 
-                throw;
-            }
+            hoaDonDb.SoDienTieuThu = hoaDonDb.ChiSoDienMoi - hoaDonDb.ChiSoDienCu;
+            hoaDonDb.TienDien = hoaDonDb.SoDienTieuThu * hoaDonDb.DonGiaDien;
+
+            hoaDonDb.SoNuocTieuThu = hoaDonDb.ChiSoNuocMoi - hoaDonDb.ChiSoNuocCu;
+            hoaDonDb.TienNuoc = hoaDonDb.SoNuocTieuThu * hoaDonDb.DonGiaNuoc;
+
+            hoaDonDb.TongTien =
+                hoaDonDb.TienPhong +
+                hoaDonDb.TienDien +
+                hoaDonDb.TienNuoc +
+                hoaDonDb.TienDichVu;
+
+            hoaDonDb.TrangThai = "Chưa thanh toán";
+
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Cập nhật hóa đơn thành công.";
 
             return RedirectToPage("./Index");
-        }
-
-        private void LoadSelectLists()
-        {
-            ViewData["HopDongId"] = new SelectList(
-                _context.HopDongs,
-                "HopDongId",
-                "HopDongId",
-                HoaDon.HopDongId
-            );
         }
 
         private void FormatMoneyToText()
@@ -158,39 +170,9 @@ namespace QLNT.Pages_HoaDon
             TongTienText = FormatVnd(HoaDon.TongTien);
         }
 
-        private string FormatVnd(decimal value)
+        public string FormatVnd(decimal value)
         {
-            return value.ToString("N0", new CultureInfo("vi-VN"));
-        }
-
-        private bool TryParseVnd(string? input, out decimal value)
-        {
-            value = 0;
-
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                return true;
-            }
-
-            var clean = input
-                .Replace(".", "")
-                .Replace(",", "")
-                .Replace("VNĐ", "", StringComparison.OrdinalIgnoreCase)
-                .Replace("VND", "", StringComparison.OrdinalIgnoreCase)
-                .Replace("đ", "", StringComparison.OrdinalIgnoreCase)
-                .Trim();
-
-            return decimal.TryParse(
-                clean,
-                NumberStyles.Number,
-                CultureInfo.InvariantCulture,
-                out value
-            );
-        }
-
-        private bool HoaDonExists(int id)
-        {
-            return _context.HoaDons.Any(e => e.HoaDonId == id);
+            return value.ToString("N0", new CultureInfo("vi-VN")) + " VNĐ";
         }
     }
 }

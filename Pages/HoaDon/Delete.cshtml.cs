@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +8,9 @@ namespace QLNT.Pages_HoaDon
 {
     public class DeleteModel : PageModel
     {
-        private readonly QLNT.Data.AppDbContext _context;
+        private readonly AppDbContext _context;
 
-        public DeleteModel(QLNT.Data.AppDbContext context)
+        public DeleteModel(AppDbContext context)
         {
             _context = context;
         }
@@ -29,32 +25,44 @@ namespace QLNT.Pages_HoaDon
                 return NotFound();
             }
 
-            var hoadon = await _context.HoaDons.FirstOrDefaultAsync(m => m.HoaDonId == id);
+            var hoaDon = await _context.HoaDons
+                .Include(h => h.HopDong)
+                    .ThenInclude(hd => hd.Phong)
+                .Include(h => h.HopDong)
+                    .ThenInclude(hd => hd.NguoiThue)
+                .Include(h => h.ThanhToans)
+                .FirstOrDefaultAsync(h => h.HoaDonId == id.Value);
 
-            if (hoadon is not null)
-            {
-                HoaDon = hoadon;
-
-                return Page();
-            }
-
-            return NotFound();
-        }
-
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
-            if (id == null)
+            if (hoaDon == null)
             {
                 return NotFound();
             }
 
-            var hoadon = await _context.HoaDons.FindAsync(id);
-            if (hoadon != null)
+            HoaDon = hoaDon;
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            var hoaDon = await _context.HoaDons
+                .Include(h => h.ThanhToans)
+                .FirstOrDefaultAsync(h => h.HoaDonId == HoaDon.HoaDonId);
+
+            if (hoaDon == null)
             {
-                HoaDon = hoadon;
-                _context.HoaDons.Remove(HoaDon);
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
+
+            if (hoaDon.ThanhToans != null && hoaDon.ThanhToans.Any())
+            {
+                _context.ThanhToans.RemoveRange(hoaDon.ThanhToans);
+            }
+
+            _context.HoaDons.Remove(hoaDon);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Đã xóa hóa đơn.";
 
             return RedirectToPage("./Index");
         }

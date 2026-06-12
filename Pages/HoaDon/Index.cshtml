@@ -1,10 +1,10 @@
 @page
 @model QLNT.Pages_HoaDon.IndexModel
-@using QLNT
+@using System.Globalization
 
 @{
     ViewData["Title"] = "Quản lý Hóa đơn & Thanh toán";
-    var dichVus = ViewData["DichVus"] as List<DichVu> ?? new List<DichVu>();
+    var viVN = new CultureInfo("vi-VN");
 }
 
 <h1>Quản lý Hóa đơn & Thanh toán</h1>
@@ -16,127 +16,26 @@
     </div>
 }
 
-<div class="card mb-4">
-    <div class="card-body">
-        <h5 class="mb-3">Tạo mới hóa đơn tháng</h5>
+<p class="text-end">
+    <a asp-page="./Create" class="btn btn-primary">
+        + Tạo hóa đơn
+    </a>
+</p>
 
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-group mb-3">
-                <label asp-for="HoaDonMoi.HopDongId" class="control-label fw-bold">
-                    Hợp đồng / phòng đang thuê
-                </label>
-
-                <select asp-for="HoaDonMoi.HopDongId" class="form-select" asp-items="ViewBag.HopDongId">
-                    <option value="">-- Chọn hợp đồng phòng đang thuê --</option>
-                </select>
-
-                <span asp-validation-for="HoaDonMoi.HopDongId" class="text-danger"></span>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label asp-for="HoaDonMoi.Thang">Tháng</label>
-                    <input asp-for="HoaDonMoi.Thang" class="form-control" />
-                    <span asp-validation-for="HoaDonMoi.Thang" class="text-danger"></span>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label asp-for="HoaDonMoi.Nam">Năm</label>
-                    <input asp-for="HoaDonMoi.Nam" class="form-control" />
-                    <span asp-validation-for="HoaDonMoi.Nam" class="text-danger"></span>
-                </div>
-            </div>
-
-            <h6 class="mt-3">Chỉ số điện</h6>
-
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <label asp-for="HoaDonMoi.ChiSoDienCu">Chỉ số điện cũ</label>
-                    <input asp-for="HoaDonMoi.ChiSoDienCu" class="form-control" />
-                    <span asp-validation-for="HoaDonMoi.ChiSoDienCu" class="text-danger"></span>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <label asp-for="HoaDonMoi.ChiSoDienMoi">Chỉ số điện mới</label>
-                    <input asp-for="HoaDonMoi.ChiSoDienMoi" class="form-control" />
-                    <span asp-validation-for="HoaDonMoi.ChiSoDienMoi" class="text-danger"></span>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <label>Đơn giá điện</label>
-                    <input value="3500" class="form-control" readonly />
-                </div>
-            </div>
-
-            <h6 class="mt-3">Chỉ số nước</h6>
-
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <label asp-for="HoaDonMoi.ChiSoNuocCu">Chỉ số nước cũ</label>
-                    <input asp-for="HoaDonMoi.ChiSoNuocCu" class="form-control" />
-                    <span asp-validation-for="HoaDonMoi.ChiSoNuocCu" class="text-danger"></span>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <label asp-for="HoaDonMoi.ChiSoNuocMoi">Chỉ số nước mới</label>
-                    <input asp-for="HoaDonMoi.ChiSoNuocMoi" class="form-control" />
-                    <span asp-validation-for="HoaDonMoi.ChiSoNuocMoi" class="text-danger"></span>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <label>Đơn giá nước</label>
-                    <input value="15000" class="form-control" readonly />
-                </div>
-            </div>
-
-            <h6 class="mt-3">Dịch vụ tháng này</h6>
-
-            <div class="form-group mb-3">
-                @foreach (var dv in dichVus)
-                {
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="DichVuIds" value="@dv.DichVuId"
-                               id="dv_@dv.DichVuId" />
-
-                        <label class="form-check-label" for="dv_@dv.DichVuId">
-                            @dv.TenDichVu - @dv.DonGia.ToString("N0") VNĐ/tháng
-                        </label>
-                    </div>
-                }
-            </div>
-
-            <div class="form-group mb-3">
-                <label asp-for="HoaDonMoi.GhiChu">Ghi chú</label>
-                <input asp-for="HoaDonMoi.GhiChu" class="form-control" />
-                <span asp-validation-for="HoaDonMoi.GhiChu" class="text-danger"></span>
-            </div>
-
-            <button type="submit" class="btn btn-primary">
-                Lưu hóa đơn
-            </button>
-
-            <button type="reset" class="btn btn-secondary">
-                Hủy
-            </button>
-        </form>
-    </div>
-</div>
-
-<table class="table table-bordered table-hover">
+<table class="table table-bordered hoa-don-table">
     <thead>
         <tr>
-            <th>Tháng/Năm</th>
-            <th>Phòng</th>
-            <th>Khách thuê</th>
-            <th>Tiền phòng</th>
-            <th>Điện</th>
-            <th>Nước</th>
-            <th>Dịch vụ</th>
-            <th>Tổng tiền</th>
-            <th>Trạng thái</th>
-            <th>Thao tác</th>
+            <th class="col-han">Hạn thanh toán</th>
+            <th class="col-thang">Tháng/Năm</th>
+            <th class="col-phong">Phòng</th>
+            <th class="col-khach">Khách thuê</th>
+            <th class="col-tien">Tiền phòng</th>
+            <th class="col-dien">Điện</th>
+            <th class="col-nuoc">Nước</th>
+            <th class="col-dichvu">Dịch vụ</th>
+            <th class="col-tong">Tổng tiền</th>
+            <th class="col-trangthai">Trạng thái</th>
+            <th class="col-thaotac">Thao tác</th>
         </tr>
     </thead>
 
@@ -147,31 +46,51 @@
                 .OrderByDescending(t => t.NgayThanhToan)
                 .FirstOrDefault();
 
+            var quaHan = item.TrangThai != "Đã thanh toán"
+                && item.HanThanhToan.HasValue
+                && item.HanThanhToan.Value.Date < DateTime.Today;
+
             <tr>
+                <td>
+                    @(item.HanThanhToan?.ToString("dd/MM/yyyy") ?? "Chưa có")
+                </td>
+
                 <td>@item.Thang/@item.Nam</td>
 
-                <td>@item.HopDong?.Phong?.TenPhong</td>
-
-                <td>@item.HopDong?.NguoiThue?.HoTen</td>
-
-                <td>@item.TienPhong.ToString("N0") VNĐ</td>
-
                 <td>
-                    @item.SoDienTieuThu kWh
-                    <br />
-                    <small>@item.TienDien.ToString("N0") VNĐ</small>
+                    @(item.HopDong?.Phong?.TenPhong ?? item.TenPhong)
                 </td>
 
                 <td>
-                    @item.SoNuocTieuThu m³
-                    <br />
-                    <small>@item.TienNuoc.ToString("N0") VNĐ</small>
+                    @item.HopDong?.NguoiThue?.HoTen
                 </td>
 
-                <td>@item.TienDichVu.ToString("N0") VNĐ</td>
+                <td>
+                    @item.TienPhong.ToString("N0", viVN) VNĐ
+                </td>
 
                 <td>
-                    <strong>@item.TongTien.ToString("N0") VNĐ</strong>
+                    <strong>Số điện tiêu thụ:</strong><br />
+                    @item.SoDienTieuThu.ToString("N0", viVN) kWh
+                    <br />
+                    <strong>Tiền điện:</strong><br />
+                    <small>@item.TienDien.ToString("N0", viVN) VNĐ</small>
+                </td>
+
+                <td>
+                    <strong>Số nước tiêu thụ:</strong><br />
+                    @item.SoNuocTieuThu.ToString("N0", viVN) m³
+                    <br />
+                    <strong>Tiền nước:</strong><br />
+                    <small>@item.TienNuoc.ToString("N0", viVN) VNĐ</small>
+                </td>
+
+                <td>
+                    @item.TienDichVu.ToString("N0", viVN) VNĐ
+                </td>
+
+                <td>
+                    <strong>@item.TongTien.ToString("N0", viVN) VNĐ</strong>
                 </td>
 
                 <td>
@@ -187,6 +106,10 @@
                             </small>
                         }
                     }
+                    else if (quaHan)
+                    {
+                        <span class="text-danger fw-bold">Quá hạn</span>
+                    }
                     else
                     {
                         <span class="text-warning fw-bold">Chưa thanh toán</span>
@@ -196,14 +119,21 @@
                 <td>
                     @if (item.TrangThai != "Đã thanh toán")
                     {
-                        <a asp-page="/ThanhToan/Create" asp-route-hoaDonId="@item.HoaDonId" class="btn btn-primary btn-sm">
+                        <a asp-page="/ThanhToan/Create" asp-route-hoaDonId="@item.HoaDonId" class="btn btn-sm btn-success">
                             Thanh toán
                         </a>
                     }
 
-                    <a asp-page="./Edit" asp-route-id="@item.HoaDonId" class="btn btn-sm btn-primary">
-                        Sửa
+                    <a asp-page="./Details" asp-route-id="@item.HoaDonId" class="btn btn-sm btn-info">
+                        Chi tiết
                     </a>
+
+                    @if (item.TrangThai != "Đã thanh toán")
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.HoaDonId" class="btn btn-sm btn-primary">
+                            Sửa
+                        </a>
+                    }
 
                     <a asp-page="./Delete" asp-route-id="@item.HoaDonId" class="btn btn-sm btn-danger">
                         Xóa
@@ -213,9 +143,3 @@
         }
     </tbody>
 </table>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}

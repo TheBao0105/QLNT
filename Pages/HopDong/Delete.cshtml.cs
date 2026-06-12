@@ -47,6 +47,7 @@ namespace QLNT.Pages_HopDong
             }
 
             var hopdong = await _context.HopDongs.FindAsync(id);
+
             if (hopdong != null)
             {
                 _context.HopDongs.Remove(hopdong);

@@ -17,7 +17,7 @@
 
             <p>
                 <strong>Phòng:</strong>
-                @Model.HoaDonDangThanhToan.TenPhong
+                @(Model.HoaDonDangThanhToan.HopDong?.Phong?.TenPhong ?? Model.HoaDonDangThanhToan.TenPhong)
             </p>
 
             <p>
@@ -32,7 +32,7 @@
 
             <p>
                 <strong>Tổng tiền:</strong>
-                @Model.HoaDonDangThanhToan.TongTien.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) VNĐ
+                @Model.FormatVnd(Model.HoaDonDangThanhToan.TongTien)
             </p>
         </div>
     </div>
@@ -41,26 +41,20 @@
 <div class="row">
     <div class="col-md-5">
         <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
             <input asp-for="ThanhToan.HoaDonId" type="hidden" />
+            <input asp-for="ThanhToan.SoTien" type="hidden" />
 
             <div class="form-group mb-3">
-                <label class="control-label">
-                    Số tiền thanh toán
-                </label>
-
+                <label class="control-label">Số tiền thanh toán</label>
                 <input asp-for="SoTienHienThi" class="form-control" readonly />
-
-                <input asp-for="ThanhToan.SoTien" type="hidden" />
-
                 <span asp-validation-for="SoTienHienThi" class="text-danger"></span>
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="ThanhToan.PhuongThuc" class="control-label">
-                    Phương thức thanh toán
-                </label>
+                <span class="text-danger">*</span>
+                <label asp-for="ThanhToan.PhuongThuc" class="control-label">Phương thức thanh toán</label>
 
                 <select asp-for="ThanhToan.PhuongThuc" class="form-control">
                     <option value="Tiền mặt">Tiền mặt</option>
@@ -72,22 +66,15 @@
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="ThanhToan.NgayThanhToan" class="control-label">
-                    Ngày thanh toán
-                </label>
-
+                <span class="text-danger">*</span>
+                <label asp-for="ThanhToan.NgayThanhToan" class="control-label">Ngày thanh toán</label>
                 <input asp-for="ThanhToan.NgayThanhToan" class="form-control" type="date" />
-
                 <span asp-validation-for="ThanhToan.NgayThanhToan" class="text-danger"></span>
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="ThanhToan.GhiChu" class="control-label">
-                    Ghi chú
-                </label>
-
+                <label asp-for="ThanhToan.GhiChu" class="control-label">Ghi chú</label>
                 <input asp-for="ThanhToan.GhiChu" class="form-control" />
-
                 <span asp-validation-for="ThanhToan.GhiChu" class="text-danger"></span>
             </div>
 
@@ -97,9 +84,10 @@
             </div>
         </form>
     </div>
+</div>
 
-    @section Scripts {
-        @{
-            await Html.RenderPartialAsync("_ValidationScriptsPartial");
-        }
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+}

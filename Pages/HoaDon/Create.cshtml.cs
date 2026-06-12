@@ -15,9 +15,9 @@ namespace QLNT.Pages_HoaDon
         {
             _context = context;
         }
-        public IList<HopDong> DanhSachHopDong { get; set; } = new List<HopDong>();
+
         [BindProperty]
-        public HoaDon HoaDon { get; set; } = default!;
+        public HoaDon HoaDon { get; set; } = new();
 
         [BindProperty]
         public List<int> DichVuIds { get; set; } = new();
@@ -26,39 +26,37 @@ namespace QLNT.Pages_HoaDon
         private const decimal DonGiaNuoc = 15000;
 
         public async Task<IActionResult> OnGetAsync()
-
         {
-            await LoadSelectListAsync();
-            await LoadDanhSachHopDongAsync();
-
             HoaDon = new HoaDon
             {
                 NgayLap = DateTime.Now,
+                HanThanhToan = DateTime.Now.AddDays(7),
                 Thang = DateTime.Now.Month,
                 Nam = DateTime.Now.Year,
+                DonGiaDien = DonGiaDien,
+                DonGiaNuoc = DonGiaNuoc,
                 TrangThai = "Chưa thanh toán"
             };
 
+            await LoadDataAsync();
+
             return Page();
         }
-        private async Task LoadDanhSachHopDongAsync()
-        {
-            DanhSachHopDong = await _context.HopDongs
-                .Include(h => h.Phong)
-                .Include(h => h.NguoiThue)
-                .Where(h => h.TrangThai == "Hiệu lực"
-                         || h.TrangThai == "Đang thuê")
-                .ToListAsync();
-        }
+
         public async Task<IActionResult> OnPostAsync()
         {
-            await LoadSelectListAsync();
+            await LoadDataAsync();
 
             var hopDong = await _context.HopDongs
                 .Include(h => h.Phong)
+                .Include(h => h.NguoiThue)
                 .FirstOrDefaultAsync(h =>
                     h.HopDongId == HoaDon.HopDongId &&
-                    h.TrangThai == "Đang hiệu lực");
+                    (
+                        h.TrangThai == "Còn hạn" ||
+                        h.TrangThai == "Đang thuê" ||
+                        h.TrangThai == "Đang hiệu lực"
+                    ));
 
             if (hopDong == null)
             {
@@ -66,23 +64,37 @@ namespace QLNT.Pages_HoaDon
                 return Page();
             }
 
+            if (HoaDon.Thang < 1 || HoaDon.Thang > 12)
+            {
+                ModelState.AddModelError("HoaDon.Thang", "Tháng phải từ 1 đến 12.");
+            }
+
+            if (HoaDon.Nam < 2000)
+            {
+                ModelState.AddModelError("HoaDon.Nam", "Năm không hợp lệ.");
+            }
+
             if (HoaDon.ChiSoDienMoi < HoaDon.ChiSoDienCu)
             {
                 ModelState.AddModelError("HoaDon.ChiSoDienMoi", "Chỉ số điện mới phải lớn hơn hoặc bằng chỉ số điện cũ.");
-                return Page();
             }
 
             if (HoaDon.ChiSoNuocMoi < HoaDon.ChiSoNuocCu)
             {
                 ModelState.AddModelError("HoaDon.ChiSoNuocMoi", "Chỉ số nước mới phải lớn hơn hoặc bằng chỉ số nước cũ.");
-                return Page();
             }
 
-            var tienDichVu = await _context.DichVus
-                .Where(d => DichVuIds.Contains(d.DichVuId) && d.TrangThai == "Đang sử dụng")
-                .SumAsync(d => d.DonGia);
+            var daCoHoaDon = await _context.HoaDons.AnyAsync(h =>
+                h.HopDongId == HoaDon.HopDongId &&
+                h.Thang == HoaDon.Thang &&
+                h.Nam == HoaDon.Nam);
 
-            HoaDon.TenPhong = hopDong.Phong.TenPhong;
+            if (daCoHoaDon)
+            {
+                ModelState.AddModelError("HoaDon.Thang", "Hợp đồng này đã có hóa đơn trong tháng/năm đã chọn.");
+            }
+
+            HoaDon.TenPhong = hopDong.Phong?.TenPhong;
             HoaDon.TienPhong = hopDong.GiaThue;
 
             HoaDon.DonGiaDien = DonGiaDien;
@@ -94,7 +106,9 @@ namespace QLNT.Pages_HoaDon
             HoaDon.SoNuocTieuThu = HoaDon.ChiSoNuocMoi - HoaDon.ChiSoNuocCu;
             HoaDon.TienNuoc = HoaDon.SoNuocTieuThu * HoaDon.DonGiaNuoc;
 
-            HoaDon.TienDichVu = tienDichVu;
+            HoaDon.TienDichVu = await _context.DichVus
+                .Where(d => DichVuIds.Contains(d.DichVuId) && d.TrangThai == "Đang sử dụng")
+                .SumAsync(d => d.DonGia);
 
             HoaDon.TongTien =
                 HoaDon.TienPhong +
@@ -107,12 +121,20 @@ namespace QLNT.Pages_HoaDon
                 HoaDon.NgayLap = DateTime.Now;
             }
 
+            if (HoaDon.HanThanhToan == null)
+            {
+                HoaDon.HanThanhToan = HoaDon.NgayLap.AddDays(7);
+            }
+
             HoaDon.TrangThai = "Chưa thanh toán";
 
-            // Xóa lỗi validate của các field tự tính hoặc navigation property
             ModelState.Remove("HoaDon.TenPhong");
             ModelState.Remove("HoaDon.TienPhong");
+            ModelState.Remove("HoaDon.DonGiaDien");
+            ModelState.Remove("HoaDon.SoDienTieuThu");
             ModelState.Remove("HoaDon.TienDien");
+            ModelState.Remove("HoaDon.DonGiaNuoc");
+            ModelState.Remove("HoaDon.SoNuocTieuThu");
             ModelState.Remove("HoaDon.TienNuoc");
             ModelState.Remove("HoaDon.TienDichVu");
             ModelState.Remove("HoaDon.TongTien");
@@ -122,31 +144,49 @@ namespace QLNT.Pages_HoaDon
 
             if (!ModelState.IsValid)
             {
-                await LoadDanhSachHopDongAsync();
                 return Page();
             }
 
             _context.HoaDons.Add(HoaDon);
             await _context.SaveChangesAsync();
 
+            TempData["Success"] = "Tạo hóa đơn thành công.";
+
             return RedirectToPage("./Index");
         }
-        private async Task LoadSelectListAsync()
+
+        private async Task LoadDataAsync()
         {
-            var hopDongsDangThue = await _context.HopDongs
+            var hopDongsDangThueRaw = await _context.HopDongs
                 .Include(h => h.Phong)
-                .Where(h => h.TrangThai == "Đang hiệu lực")
+                .Include(h => h.NguoiThue)
+                .Where(h =>
+                    h.TrangThai == "Còn hạn" ||
+                    h.TrangThai == "Đang thuê" ||
+                    h.TrangThai == "Đang hiệu lực")
                 .OrderBy(h => h.Phong.TenPhong)
+                .ToListAsync();
+
+            var hopDongsDangThue = hopDongsDangThueRaw
                 .Select(h => new
                 {
                     h.HopDongId,
-                    TenHienThi = h.Phong.TenPhong + " - " + h.GiaThue.ToString("N0") + " VNĐ",
-                    h.GiaThue
+                    TenHienThi =
+                        h.Phong.TenPhong
+                        + " - "
+                        + h.NguoiThue.HoTen
+                        + " - "
+                        + h.GiaThue.ToString("N0")
+                        + " VNĐ"
                 })
-                .ToListAsync();
+                .ToList();
 
-            ViewData["HopDongId"] = new SelectList(hopDongsDangThue, "HopDongId", "TenHienThi");
-            ViewData["HopDongGiaThue"] = hopDongsDangThue.ToDictionary(h => h.HopDongId, h => h.GiaThue);
+            ViewData["HopDongId"] = new SelectList(
+                hopDongsDangThue,
+                "HopDongId",
+                "TenHienThi",
+                HoaDon.HopDongId
+            );
 
             var dichVus = await _context.DichVus
                 .Where(d => d.TrangThai == "Đang sử dụng")
@@ -154,7 +194,6 @@ namespace QLNT.Pages_HoaDon
                 .ToListAsync();
 
             ViewData["DichVus"] = dichVus;
-            ViewData["DichVuDonGia"] = dichVus.ToDictionary(d => d.DichVuId, d => d.DonGia);
         }
     }
 }

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +8,9 @@ namespace QLNT.Pages_ThanhToan
 {
     public class DeleteModel : PageModel
     {
-        private readonly QLNT.Data.AppDbContext _context;
+        private readonly AppDbContext _context;
 
-        public DeleteModel(QLNT.Data.AppDbContext context)
+        public DeleteModel(AppDbContext context)
         {
             _context = context;
         }
@@ -29,34 +25,55 @@ namespace QLNT.Pages_ThanhToan
                 return NotFound();
             }
 
-            var thanhtoan = await _context.ThanhToans.FirstOrDefaultAsync(m => m.ThanhToanId == id);
+            var thanhToan = await _context.ThanhToans
+                .Include(t => t.HoaDon)
+                    .ThenInclude(h => h.HopDong)
+                        .ThenInclude(hd => hd.Phong)
+                .Include(t => t.HoaDon)
+                    .ThenInclude(h => h.HopDong)
+                        .ThenInclude(hd => hd.NguoiThue)
+                .FirstOrDefaultAsync(t => t.ThanhToanId == id.Value);
 
-            if (thanhtoan is not null)
-            {
-                ThanhToan = thanhtoan;
-
-                return Page();
-            }
-
-            return NotFound();
-        }
-
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
-            if (id == null)
+            if (thanhToan == null)
             {
                 return NotFound();
             }
 
-            var thanhtoan = await _context.ThanhToans.FindAsync(id);
-            if (thanhtoan != null)
+            ThanhToan = thanhToan;
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            var thanhToan = await _context.ThanhToans
+                .FirstOrDefaultAsync(t => t.ThanhToanId == ThanhToan.ThanhToanId);
+
+            if (thanhToan == null)
             {
-                ThanhToan = thanhtoan;
-                _context.ThanhToans.Remove(ThanhToan);
+                return NotFound();
+            }
+
+            var hoaDonId = thanhToan.HoaDonId;
+
+            _context.ThanhToans.Remove(thanhToan);
+            await _context.SaveChangesAsync();
+
+            var conThanhToanKhac = await _context.ThanhToans
+                .AnyAsync(t => t.HoaDonId == hoaDonId);
+
+            var hoaDon = await _context.HoaDons
+                .FirstOrDefaultAsync(h => h.HoaDonId == hoaDonId);
+
+            if (hoaDon != null && !conThanhToanKhac)
+            {
+                hoaDon.TrangThai = "Chưa thanh toán";
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            TempData["Success"] = "Đã xóa thanh toán.";
+
+            return RedirectToPage("/HoaDon/Index");
         }
     }
 }

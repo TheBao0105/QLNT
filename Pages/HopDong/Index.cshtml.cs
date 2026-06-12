@@ -8,27 +8,49 @@ namespace QLNT.Pages_HopDong
     public class IndexModel : PageModel
     {
         private readonly AppDbContext _context;
-        private const int PageSize = 5;
 
         public IndexModel(AppDbContext context)
         {
             _context = context;
         }
 
-        public PaginatedList<HopDong> HopDong { get; set; } = default!;
+        public IList<HopDong> HopDong { get; set; } = new List<HopDong>();
 
-        public async Task OnGetAsync(int? pageIndex)
+        public string? StatusFilter { get; set; }
+
+        public async Task OnGetAsync(string? StatusFilter)
         {
+            this.StatusFilter = StatusFilter;
+
+            var today = DateTime.Today;
+
             var query = _context.HopDongs
                 .Include(h => h.NguoiThue)
                 .Include(h => h.Phong)
-                .OrderByDescending(h => h.NgayBatDau);
+                .AsQueryable();
 
-            HopDong = await PaginatedList<HopDong>.CreateAsync(
-                query.AsNoTracking(),
-                pageIndex ?? 1,
-                PageSize
-            );
+            if (!string.IsNullOrWhiteSpace(StatusFilter))
+            {
+                if (StatusFilter == "Còn hạn")
+                {
+                    query = query.Where(h => h.NgayBatDau.Date <= today
+                                          && (!h.NgayKetThuc.HasValue || h.NgayKetThuc.Value.Date >= today));
+                }
+                else if (StatusFilter == "Hết hạn")
+                {
+                    query = query.Where(h => h.NgayKetThuc.HasValue
+                                          && h.NgayKetThuc.Value.Date < today);
+                }
+                else if (StatusFilter == "Chưa bắt đầu")
+                {
+                    query = query.Where(h => h.NgayBatDau.Date > today);
+                }
+            }
+
+            HopDong = await query
+                .OrderByDescending(h => h.NgayBatDau)
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public string TinhTrangThaiHopDong(DateTime ngayBatDau, DateTime? ngayKetThuc)

@@ -10,30 +10,37 @@
 <h4>Hợp đồng</h4>
 <hr />
 
-<div class="row">
-    <div class="col-md-5">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
 
-            <div class="form-group mb-2">
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+            <div class="form-group mb-3">
                 <span class="text-danger">*</span>
                 <label asp-for="Input.PhongId" class="control-label">Phòng</label>
 
-                <select asp-for="Input.PhongId" class="form-control" id="phongSelect">
+                <select asp-for="Input.PhongId" class="form-select">
                     <option value="">-- Chọn phòng --</option>
 
                     @foreach (var phong in Model.DanhSachPhong)
                     {
                         if (phong.PhongId == Model.Input.PhongId)
                         {
-                            <option value="@phong.PhongId" data-gia="@phong.GiaPhong" selected>
-                                @phong.TenPhong
+                            <option value="@phong.PhongId" selected>
+                                @phong.TenPhong - @Model.FormatVnd(phong.GiaPhong) VNĐ - @phong.TrangThai
                             </option>
                         }
                         else
                         {
-                            <option value="@phong.PhongId" data-gia="@phong.GiaPhong">
-                                @phong.TenPhong
+                            <option value="@phong.PhongId">
+                                @phong.TenPhong - @Model.FormatVnd(phong.GiaPhong) VNĐ - @phong.TrangThai
                             </option>
                         }
                     }
@@ -42,83 +49,71 @@
                 <span asp-validation-for="Input.PhongId" class="text-danger"></span>
             </div>
 
-            <div class="form-group mb-2">
+            <div class="form-group mb-3">
                 <span class="text-danger">*</span>
                 <label asp-for="Input.NguoiThueId" class="control-label">Người thuê</label>
 
-                <select asp-for="Input.NguoiThueId" class="form-control" asp-items="Model.NguoiThueSelectList">
+                <select asp-for="Input.NguoiThueId" class="form-select" asp-items="Model.NguoiThueSelectList">
                     <option value="">-- Chọn người thuê --</option>
                 </select>
 
                 <span asp-validation-for="Input.NguoiThueId" class="text-danger"></span>
             </div>
 
-            <div class="form-group mb-2">
+            <div class="form-group mb-3">
                 <span class="text-danger">*</span>
                 <label asp-for="Input.NgayBatDau" class="control-label">Ngày bắt đầu</label>
                 <input asp-for="Input.NgayBatDau" type="date" class="form-control" />
                 <span asp-validation-for="Input.NgayBatDau" class="text-danger"></span>
             </div>
 
-            <div class="form-group mb-2">
+            <div class="form-group mb-3">
                 <label asp-for="Input.NgayKetThuc" class="control-label">Ngày kết thúc</label>
                 <input asp-for="Input.NgayKetThuc" type="date" class="form-control" />
                 <span asp-validation-for="Input.NgayKetThuc" class="text-danger"></span>
             </div>
 
-            <div class="form-group mb-2">
-                <span class="text-danger">*</span>
+            <div class="form-group mb-3">
                 <label class="control-label">Tiền cọc</label>
 
                 <div class="input-group">
-                    <input asp-for="TienCocText" type="text" class="form-control" id="tienCocInput" readonly />
+                    <input value="@Model.FormatVnd(Model.Input.TienCoc)" class="form-control" readonly />
                     <span class="input-group-text">VNĐ</span>
                 </div>
-
-                <span asp-validation-for="TienCocText" class="text-danger"></span>
             </div>
 
-            <div class="form-group mb-2">
-                <span class="text-danger">*</span>
+            <div class="form-group mb-3">
                 <label class="control-label">Giá thuê</label>
 
                 <div class="input-group">
-                    <input asp-for="GiaThueText" type="text" class="form-control" id="giaThueInput" readonly />
+                    <input value="@Model.FormatVnd(Model.Input.GiaThue)" class="form-control" readonly />
                     <span class="input-group-text">VNĐ</span>
                 </div>
-
-                <span asp-validation-for="GiaThueText" class="text-danger"></span>
             </div>
 
-            <div class="form-group mb-2">
+            <div class="form-group mb-3">
                 <label class="control-label">Trạng thái</label>
-                <input asp-for="TrangThaiText" class="form-control" readonly />
-                <option>
-                    @if (Model.TrangThaiText == "Đang thuê")
-                    {
-                        <span class="badge bg-success">Đang thuê</span>
-                    }
-                    else if (Model.TrangThaiText == "Sắp hết hạn")
-                    {
-                        <span class="badge bg-warning">Sắp hết hạn</span>
-                    }
-                    else if (Model.TrangThaiText == "Đã hết hạn")
-                    {
-                        <span class="badge bg-danger">Đã hết hạn</span>
-                    }
-                </option>
-                <span asp-validation-for="TrangThaiText" class="text-danger"></span>
+                <input value="@Model.Input.TrangThai" class="form-control" readonly />
             </div>
 
-            <div class="form-group mb-2">
+            <div class="form-group mb-3">
                 <label asp-for="Input.GhiChu" class="control-label">Ghi chú</label>
-                <input asp-for="Input.GhiChu" class="form-control" />
+                <textarea asp-for="Input.GhiChu" class="form-control" rows="3"></textarea>
                 <span asp-validation-for="Input.GhiChu" class="text-danger"></span>
             </div>
 
             <div class="form-group mt-3">
-                <input type="submit" value="Thêm" class="btn btn-primary" />
-                <a asp-page="./Index" class="btn btn-secondary">Quay lại</a>
+                <button type="submit" name="FormAction" value="preview" class="btn btn-secondary">
+                    Đồng bộ tiền
+                </button>
+
+                <button type="submit" name="FormAction" value="create" class="btn btn-primary">
+                    Thêm
+                </button>
+
+                <a asp-page="./Index" class="btn btn-outline-secondary">
+                    Quay lại
+                </a>
             </div>
         </form>
     </div>
@@ -128,30 +123,4 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-
-    <script>
-        function formatVnd(value) {
-            value = String(value).replace(/\D/g, "");
-
-            if (value === "") {
-                return "";
-            }
-
-            return value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
-
-        function dongBoTienTheoPhong() {
-            const phongSelect = document.getElementById("phongSelect");
-            const selectedOption = phongSelect.options[phongSelect.selectedIndex];
-
-            const giaPhong = selectedOption.getAttribute("data-gia") || "";
-
-            document.getElementById("tienCocInput").value = formatVnd(giaPhong);
-            document.getElementById("giaThueInput").value = formatVnd(giaPhong);
-        }
-
-        document.getElementById("phongSelect").addEventListener("change", dongBoTienTheoPhong);
-
-        dongBoTienTheoPhong();
-    </script>
 }

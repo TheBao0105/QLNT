@@ -9,9 +9,6 @@ namespace QLNT.Pages_ThanhToan
 {
     public class CreateModel : PageModel
     {
-
-        [BindProperty]
-        public string SoTienHienThi { get; set; } = "";
         private readonly AppDbContext _context;
 
         public CreateModel(AppDbContext context)
@@ -22,14 +19,14 @@ namespace QLNT.Pages_ThanhToan
         [BindProperty]
         public ThanhToan ThanhToan { get; set; } = new();
 
+        [BindProperty]
+        public string SoTienHienThi { get; set; } = "";
+
         public HoaDon? HoaDonDangThanhToan { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int hoaDonId)
         {
-            HoaDonDangThanhToan = await _context.HoaDons
-                .Include(h => h.HopDong)
-                    .ThenInclude(hd => hd.NguoiThue)
-                .FirstOrDefaultAsync(h => h.HoaDonId == hoaDonId);
+            await LoadHoaDonAsync(hoaDonId);
 
             if (HoaDonDangThanhToan == null)
             {
@@ -38,6 +35,7 @@ namespace QLNT.Pages_ThanhToan
 
             if (HoaDonDangThanhToan.TrangThai == "Đã thanh toán")
             {
+                TempData["Success"] = "Hóa đơn này đã được thanh toán.";
                 return RedirectToPage("/HoaDon/Index");
             }
 
@@ -49,22 +47,21 @@ namespace QLNT.Pages_ThanhToan
                 PhuongThuc = "Tiền mặt"
             };
 
-            SoTienHienThi = HoaDonDangThanhToan.TongTien.ToString("N0", new CultureInfo("vi-VN")) + " VNĐ";
+            SoTienHienThi = FormatVnd(HoaDonDangThanhToan.TongTien);
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            HoaDonDangThanhToan = await _context.HoaDons
-                .Include(h => h.HopDong)
-                    .ThenInclude(hd => hd.NguoiThue)
-                .FirstOrDefaultAsync(h => h.HoaDonId == ThanhToan.HoaDonId);
-            ModelState.Remove("SoTienHienThi");
+            await LoadHoaDonAsync(ThanhToan.HoaDonId);
+
             if (HoaDonDangThanhToan == null)
             {
                 return NotFound();
             }
+
+            SoTienHienThi = FormatVnd(HoaDonDangThanhToan.TongTien);
 
             if (HoaDonDangThanhToan.TrangThai == "Đã thanh toán")
             {
@@ -74,15 +71,14 @@ namespace QLNT.Pages_ThanhToan
 
             ThanhToan.SoTien = HoaDonDangThanhToan.TongTien;
 
+            if (ThanhToan.NgayThanhToan == default)
+            {
+                ThanhToan.NgayThanhToan = DateTime.Today;
+            }
+
             if (string.IsNullOrWhiteSpace(ThanhToan.PhuongThuc))
             {
                 ModelState.AddModelError("ThanhToan.PhuongThuc", "Vui lòng chọn phương thức thanh toán.");
-                return Page();
-            }
-
-            if (ThanhToan.NgayThanhToan == default)
-            {
-                ThanhToan.NgayThanhToan = DateTime.Now;
             }
 
             ModelState.Remove("ThanhToan.HoaDon");
@@ -100,7 +96,24 @@ namespace QLNT.Pages_ThanhToan
 
             await _context.SaveChangesAsync();
 
+            TempData["Success"] = "Thanh toán hóa đơn thành công.";
+
             return RedirectToPage("/HoaDon/Index");
+        }
+
+        private async Task LoadHoaDonAsync(int hoaDonId)
+        {
+            HoaDonDangThanhToan = await _context.HoaDons
+                .Include(h => h.HopDong)
+                    .ThenInclude(hd => hd.Phong)
+                .Include(h => h.HopDong)
+                    .ThenInclude(hd => hd.NguoiThue)
+                .FirstOrDefaultAsync(h => h.HoaDonId == hoaDonId);
+        }
+
+        public string FormatVnd(decimal value)
+        {
+            return value.ToString("N0", new CultureInfo("vi-VN")) + " VNĐ";
         }
     }
 }

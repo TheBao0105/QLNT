@@ -22,13 +22,7 @@ namespace QLNT.Pages_HopDong
         public InputModel Input { get; set; } = new();
 
         [BindProperty]
-        public string TienCocText { get; set; } = "";
-
-        [BindProperty]
-        public string GiaThueText { get; set; } = "";
-
-        [BindProperty]
-        public string TrangThaiText { get; set; } = "";
+        public string? FormAction { get; set; }
 
         public List<Phong> DanhSachPhong { get; set; } = new();
 
@@ -49,19 +43,21 @@ namespace QLNT.Pages_HopDong
             [DataType(DataType.Date)]
             public DateTime? NgayKetThuc { get; set; }
 
+            public decimal TienCoc { get; set; }
+
+            public decimal GiaThue { get; set; }
+
+            public string TrangThai { get; set; } = "Còn hạn";
+
             public string? GhiChu { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
             Input.NgayBatDau = DateTime.Today;
-
-            TrangThaiText = TinhTrangThaiHopDong(Input.NgayBatDau, Input.NgayKetThuc);
+            Input.TrangThai = TinhTrangThaiHopDong(Input.NgayBatDau, Input.NgayKetThuc);
 
             await LoadDataAsync();
-
-            TienCocText = "";
-            GiaThueText = "";
 
             return Page();
         }
@@ -70,29 +66,29 @@ namespace QLNT.Pages_HopDong
         {
             await LoadDataAsync();
 
-            TrangThaiText = TinhTrangThaiHopDong(Input.NgayBatDau, Input.NgayKetThuc);
+            Input.TrangThai = TinhTrangThaiHopDong(Input.NgayBatDau, Input.NgayKetThuc);
+
+            await DongBoTienTheoPhongAsync();
+
+
+            ModelState.Remove("Input.TienCoc");
+            ModelState.Remove("Input.GiaThue");
+            ModelState.Remove("Input.TrangThai");
+
+            if (FormAction == "preview")
+            {
+                ModelState.Clear();
+                return Page();
+            }
 
             if (!Input.PhongId.HasValue)
             {
-                TienCocText = "";
-                GiaThueText = "";
+                ModelState.AddModelError("Input.PhongId", "Vui lòng chọn phòng.");
             }
-            else
-            {
-                var phong = await _context.Phongs
-                    .FirstOrDefaultAsync(p => p.PhongId == Input.PhongId.Value);
 
-                if (phong == null)
-                {
-                    ModelState.AddModelError("Input.PhongId", "Phòng không tồn tại.");
-                    TienCocText = "";
-                    GiaThueText = "";
-                }
-                else
-                {
-                    TienCocText = FormatVnd(phong.GiaPhong);
-                    GiaThueText = FormatVnd(phong.GiaPhong);
-                }
+            if (!Input.NguoiThueId.HasValue)
+            {
+                ModelState.AddModelError("Input.NguoiThueId", "Vui lòng chọn người thuê.");
             }
 
             if (Input.NgayKetThuc.HasValue &&
@@ -114,6 +110,16 @@ namespace QLNT.Pages_HopDong
                 ModelState.AddModelError("Input.PhongId", "Phòng không tồn tại.");
                 return Page();
             }
+            //chỉ được lập hợp đồng cho phòng đang trống hoặc đã thuê nhưng hợp đồng đã hết hạn
+            if (phongDuocChon.TrangThai == "Đã thuê")
+            {
+                ModelState.AddModelError("Input.PhongId", "Phòng này đã được thuê.");
+                return Page();
+            }
+
+            Input.TienCoc = phongDuocChon.GiaPhong;
+            Input.GiaThue = phongDuocChon.GiaPhong;
+            Input.TrangThai = TinhTrangThaiHopDong(Input.NgayBatDau, Input.NgayKetThuc);
 
             var hopDong = new HopDong
             {
@@ -121,9 +127,9 @@ namespace QLNT.Pages_HopDong
                 NguoiThueId = Input.NguoiThueId!.Value,
                 NgayBatDau = Input.NgayBatDau,
                 NgayKetThuc = Input.NgayKetThuc,
-                TienCoc = phongDuocChon.GiaPhong,
-                GiaThue = phongDuocChon.GiaPhong,
-                TrangThai = TrangThaiText,
+                TienCoc = Input.TienCoc,
+                GiaThue = Input.GiaThue,
+                TrangThai = Input.TrangThai,
                 GhiChu = Input.GhiChu
             };
 
@@ -136,10 +142,35 @@ namespace QLNT.Pages_HopDong
 
             await _context.SaveChangesAsync();
 
+            TempData["Success"] = "Thêm hợp đồng thành công.";
+
             return RedirectToPage("./Index");
         }
 
-        private string TinhTrangThaiHopDong(DateTime ngayBatDau, DateTime? ngayKetThuc)
+        private async Task DongBoTienTheoPhongAsync()
+        {
+            Input.TienCoc = 0;
+            Input.GiaThue = 0;
+
+            if (!Input.PhongId.HasValue)
+            {
+                return;
+            }
+
+            var phong = await _context.Phongs
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.PhongId == Input.PhongId.Value);
+
+            if (phong == null)
+            {
+                return;
+            }
+
+            Input.TienCoc = phong.GiaPhong;
+            Input.GiaThue = phong.GiaPhong;
+        }
+
+        public string TinhTrangThaiHopDong(DateTime ngayBatDau, DateTime? ngayKetThuc)
         {
             var today = DateTime.Today;
 
@@ -156,8 +187,13 @@ namespace QLNT.Pages_HopDong
             return "Còn hạn";
         }
 
-        private string FormatVnd(decimal value)
+        public string FormatVnd(decimal value)
         {
+            if (value <= 0)
+            {
+                return "";
+            }
+
             return value.ToString("N0", new CultureInfo("vi-VN"));
         }
 

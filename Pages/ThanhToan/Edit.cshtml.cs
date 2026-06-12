@@ -1,27 +1,27 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLNT;
 using QLNT.Data;
+using System.Globalization;
 
 namespace QLNT.Pages_ThanhToan
 {
     public class EditModel : PageModel
     {
-        private readonly QLNT.Data.AppDbContext _context;
+        private readonly AppDbContext _context;
 
-        public EditModel(QLNT.Data.AppDbContext context)
+        public EditModel(AppDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
         public ThanhToan ThanhToan { get; set; } = default!;
+
+        public HoaDon? HoaDonDangThanhToan { get; set; }
+
+        public string SoTienHienThi { get; set; } = "";
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,49 +30,85 @@ namespace QLNT.Pages_ThanhToan
                 return NotFound();
             }
 
-            var thanhtoan = await _context.ThanhToans.FirstOrDefaultAsync(m => m.ThanhToanId == id);
-            if (thanhtoan == null)
+            var thanhToan = await _context.ThanhToans
+                .Include(t => t.HoaDon)
+                    .ThenInclude(h => h.HopDong)
+                        .ThenInclude(hd => hd.Phong)
+                .Include(t => t.HoaDon)
+                    .ThenInclude(h => h.HopDong)
+                        .ThenInclude(hd => hd.NguoiThue)
+                .FirstOrDefaultAsync(t => t.ThanhToanId == id.Value);
+
+            if (thanhToan == null)
             {
                 return NotFound();
             }
-            ThanhToan = thanhtoan;
-            ViewData["HoaDonId"] = new SelectList(_context.HoaDons, "HoaDonId", "HoaDonId");
+
+            ThanhToan = thanhToan;
+            HoaDonDangThanhToan = thanhToan.HoaDon;
+            SoTienHienThi = FormatVnd(thanhToan.SoTien);
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            ModelState.Remove("ThanhToan.HoaDon");
+            ModelState.Remove("ThanhToan.SoTien");
+
             if (!ModelState.IsValid)
             {
+                await LoadHoaDonForInvalidPageAsync();
                 return Page();
             }
 
-            _context.Attach(ThanhToan).State = EntityState.Modified;
+            var thanhToanDb = await _context.ThanhToans
+                .Include(t => t.HoaDon)
+                    .ThenInclude(h => h.HopDong)
+                        .ThenInclude(hd => hd.Phong)
+                .Include(t => t.HoaDon)
+                    .ThenInclude(h => h.HopDong)
+                        .ThenInclude(hd => hd.NguoiThue)
+                .FirstOrDefaultAsync(t => t.ThanhToanId == ThanhToan.ThanhToanId);
 
-            try
+            if (thanhToanDb == null)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ThanhToanExists(ThanhToan.ThanhToanId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
-            return RedirectToPage("./Index");
+            thanhToanDb.NgayThanhToan = ThanhToan.NgayThanhToan;
+            thanhToanDb.PhuongThuc = ThanhToan.PhuongThuc;
+            thanhToanDb.GhiChu = ThanhToan.GhiChu;
+
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Cập nhật thanh toán thành công.";
+
+            return RedirectToPage("/HoaDon/Index");
         }
 
-        private bool ThanhToanExists(int id)
+        private async Task LoadHoaDonForInvalidPageAsync()
         {
-            return _context.ThanhToans.Any(e => e.ThanhToanId == id);
+            var thanhToanDb = await _context.ThanhToans
+                .Include(t => t.HoaDon)
+                    .ThenInclude(h => h.HopDong)
+                        .ThenInclude(hd => hd.Phong)
+                .Include(t => t.HoaDon)
+                    .ThenInclude(h => h.HopDong)
+                        .ThenInclude(hd => hd.NguoiThue)
+                .FirstOrDefaultAsync(t => t.ThanhToanId == ThanhToan.ThanhToanId);
+
+            HoaDonDangThanhToan = thanhToanDb?.HoaDon;
+
+            if (thanhToanDb != null)
+            {
+                SoTienHienThi = FormatVnd(thanhToanDb.SoTien);
+            }
+        }
+
+        public string FormatVnd(decimal value)
+        {
+            return value.ToString("N0", new CultureInfo("vi-VN")) + " VNĐ";
         }
     }
 }

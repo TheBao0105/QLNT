@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +8,9 @@ namespace QLNT.Pages_ThanhToan
 {
     public class DetailsModel : PageModel
     {
-        private readonly QLNT.Data.AppDbContext _context;
+        private readonly AppDbContext _context;
 
-        public DetailsModel(QLNT.Data.AppDbContext context)
+        public DetailsModel(AppDbContext context)
         {
             _context = context;
         }
@@ -28,16 +24,23 @@ namespace QLNT.Pages_ThanhToan
                 return NotFound();
             }
 
-            var thanhtoan = await _context.ThanhToans.FirstOrDefaultAsync(m => m.ThanhToanId == id);
+            var thanhToan = await _context.ThanhToans
+                .Include(t => t.HoaDon)
+                    .ThenInclude(h => h.HopDong)
+                        .ThenInclude(hd => hd.Phong)
+                .Include(t => t.HoaDon)
+                    .ThenInclude(h => h.HopDong)
+                        .ThenInclude(hd => hd.NguoiThue)
+                .FirstOrDefaultAsync(t => t.ThanhToanId == id.Value);
 
-            if (thanhtoan is not null)
+            if (thanhToan == null)
             {
-                ThanhToan = thanhtoan;
-
-                return Page();
+                return NotFound();
             }
 
-            return NotFound();
+            ThanhToan = thanhToan;
+
+            return Page();
         }
     }
 }

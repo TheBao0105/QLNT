@@ -44,9 +44,9 @@
                 </td>
                 <td>@Html.DisplayFor(modelItem => item.GhiChu)</td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@item.DichVuId">Sửa</a> |
-                    <a asp-page="./Details" asp-route-id="@item.DichVuId">Chi tiết</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.DichVuId">Xóa</a>
+                    <a asp-page="./Edit" asp-route-id="@item.DichVuId" class="btn btn-primary btn-sm">Sửa</a>
+                    <a asp-page="./Details" asp-route-id="@item.DichVuId" class="btn btn-info btn-sm">Chi tiết</a>
+                    <a asp-page="./Delete" asp-route-id="@item.DichVuId" class="btn btn-danger btn-sm">Xóa</a>
                 </td>
             </tr>
         }

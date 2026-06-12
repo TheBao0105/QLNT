@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +8,9 @@ namespace QLNT.Pages_HoaDon
 {
     public class DetailsModel : PageModel
     {
-        private readonly QLNT.Data.AppDbContext _context;
+        private readonly AppDbContext _context;
 
-        public DetailsModel(QLNT.Data.AppDbContext context)
+        public DetailsModel(AppDbContext context)
         {
             _context = context;
         }
@@ -28,16 +24,22 @@ namespace QLNT.Pages_HoaDon
                 return NotFound();
             }
 
-            var hoadon = await _context.HoaDons.FirstOrDefaultAsync(m => m.HoaDonId == id);
+            var hoaDon = await _context.HoaDons
+                .Include(h => h.HopDong)
+                    .ThenInclude(hd => hd.Phong)
+                .Include(h => h.HopDong)
+                    .ThenInclude(hd => hd.NguoiThue)
+                .Include(h => h.ThanhToans)
+                .FirstOrDefaultAsync(h => h.HoaDonId == id.Value);
 
-            if (hoadon is not null)
+            if (hoaDon == null)
             {
-                HoaDon = hoadon;
-
-                return Page();
+                return NotFound();
             }
 
-            return NotFound();
+            HoaDon = hoaDon;
+
+            return Page();
         }
     }
 }

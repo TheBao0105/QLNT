@@ -44,6 +44,7 @@ public class HoaDon
     public decimal DaThanhtoan { get; set; } = 0;
     public string? GhiChu { get; set; }
 
+    public string GiaThue { get; set; } = string.Empty;
     // Navigation properties
     public HopDong? HopDong { get; set; }
     public DateTime? HanThanhToan { get; set; }
