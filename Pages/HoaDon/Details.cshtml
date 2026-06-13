@@ -1,0 +1,94 @@
+@page
+@model QLNT.Pages_HoaDon.DetailsModel
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Chi tiết hóa đơn";
+    var viVN = new CultureInfo("vi-VN");
+    var thanhToan = Model.HoaDon.ThanhToans?
+        .OrderByDescending(t => t.NgayThanhToan)
+        .FirstOrDefault();
+}
+
+<h1>Chi tiết hóa đơn</h1>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Tháng/Năm</dt>
+            <dd class="col-sm-9">@Model.HoaDon.Thang/@Model.HoaDon.Nam</dd>
+
+            <dt class="col-sm-3">Phòng</dt>
+            <dd class="col-sm-9">
+                @(Model.HoaDon.HopDong?.Phong?.TenPhong ?? Model.HoaDon.TenPhong)
+            </dd>
+
+            <dt class="col-sm-3">Khách thuê</dt>
+            <dd class="col-sm-9">
+                @Model.HoaDon.HopDong?.NguoiThue?.HoTen
+            </dd>
+
+            <dt class="col-sm-3">Ngày lập</dt>
+            <dd class="col-sm-9">@Model.HoaDon.NgayLap.ToString("dd/MM/yyyy")</dd>
+
+            <dt class="col-sm-3">Hạn thanh toán</dt>
+            <dd class="col-sm-9">
+                @(Model.HoaDon.HanThanhToan?.ToString("dd/MM/yyyy") ?? "Chưa có")
+            </dd>
+
+            <dt class="col-sm-3">Tiền phòng</dt>
+            <dd class="col-sm-9">@Model.HoaDon.TienPhong.ToString("N0", viVN) VNĐ</dd>
+
+            <dt class="col-sm-3">Điện</dt>
+            <dd class="col-sm-9">
+                @Model.HoaDon.SoDienTieuThu.ToString("N0", viVN) kWh -
+                @Model.HoaDon.TienDien.ToString("N0", viVN) VNĐ
+            </dd>
+
+            <dt class="col-sm-3">Nước</dt>
+            <dd class="col-sm-9">
+                @Model.HoaDon.SoNuocTieuThu.ToString("N0", viVN) m³ -
+                @Model.HoaDon.TienNuoc.ToString("N0", viVN) VNĐ
+            </dd>
+
+            <dt class="col-sm-3">Dịch vụ</dt>
+            <dd class="col-sm-9">@Model.HoaDon.TienDichVu.ToString("N0", viVN) VNĐ</dd>
+
+            <dt class="col-sm-3">Tổng tiền</dt>
+            <dd class="col-sm-9">
+                <strong>@Model.HoaDon.TongTien.ToString("N0", viVN) VNĐ</strong>
+            </dd>
+
+            <dt class="col-sm-3">Trạng thái</dt>
+            <dd class="col-sm-9">@Model.HoaDon.TrangThai</dd>
+
+            @if (thanhToan != null)
+            {
+                <dt class="col-sm-3">Thanh toán gần nhất</dt>
+                <dd class="col-sm-9">
+                    @thanhToan.PhuongThuc -
+                    @thanhToan.NgayThanhToan.ToString("dd/MM/yyyy") -
+                    @thanhToan.SoTien.ToString("N0", viVN) VNĐ
+                </dd>
+            }
+
+            <dt class="col-sm-3">Ghi chú</dt>
+            <dd class="col-sm-9">@Model.HoaDon.GhiChu</dd>
+        </dl>
+
+        @if (Model.HoaDon.TrangThai != "Đã thanh toán")
+        {
+            <a asp-page="./Edit" asp-route-id="@Model.HoaDon.HoaDonId" class="btn btn-primary">
+                Sửa
+            </a>
+
+            <a asp-page="/ThanhToan/Create" asp-route-hoaDonId="@Model.HoaDon.HoaDonId" class="btn btn-success">
+                Thanh toán
+            </a>
+        }
+
+        <a asp-page="./Index" class="btn btn-secondary">
+            Quay lại
+        </a>
+    </div>
+</div>

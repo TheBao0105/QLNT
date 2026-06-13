@@ -1,0 +1,154 @@
+@page
+@model QLNT.Pages_HoaDon.EditModel
+
+@{
+    ViewData["Title"] = "Sửa hóa đơn";
+}
+
+<h1>Sửa hóa đơn</h1>
+
+<hr />
+
+@if (Model.HoaDon.HopDong != null)
+{
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5>Thông tin hóa đơn</h5>
+
+            <p>
+                <strong>Phòng:</strong>
+                @(Model.HoaDon.HopDong?.Phong?.TenPhong ?? Model.HoaDon.TenPhong)
+            </p>
+
+            <p>
+                <strong>Khách thuê:</strong>
+                @Model.HoaDon.HopDong?.NguoiThue?.HoTen
+            </p>
+
+            <p>
+                <strong>Tiền phòng:</strong>
+                @Model.TienPhongText
+            </p>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+            <input type="hidden" asp-for="HoaDon.HoaDonId" />
+            <input type="hidden" asp-for="HoaDon.HopDongId" />
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <span class="text-danger">*</span>
+                    <label asp-for="HoaDon.Thang">Tháng</label>
+                    <input asp-for="HoaDon.Thang" class="form-control" />
+                    <span asp-validation-for="HoaDon.Thang" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <span class="text-danger">*</span>
+                    <label asp-for="HoaDon.Nam">Năm</label>
+                    <input asp-for="HoaDon.Nam" class="form-control" />
+                    <span asp-validation-for="HoaDon.Nam" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="HoaDon.NgayLap">Ngày lập</label>
+                <input asp-for="HoaDon.NgayLap" type="date" class="form-control" />
+                <span asp-validation-for="HoaDon.NgayLap" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="HoaDon.HanThanhToan">Hạn thanh toán</label>
+                <input asp-for="HoaDon.HanThanhToan" type="date" class="form-control" />
+                <span asp-validation-for="HoaDon.HanThanhToan" class="text-danger"></span>
+            </div>
+
+            <h6 class="mt-3">Chỉ số điện</h6>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="HoaDon.ChiSoDienCu">Chỉ số điện cũ</label>
+                    <input asp-for="HoaDon.ChiSoDienCu" class="form-control" />
+                    <span asp-validation-for="HoaDon.ChiSoDienCu" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="HoaDon.ChiSoDienMoi">Chỉ số điện mới</label>
+                    <input asp-for="HoaDon.ChiSoDienMoi" class="form-control" />
+                    <span asp-validation-for="HoaDon.ChiSoDienMoi" class="text-danger"></span>
+                </div>
+            </div>
+
+            <h6 class="mt-3">Chỉ số nước</h6>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="HoaDon.ChiSoNuocCu">Chỉ số nước cũ</label>
+                    <input asp-for="HoaDon.ChiSoNuocCu" class="form-control" />
+                    <span asp-validation-for="HoaDon.ChiSoNuocCu" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="HoaDon.ChiSoNuocMoi">Chỉ số nước mới</label>
+                    <input asp-for="HoaDon.ChiSoNuocMoi" class="form-control" />
+                    <span asp-validation-for="HoaDon.ChiSoNuocMoi" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <p>
+                        <strong>Tiền phòng:</strong>
+                        @Model.TienPhongText
+                    </p>
+
+                    <p>
+                        <strong>Tiền điện hiện tại:</strong>
+                        @Model.TienDienText
+                    </p>
+
+                    <p>
+                        <strong>Tiền nước hiện tại:</strong>
+                        @Model.TienNuocText
+                    </p>
+
+                    <p>
+                        <strong>Tiền dịch vụ:</strong>
+                        @Model.TienDichVuText
+                    </p>
+
+                    <p>
+                        <strong>Tổng tiền hiện tại:</strong>
+                        @Model.TongTienText
+                    </p>
+                </div>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="HoaDon.GhiChu">Ghi chú</label>
+                <input asp-for="HoaDon.GhiChu" class="form-control" />
+                <span asp-validation-for="HoaDon.GhiChu" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+
+                <a asp-page="./Index" class="btn btn-secondary">
+                    Quay lại
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

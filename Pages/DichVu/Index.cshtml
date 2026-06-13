@@ -1,0 +1,54 @@
+@page
+@model QLNT.Pages_DichVu.IndexModel
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Danh sách dịch vụ";
+    var viVN = new CultureInfo("vi-VN");
+}
+
+<h1>Danh sách dịch vụ</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-primary">Thêm mới</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tên dịch vụ</th>
+            <th>Đơn giá</th>
+            <th>Đơn vị tính</th>
+            <th>Trạng thái</th>
+            <th>Ghi chú</th>
+            <th>Thao tác</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.DichVu)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.TenDichVu)</td>
+                <td>@item.DonGia.ToString("N0", viVN) VNĐ</td>
+                <td>@Html.DisplayFor(modelItem => item.DonViTinh)</td>
+                <td>
+                    @if (item.TrangThai == "Đang sử dụng")
+                    {
+                        <span class="badge bg-success">Đang sử dụng</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Ngừng sử dụng</span>
+                    }
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.GhiChu)</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.DichVuId" class="btn btn-primary btn-sm">Sửa</a>
+                    <a asp-page="./Details" asp-route-id="@item.DichVuId" class="btn btn-info btn-sm">Chi tiết</a>
+                    <a asp-page="./Delete" asp-route-id="@item.DichVuId" class="btn btn-danger btn-sm">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

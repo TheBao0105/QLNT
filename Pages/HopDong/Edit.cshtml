@@ -1,0 +1,95 @@
+@page
+@model QLNT.Pages_HopDong.EditModel
+
+@{
+    ViewData["Title"] = "Sửa hợp đồng";
+}
+
+<h1>Sửa hợp đồng</h1>
+
+<div class="form-card">
+    <h4>Thông tin hợp đồng</h4>
+    <hr />
+
+    <form method="post">
+        <input type="hidden" asp-for="HopDong.HopDongId" />
+        <input type="hidden" asp-for="HopDong.TrangThai" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group mb-2">
+            <label asp-for="HopDong.PhongId" class="control-label">
+                Phòng <span class="required text-danger">*</span>
+            </label>
+            <select asp-for="HopDong.PhongId" class="form-control" asp-items="ViewBag.PhongId"></select>
+            <span asp-validation-for="HopDong.PhongId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-2">
+            <label asp-for="HopDong.NguoiThueId" class="control-label">
+                Người thuê <span class="required text-danger">*</span>
+            </label>
+            <select asp-for="HopDong.NguoiThueId" class="form-control" asp-items="ViewBag.NguoiThueId"></select>
+            <span asp-validation-for="HopDong.NguoiThueId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-2">
+            <label asp-for="HopDong.NgayBatDau" class="control-label">
+                Ngày bắt đầu <span class="required text-danger">*</span>
+            </label>
+            <input asp-for="HopDong.NgayBatDau" type="date" asp-format="{0:yyyy-MM-dd}" class="form-control" />
+            <span asp-validation-for="HopDong.NgayBatDau" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-2">
+            <label asp-for="HopDong.NgayKetThuc" class="control-label">Ngày kết thúc</label>
+            <input asp-for="HopDong.NgayKetThuc" type="date" asp-format="{0:yyyy-MM-dd}" class="form-control" />
+            <span asp-validation-for="HopDong.NgayKetThuc" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-2">
+            <label class="control-label">
+                Tiền cọc <span class="required text-danger">*</span>
+            </label>
+            <div class="input-group">
+                <input name="TienCoc" value="@Model.HienThiTienCoc" class="form-control" />
+                <span class="input-group-text">VNĐ</span>
+            </div>
+            @Html.ValidationMessage("TienCoc", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group mb-2">
+            <label class="control-label">
+                Giá thuê <span class="required text-danger">*</span>
+            </label>
+            <div class="input-group">
+                <input name="GiaThue" value="@Model.HienThiGiaThue" class="form-control" />
+                <span class="input-group-text">VNĐ</span>
+            </div>
+            @Html.ValidationMessage("GiaThue", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group mb-2">
+            <label class="control-label">Trạng thái</label>
+            <input value="@Model.TinhTrangThaiHopDong(Model.HopDong.NgayBatDau, Model.HopDong.NgayKetThuc)"
+                   class="form-control" readonly />
+        </div>
+
+        <div class="form-group mb-2">
+            <label asp-for="HopDong.GhiChu" class="control-label">Ghi chú</label>
+            <input asp-for="HopDong.GhiChu" class="form-control" />
+            <span asp-validation-for="HopDong.GhiChu" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <a asp-page="./Index" class="btn btn-secondary">Quay lại</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

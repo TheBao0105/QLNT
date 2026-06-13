@@ -1,0 +1,57 @@
+@page
+@model QLNT.Pages_HopDong.DeleteModel
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Xóa hợp đồng";
+    var viVN = new CultureInfo("vi-VN");
+}
+
+<h1>Xóa hợp đồng</h1>
+
+<h3>Bạn có chắc chắn muốn xóa hợp đồng này?</h3>
+
+<div>
+    <h4>Hợp đồng</h4>
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-2">ID hợp đồng</dt>
+        <dd class="col-sm-10">@Model.HopDong.HopDongId</dd>
+
+        <dt class="col-sm-2">Phòng</dt>
+        <dd class="col-sm-10">@Model.HopDong.Phong?.TenPhong</dd>
+
+        <dt class="col-sm-2">Người thuê</dt>
+        <dd class="col-sm-10">@Model.HopDong.NguoiThue?.HoTen</dd>
+
+        <dt class="col-sm-2">Ngày bắt đầu</dt>
+        <dd class="col-sm-10">@Model.HopDong.NgayBatDau.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-2">Ngày kết thúc</dt>
+        <dd class="col-sm-10">
+            @(Model.HopDong.NgayKetThuc.HasValue
+                ? Model.HopDong.NgayKetThuc.Value.ToString("dd/MM/yyyy")
+                : "")
+        </dd>
+
+        <dt class="col-sm-2">Tiền cọc</dt>
+        <dd class="col-sm-10">@Model.HopDong.TienCoc.ToString("N0", viVN) VNĐ</dd>
+
+        <dt class="col-sm-2">Giá thuê</dt>
+        <dd class="col-sm-10">@Model.HopDong.GiaThue.ToString("N0", viVN) VNĐ</dd>
+
+        <dt class="col-sm-2">Trạng thái</dt>
+        <dd class="col-sm-10">@Model.HopDong.TrangThai</dd>
+
+        <dt class="col-sm-2">Ghi chú</dt>
+        <dd class="col-sm-10">@Model.HopDong.GhiChu</dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="HopDong.HopDongId" />
+
+        <input type="submit" value="Xóa" class="btn btn-danger" />
+        <a asp-page="./Index" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>

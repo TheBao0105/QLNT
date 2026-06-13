@@ -1,0 +1,83 @@
+@page
+@model QLNT.Pages_Phong.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Chi tiết phòng</h1>
+
+<div class="details-card">
+    <div class="details-header">
+        <h2>Thông tin phòng</h2>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.Phong.HinhAnh))
+    {
+        <div class="mb-3">
+            <img src="@Model.Phong.HinhAnh" class="img-fluid" style="max-width: 400px; border-radius: 8px;" alt="@Model.Phong.TenPhong" />
+        </div>
+    }
+
+    <dl class="row details-list">
+        <dt class="col-sm-3">
+            Tên phòng
+        </dt>
+        <dd class="col-sm-9">
+            @Model.Phong.TenPhong
+        </dd>
+
+        <dt class="col-sm-3">
+            Giá phòng
+        </dt>
+        <dd class="col-sm-9 money">
+            @Model.Phong.GiaPhong.ToString("N0") VNĐ
+        </dd>
+
+        <dt class="col-sm-3">
+            Diện tích
+        </dt>
+        <dd class="col-sm-9">
+            @Model.Phong.DienTich m²
+        </dd>
+
+        <dt class="col-sm-3">
+            Trạng thái
+        </dt>
+        <dd class="col-sm-9">
+            @if (Model.Phong.TrangThai == "Trống")
+            {
+                <span class="badge bg-success">Trống</span>
+            }
+            else if (Model.Phong.TrangThai == "Đã thuê")
+            {
+                <span class="badge bg-warning">Đã thuê</span>
+            }
+            else
+            {
+                <span class="badge bg-secondary">@Model.Phong.TrangThai</span>
+            }
+        </dd>
+
+        <dt class="col-sm-3">
+            Ghi chú
+        </dt>
+        <dd class="col-sm-9">
+            @(string.IsNullOrWhiteSpace(Model.Phong.GhiChu) ? "Không có" : Model.Phong.GhiChu)
+        </dd>
+    </dl>
+</div>
+
+<div class="mt-3">
+    <a asp-page="./Edit" asp-route-id="@Model.Phong.PhongId" class="btn btn-primary">
+        Sửa
+    </a>
+
+    <a asp-page="./Index" class="btn btn-secondary">
+        Quay lại
+    </a>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Phong.PhongId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

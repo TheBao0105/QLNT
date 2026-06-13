@@ -1,0 +1,73 @@
+@page
+@model QLNT.Pages_DichVu.EditModel
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Sửa dịch vụ";
+    var viVN = new CultureInfo("vi-VN");
+}
+
+<h1>Sửa dịch vụ</h1>
+
+<h4>Dịch vụ</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-5">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="DichVu.DichVuId" />
+
+            <div class="form-group mb-2">
+                <span class="text-danger">*</span>
+                <label asp-for="DichVu.TenDichVu" class="control-label">Tên dịch vụ</label>
+                <input asp-for="DichVu.TenDichVu" class="form-control" />
+                <span asp-validation-for="DichVu.TenDichVu" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <span class="text-danger">*</span>
+                <label asp-for="DichVu.DonGia" class="control-label">Đơn giá</label>
+                <div class="input-group">
+                    <input asp-for="DichVu.DonGia" type="text" step="any" min="0" class="form-control" />
+                    <span class="input-group-text">VNĐ</span>
+                </div>
+                <span asp-validation-for="DichVu.DonGia" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="DichVu.DonViTinh" class="control-label">Đơn vị tính</label>
+                <input asp-for="DichVu.DonViTinh" class="form-control" />
+                <span asp-validation-for="DichVu.DonViTinh" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <span class="text-danger">*</span>
+                <label asp-for="DichVu.TrangThai" class="control-label">Trạng thái</label>
+                <select asp-for="DichVu.TrangThai" class="form-control">
+                    <option value="Đang sử dụng">Đang sử dụng</option>
+                    <option value="Ngừng sử dụng">Ngừng sử dụng</option>
+                </select>
+                <span asp-validation-for="DichVu.TrangThai" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="DichVu.GhiChu" class="control-label">Ghi chú</label>
+                <input asp-for="DichVu.GhiChu" class="form-control" />
+                <span asp-validation-for="DichVu.GhiChu" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+                <a asp-page="./Index" class="btn btn-secondary">Quay lại</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

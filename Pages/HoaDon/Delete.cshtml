@@ -1,0 +1,59 @@
+@page
+@model QLNT.Pages_HoaDon.DeleteModel
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Xóa hóa đơn";
+    var viVN = new CultureInfo("vi-VN");
+}
+
+<h1>Xóa hóa đơn</h1>
+
+<h5 class="text-danger">Bạn có chắc chắn muốn xóa hóa đơn này không?</h5>
+
+<div class="card mt-3">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Tháng/Năm</dt>
+            <dd class="col-sm-9">@Model.HoaDon.Thang/@Model.HoaDon.Nam</dd>
+
+            <dt class="col-sm-3">Phòng</dt>
+            <dd class="col-sm-9">
+                @(Model.HoaDon.HopDong?.Phong?.TenPhong ?? Model.HoaDon.TenPhong)
+            </dd>
+
+            <dt class="col-sm-3">Khách thuê</dt>
+            <dd class="col-sm-9">
+                @Model.HoaDon.HopDong?.NguoiThue?.HoTen
+            </dd>
+
+            <dt class="col-sm-3">Hạn thanh toán</dt>
+            <dd class="col-sm-9">
+                @(Model.HoaDon.HanThanhToan?.ToString("dd/MM/yyyy") ?? "Chưa có")
+            </dd>
+
+            <dt class="col-sm-3">Tổng tiền</dt>
+            <dd class="col-sm-9">
+                @Model.HoaDon.TongTien.ToString("N0", viVN) VNĐ
+            </dd>
+
+            <dt class="col-sm-3">Trạng thái</dt>
+            <dd class="col-sm-9">@Model.HoaDon.TrangThai</dd>
+
+            <dt class="col-sm-3">Thanh toán liên quan</dt>
+            <dd class="col-sm-9">
+                @(Model.HoaDon.ThanhToans?.Count ?? 0)
+            </dd>
+        </dl>
+
+        <form method="post">
+            <input type="hidden" asp-for="HoaDon.HoaDonId" />
+
+            <input type="submit" value="Xóa" class="btn btn-danger" />
+
+            <a asp-page="./Index" class="btn btn-secondary">
+                Quay lại
+            </a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,152 @@
+@page
+@model QLNT.Pages_NguoiThue.IndexModel
+
+@{
+    ViewData["Title"] = "Danh sách người thuê";
+}
+
+<h1>Danh sách người thuê</h1>
+
+<form method="get" class="mb-3 row g-2 align-items-center">
+    <div class="col-auto">
+        <input type="text" name="SearchHoTen" value="@Model.SearchHoTen" class="form-control" placeholder="Tìm Họ tên..." />
+    </div>
+    <div class="col-auto">
+        <input type="text" name="SearchSdt" value="@Model.SearchSdt" class="form-control" placeholder="Tìm SĐT..." />
+    </div>
+    <div class="col-auto">
+        <input type="text" name="SearchEmail" value="@Model.SearchEmail" class="form-control" placeholder="Tìm Email..." />
+    </div>
+    <div class="col-auto">
+        <input type="text" name="SearchCccd" value="@Model.SearchCccd" class="form-control" placeholder="Tìm CCCD..." />
+    </div>
+    <div class="col-auto">
+        <input type="text" name="SearchDiaChi" value="@Model.SearchDiaChi" class="form-control" placeholder="Tìm Địa chỉ..." />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        <a asp-page="./Index" class="btn btn-secondary">Xóa lọc</a>
+    </div>
+</form>
+
+
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        @if (Model.NguoiThue.HasPreviousPage)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-page="./Index" asp-route-pageIndex="@(Model.NguoiThue.PageIndex - 1)"
+                   asp-route-SearchHoTen="@Model.SearchHoTen" asp-route-SearchSdt="@Model.SearchSdt"
+                   asp-route-SearchEmail="@Model.SearchEmail" asp-route-SearchCccd="@Model.SearchCccd"
+                   asp-route-SearchDiaChi="@Model.SearchDiaChi">Previous</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled"><span class="page-link">Previous</span></li>
+        }
+
+        @for (var i = 1; i <= Model.NguoiThue.TotalPages; i++)
+        {
+            if (i == Model.NguoiThue.PageIndex)
+            {
+                <li class="page-item active"><span class="page-link">@i</span></li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="./Index" asp-route-pageIndex="@i"
+                       asp-route-SearchHoTen="@Model.SearchHoTen" asp-route-SearchSdt="@Model.SearchSdt"
+                       asp-route-SearchEmail="@Model.SearchEmail" asp-route-SearchCccd="@Model.SearchCccd"
+                       asp-route-SearchDiaChi="@Model.SearchDiaChi">@i</a>
+                </li>
+            }
+        }
+
+        @if (Model.NguoiThue.HasNextPage)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-page="./Index" asp-route-pageIndex="@(Model.NguoiThue.PageIndex + 1)"
+                   asp-route-SearchHoTen="@Model.SearchHoTen" asp-route-SearchSdt="@Model.SearchSdt"
+                   asp-route-SearchEmail="@Model.SearchEmail" asp-route-SearchCccd="@Model.SearchCccd"
+                   asp-route-SearchDiaChi="@Model.SearchDiaChi">Next</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled"><span class="page-link">Next</span></li>
+        }
+    </ul>
+</nav>
+
+
+
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Họ tên</th>
+                <th>Số điện thoại</th>
+                <th>Email</th>
+                <th>CCCD</th>
+                <th>Ngày sinh</th>
+                <th>Địa chỉ</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.NguoiThue)
+            {
+                <tr>
+                    <td>@item.HoTen</td>
+
+                    <td>
+                        @(string.IsNullOrWhiteSpace(item.SoDienThoai) ? "Không có" : item.SoDienThoai)
+                    </td>
+
+                    <td>
+                        @(string.IsNullOrWhiteSpace(item.Email) ? "Không có" : item.Email)
+                    </td>
+
+                    <td>
+                        @(string.IsNullOrWhiteSpace(item.CCCD) ? "Không có" : item.CCCD)
+                    </td>
+
+                    <td>
+                        @(item.NgaySinh.HasValue ? item.NgaySinh.Value.ToString("dd/MM/yyyy") : "Không có")
+                    </td>
+
+                    <td>
+                        @(string.IsNullOrWhiteSpace(item.DiaChi) ? "Không có" : item.DiaChi)
+                    </td>
+
+                    <td>
+                        <div class="action-buttons">
+                            <a asp-page="./Edit" asp-route-id="@item.NguoiThueId" class="btn btn-primary">
+                                Sửa
+                            </a>
+
+                            <a asp-page="./Details" asp-route-id="@item.NguoiThueId" class="btn btn-info">
+                                Chi tiết
+                            </a>
+
+                            <a asp-page="./Delete" asp-route-id="@item.NguoiThueId" class="btn btn-danger">
+                                Xóa
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<div class="mb-3">
+    <a asp-page="Create" class="btn btn-primary">
+        Thêm người thuê
+    </a>
+</div>

@@ -1,0 +1,149 @@
+@page
+@model QLNT.Pages_HoaDon.CreateModel
+@using QLNT
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Tạo hóa đơn";
+    var dichVus = ViewData["DichVus"] as List<DichVu> ?? new List<DichVu>();
+    var viVN = new CultureInfo("vi-VN");
+}
+
+<h1>Tạo hóa đơn</h1>
+
+<hr />
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+            <div class="form-group mb-3">
+                <span class="text-danger">*</span>
+                <label asp-for="HoaDon.HopDongId" class="control-label fw-bold">
+                    Hợp đồng / phòng đang thuê
+                </label>
+
+                <select asp-for="HoaDon.HopDongId" class="form-select" asp-items="ViewBag.HopDongId">
+                    <option value="">-- Chọn hợp đồng phòng đang thuê --</option>
+                </select>
+
+                <span asp-validation-for="HoaDon.HopDongId" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <span class="text-danger">*</span>
+                    <label asp-for="HoaDon.Thang">Tháng</label>
+                    <input asp-for="HoaDon.Thang" class="form-control" />
+                    <span asp-validation-for="HoaDon.Thang" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <span class="text-danger">*</span>
+                    <label asp-for="HoaDon.Nam">Năm</label>
+                    <input asp-for="HoaDon.Nam" class="form-control" />
+                    <span asp-validation-for="HoaDon.Nam" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="HoaDon.HanThanhToan">Hạn thanh toán</label>
+                <input asp-for="HoaDon.HanThanhToan" type="date" class="form-control" />
+                <span asp-validation-for="HoaDon.HanThanhToan" class="text-danger"></span>
+            </div>
+
+            <h6 class="mt-3">Chỉ số điện</h6>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="HoaDon.ChiSoDienCu">Chỉ số điện cũ</label>
+                    <input asp-for="HoaDon.ChiSoDienCu" class="form-control" />
+                    <span asp-validation-for="HoaDon.ChiSoDienCu" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label asp-for="HoaDon.ChiSoDienMoi">Chỉ số điện mới</label>
+                    <input asp-for="HoaDon.ChiSoDienMoi" class="form-control" />
+                    <span asp-validation-for="HoaDon.ChiSoDienMoi" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Đơn giá điện</label>
+                    <input value="@DonGiaText(3500)" class="form-control" readonly />
+                </div>
+            </div>
+
+            <h6 class="mt-3">Chỉ số nước</h6>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="HoaDon.ChiSoNuocCu">Chỉ số nước cũ</label>
+                    <input asp-for="HoaDon.ChiSoNuocCu" class="form-control" />
+                    <span asp-validation-for="HoaDon.ChiSoNuocCu" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label asp-for="HoaDon.ChiSoNuocMoi">Chỉ số nước mới</label>
+                    <input asp-for="HoaDon.ChiSoNuocMoi" class="form-control" />
+                    <span asp-validation-for="HoaDon.ChiSoNuocMoi" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Đơn giá nước</label>
+                    <input value="@DonGiaText(15000)" class="form-control" readonly />
+                </div>
+            </div>
+
+            <h6 class="mt-3">Dịch vụ tháng này</h6>
+
+            <div class="form-group mb-3">
+                @if (dichVus.Any())
+                {
+                    foreach (var dv in dichVus)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="DichVuIds" value="@dv.DichVuId"
+                                   id="dv_@dv.DichVuId" />
+
+                            <label class="form-check-label" for="dv_@dv.DichVuId">
+                                @dv.TenDichVu - @dv.DonGia.ToString("N0", viVN) VNĐ/tháng
+                            </label>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="text-muted">Chưa có dịch vụ đang sử dụng.</div>
+                }
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="HoaDon.GhiChu">Ghi chú</label>
+                <input asp-for="HoaDon.GhiChu" class="form-control" />
+                <span asp-validation-for="HoaDon.GhiChu" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Lưu hóa đơn
+            </button>
+
+            <a asp-page="./Index" class="btn btn-secondary">
+                Quay lại
+            </a>
+        </form>
+    </div>
+</div>
+
+@functions {
+    private string DonGiaText(decimal value)
+    {
+        return value.ToString("N0", new CultureInfo("vi-VN")) + " VNĐ";
+    }
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,58 @@
+@page
+@model QLNT.Pages_ThanhToan.DetailsModel
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Chi tiết thanh toán";
+    var viVN = new CultureInfo("vi-VN");
+}
+
+<h1>Chi tiết thanh toán</h1>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Mã thanh toán</dt>
+            <dd class="col-sm-9">@Model.ThanhToan.ThanhToanId</dd>
+
+            <dt class="col-sm-3">Hóa đơn</dt>
+            <dd class="col-sm-9">
+                Tháng @Model.ThanhToan.HoaDon?.Thang/@Model.ThanhToan.HoaDon?.Nam
+            </dd>
+
+            <dt class="col-sm-3">Phòng</dt>
+            <dd class="col-sm-9">
+                @(Model.ThanhToan.HoaDon?.HopDong?.Phong?.TenPhong ?? Model.ThanhToan.HoaDon?.TenPhong)
+            </dd>
+
+            <dt class="col-sm-3">Khách thuê</dt>
+            <dd class="col-sm-9">
+                @Model.ThanhToan.HoaDon?.HopDong?.NguoiThue?.HoTen
+            </dd>
+
+            <dt class="col-sm-3">Ngày thanh toán</dt>
+            <dd class="col-sm-9">
+                @Model.ThanhToan.NgayThanhToan.ToString("dd/MM/yyyy")
+            </dd>
+
+            <dt class="col-sm-3">Số tiền</dt>
+            <dd class="col-sm-9">
+                @Model.ThanhToan.SoTien.ToString("N0", viVN) VNĐ
+            </dd>
+
+            <dt class="col-sm-3">Phương thức</dt>
+            <dd class="col-sm-9">@Model.ThanhToan.PhuongThuc</dd>
+
+            <dt class="col-sm-3">Ghi chú</dt>
+            <dd class="col-sm-9">@Model.ThanhToan.GhiChu</dd>
+        </dl>
+
+        <a asp-page="./Edit" asp-route-id="@Model.ThanhToan.ThanhToanId" class="btn btn-primary">
+            Sửa
+        </a>
+
+        <a asp-page="/HoaDon/Index" class="btn btn-secondary">
+            Quay lại
+        </a>
+    </div>
+</div>

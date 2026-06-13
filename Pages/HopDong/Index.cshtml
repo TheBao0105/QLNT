@@ -1,0 +1,90 @@
+@page
+@model QLNT.Pages_HopDong.IndexModel
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Danh sách hợp đồng";
+    var viVN = new CultureInfo("vi-VN");
+}
+
+<h1>Danh sách hợp đồng</h1>
+
+<form method="get" class="mb-3 row g-2 align-items-center">
+    <div class="col-auto">
+        <input type="number" name="searchId" value="@Model.CurrentIdFilter" class="form-control"
+               placeholder="Nhập ID hợp đồng..." />
+    </div>
+
+    <div class="col-auto">
+        <select name="statusFilter" class="form-select" onchange="this.form.submit()">
+            <option value="">Tất cả trạng thái</option>
+            <option value="Còn hạn" selected="@(Model.StatusFilter == "Còn hạn")">Còn hạn</option>
+            <option value="Hết hạn" selected="@(Model.StatusFilter == "Hết hạn")">Hết hạn</option>
+            <option value="Chưa bắt đầu" selected="@(Model.StatusFilter == "Chưa bắt đầu")">Chưa bắt đầu</option>
+        </select>
+    </div>
+
+    <div class="col-auto">
+        <button type="submit" name="action" value="search" class="btn btn-primary">Tìm kiếm</button>
+    </div>
+</form>
+<p>
+    <a asp-page="Create" class="btn btn-primary">Thêm mới</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Hợp đồng</th>
+            <th>Ngày bắt đầu</th>
+            <th>Ngày kết thúc</th>
+            <th>Tiền cọc</th>
+            <th>Giá thuê</th>
+            <th>Trạng thái</th>
+            <th>Ghi chú</th>
+            <th>Phòng</th>
+            <th>Người thuê</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.HopDong)
+        {
+            var trangThai = Model.TinhTrangThaiHopDong(item.NgayBatDau, item.NgayKetThuc);
+
+            <tr>
+                <td>@item.HopDongId</td>
+                <td>@item.NgayBatDau.ToString("dd/MM/yyyy")</td>
+                <td>
+                    @(item.NgayKetThuc.HasValue
+                        ? item.NgayKetThuc.Value.ToString("dd/MM/yyyy")
+                        : "")
+                </td>
+                <td>@item.TienCoc.ToString("N0", viVN) VNĐ</td>
+                <td>@item.GiaThue.ToString("N0", viVN) VNĐ</td>
+                <td>
+                    @if (trangThai == "Còn hạn")
+                    {
+                        <span class="badge bg-success">Còn hạn</span>
+                    }
+                    else if (trangThai == "Hết hạn")
+                    {
+                        <span class="badge bg-danger">Hết hạn</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Chưa bắt đầu</span>
+                    }
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.GhiChu)</td>
+                <td>@Html.DisplayFor(modelItem => item.Phong.TenPhong)</td>
+                <td>@Html.DisplayFor(modelItem => item.NguoiThue.HoTen)</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.HopDongId" class="btn btn-primary btn-sm">Sửa </a>
+                    <a asp-page="./Details" asp-route-id="@item.HopDongId" class="btn btn-info btn-sm">Chi tiết</a>
+                    <a asp-page="./Delete" asp-route-id="@item.HopDongId" class="btn btn-danger btn-sm">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

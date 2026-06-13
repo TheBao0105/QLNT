@@ -1,0 +1,154 @@
+@page
+@model QLNT.Pages_Phong.IndexModel
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Danh sách phòng";
+    var viVN = new CultureInfo("vi-VN");
+}
+
+<h1>Danh sách phòng</h1>
+
+<form method="get" class="mb-3 row g-2 align-items-center">
+    <div class="col-auto">
+        <input type="text" name="searchString" value="@Model.CurrentFilter" class="form-control"
+               placeholder="Tìm tên phòng" />
+    </div>
+
+    <div class="col-auto">
+        <select name="statusFilter" class="form-select" onchange="this.form.submit()">
+            <option value="">Tất cả trạng thái</option>
+            <option value="Trống" selected="@(Model.StatusFilter == "Trống")">Trống</option>
+            <option value="Đã thuê" selected="@(Model.StatusFilter == "Đã thuê")">Đã thuê</option>
+            <option value="Bảo trì" selected="@(Model.StatusFilter == "Bảo trì")">Bảo trì</option>
+        </select>
+    </div>
+
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+    </div>
+</form>
+
+<p>
+    <a asp-page="Create" class="btn btn-primary">Thêm phòng</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Mã phòng</th>
+            <th>Tên phòng</th>
+            <th>Hình ảnh</th>
+            <th>Giá phòng</th>
+            <th>Diện tích</th>
+            <th>Trạng thái</th>
+            <th>Ghi chú</th>
+            <th>Thao tác</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.Phong)
+        {
+            <tr>
+                <td>
+                    @item.PhongId
+                </td>
+
+                <td>
+                    @item.TenPhong
+                </td>
+
+                <td>
+                    @if (!string.IsNullOrEmpty(item.HinhAnh))
+                    {
+                        <img src="@item.HinhAnh" class="img-thumbnail" style="max-width: 80px; max-height: 80px;"
+                             alt="@item.TenPhong" />
+                    }
+                    else
+                    {
+                        <span class="text-muted">Không có ảnh</span>
+                    }
+                </td>
+
+                <td>
+                    @item.GiaPhong.ToString("N0", viVN) VNĐ
+                </td>
+
+                <td>
+                    @item.DienTich m²
+                </td>
+
+                <td>
+                    @item.TrangThai
+                </td>
+
+                <td>
+                    @item.GhiChu
+                </td>
+
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.PhongId" class="btn btn-primary btn-sm">Sửa</a>
+                    <a asp-page="./Details" asp-route-id="@item.PhongId" class="btn btn-info btn-sm">Chi tiết</a>
+                    <a asp-page="./Delete" asp-route-id="@item.PhongId" class="btn btn-danger btn-sm">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        @if (Model.Phong.HasPreviousPage)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-page="./Index" asp-route-pageIndex="@(Model.Phong.PageIndex - 1)"
+                   asp-route-currentFilter="@Model.CurrentFilter" asp-route-statusFilter="@Model.StatusFilter">
+                    Previous
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+            </li>
+        }
+
+        @for (int i = 1; i <= Model.Phong.TotalPages; i++)
+        {
+            if (i == Model.Phong.PageIndex)
+            {
+                <li class="page-item active">
+                    <span class="page-link">@i</span>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="./Index" asp-route-pageIndex="@i"
+                       asp-route-currentFilter="@Model.CurrentFilter" asp-route-statusFilter="@Model.StatusFilter">
+                        @i
+                    </a>
+                </li>
+            }
+        }
+
+        @if (Model.Phong.HasNextPage)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-page="./Index" asp-route-pageIndex="@(Model.Phong.PageIndex + 1)"
+                   asp-route-currentFilter="@Model.CurrentFilter" asp-route-statusFilter="@Model.StatusFilter">
+                    Next
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled">
+                <span class="page-link">Next</span>
+            </li>
+        }
+    </ul>
+</nav>
