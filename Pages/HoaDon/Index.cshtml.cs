@@ -53,9 +53,25 @@ namespace QLNT.Pages_HoaDon
             // 2. Lọc theo Trạng thái hóa đơn (So sánh chuỗi trực tiếp, loại bỏ hoàn toàn ??)
             if (!string.IsNullOrWhiteSpace(StatusFilter))
             {
-                query = query.Where(h => h.TrangThai == StatusFilter);
-            }
+                var today = DateTime.Today;
 
+                if (StatusFilter == "Quá hạn")
+                {
+                    // Lấy những thằng DB ghi chữ "Quá hạn" HOẶC những thằng ghi "Chưa thanh toán" nhưng lỡ hạn đóng tiền so với hôm nay (2026)
+                    query = query.Where(h => h.TrangThai == "Quá hạn" 
+                                          || (h.TrangThai == "Chưa thanh toán" && h.HanThanhToan < today));
+                }
+                else if (StatusFilter == "Chưa thanh toán")
+                {
+                    // Chỉ lấy những thằng ghi chữ "Chưa thanh toán" và ngày hạn vẫn lớn hơn hoặc bằng hôm nay
+                    query = query.Where(h => h.TrangThai == "Chưa thanh toán" && h.HanThanhToan >= today);
+                }
+                else
+                {
+                    // Các trạng thái khác (Đã thanh toán, Thanh toán một phần...) thì khớp chuẩn theo chuỗi chữ
+                    query = query.Where(h => h.TrangThai == StatusFilter);
+                }
+            }
             // Thực hiện xuất dữ liệu và sắp xếp
             HoaDonList = await query
                 .OrderByDescending(h => h.Nam)

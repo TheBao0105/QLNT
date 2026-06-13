@@ -53,12 +53,13 @@ namespace QLNT.Pages.Dashboard
                 TongHoaDon = await _context.HoaDons.CountAsync(),
 
                 HoaDonChuaThanhToan = await _context.HoaDons
-                    .CountAsync(h => h.TrangThai == "Chưa thanh toán"
-                                  || h.TrangThai == "Thanh toán một phần"),
+                    .CountAsync(h => h.HanThanhToan >= today
+                                    && (h.TrangThai == "Chưa thanh toán" || h.TrangThai == "Thanh toán một phần")),
 
                 HoaDonQuaHan = await _context.HoaDons
                     .CountAsync(h => h.HanThanhToan < today
-                                  && h.TrangThai != "Đã thanh toán"),
+                                  && h.TrangThai == "Chưa thanh toán"),
+
 
                 TongThanhToan = await _context.ThanhToans.CountAsync(),
 
