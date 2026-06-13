@@ -5,90 +5,98 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<style>
-    .style-select {
-        width: auto !important;
-        max-width: 140px;
-        padding-left: 0.5rem !important;
-        padding-right: 1.8rem !important; /* Tạo khoảng trống an toàn cho mũi tên đi xuống */
-        background-position: right 0.4rem center !important; /* Đẩy icon mũi tên sát lề phải */
-        cursor: pointer;
-        font-weight: 500;
-    }
-    .style-select:focus {
-        box-shadow: none;
-        background-color: #e9ecef;
-    }
-</style>
-
 <div class="container mt-4">
 
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 pb-3 border-bottom row-gap-3">
-        <div>
-            <h1 class="fw-bold mb-1 fs-3 fs-md-1">Dashboard thống kê</h1>
-            <p class="text-muted mb-0 small">Tổng quan hệ thống quản lý nhà trọ</p>
-        </div>
+    <div class="mb-4">
+        <h1 class="fw-bold">Dashboard thống kê</h1>
+        <p class="text-muted">Tổng quan hệ thống quản lý nhà trọ</p>
     </div>
+
+    <style>
+        .dashboard-stat {
+            font-size: 2rem !important;
+            font-weight: 700 !important;
+            margin-bottom: 0.5rem !important;
+            line-height: 1.2 !important;
+        }
+        .dashboard-money {
+            font-size: calc(1.1rem + 0.5vw) !important;
+            font-weight: 700 !important;
+            margin-bottom: 0.5rem !important;
+            line-height: 1.2 !important;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
 
     <div class="row">
 
         <div class="col-md-3 mb-4">
             <div class="card shadow-sm border-primary h-100">
-                <div class="card-body text-center">
-                    <h6 class="text-muted">Tổng phòng</h6>
-                    <h2 class="fw-bold text-primary">@Model.Dashboard.TongPhong</h2>
-                    <a asp-page="/Phong/Index" class="btn btn-sm btn-outline-primary mt-2">Xem phòng</a>
+                <div class="card-body text-center d-flex flex-column justify-content-between">
+                    <div>
+                        <h6 class="text-muted mb-2">Tổng phòng</h6>
+                        <div class="text-primary dashboard-stat">@Model.Dashboard.TongPhong</div>
+                    </div>
+                    <a asp-page="/Phong/Index" class="btn btn-sm btn-outline-primary mt-2w-100">
+                        Xem phòng
+                    </a>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3 mb-4">
             <div class="card shadow-sm border-success h-100">
-                <div class="card-body text-center">
-                    <h6 class="text-muted">Phòng trống</h6>
-                    <h2 class="fw-bold text-success">@Model.Dashboard.PhongTrong</h2>
-                    <a asp-page="/Phong/Index" asp-route-statusFilter="Trống" class="btn btn-sm btn-outline-success mt-2">Xem phòng</a>
+                <div class="card-body text-center d-flex flex-column justify-content-between">
+                    <div>
+                        <h6 class="text-muted mb-2">Phòng trống</h6>
+                        <div class="text-success dashboard-stat">@Model.Dashboard.PhongTrong</div>
+                    </div>
+                    <a asp-page="/Phong/Index" asp-route-StatusFilter="Trống" class="btn btn-sm btn-outline-success mt-2 w-100">
+                        Xem phòng
+                    </a>
                 </div>
             </div>
         </div>
 
+
         <div class="col-md-3 mb-4">
             <div class="card shadow-sm border-warning h-100">
-                <div class="card-body text-center">
-                    <h6 class="text-muted">Phòng đang thuê</h6>
-                    <h2 class="fw-bold text-warning">@Model.Dashboard.PhongDangThue</h2>
-                    <a asp-page="/Phong/Index" asp-route-statusFilter="Đang thuê" class="btn btn-sm btn-outline-warning mt-2">Xem phòng</a>
+                <div class="card-body text-center d-flex flex-column justify-content-between">
+                    <div>
+                        <h6 class="text-muted mb-2">Phòng đang thuê</h6>
+                        <div class="text-warning dashboard-stat">@Model.Dashboard.PhongDangThue</div>
+                    </div>
+                    <a asp-page="/Phong/Index" asp-route-StatusFilter="Đã thuê" class="btn btn-sm btn-outline-warning mt-2 w-100">
+                        Xem phòng
+                    </a>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3 mb-4">
             <div class="card shadow-sm border-info h-100">
-                <div class="card-body text-center">
-                    <h6 class="text-muted">Người thuê</h6>
-                    <h2 class="fw-bold text-info">@Model.Dashboard.TongNguoiThue</h2>
-                    <a asp-page="/NguoiThue/Index" class="btn btn-sm btn-outline-info mt-2">Xem người thuê</a>
+                <div class="card-body text-center d-flex flex-column justify-content-between">
+                    <div>
+                        <h6 class="text-muted mb-2">Người thuê</h6>
+                        <div class="text-info dashboard-stat">@Model.Dashboard.TongNguoiThue</div>
+                    </div>
+                    <a asp-page="/NguoiThue/Index" class="btn btn-sm btn-outline-info mt-2 w-100">
+                        Xem người thuê
+                    </a>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3 mb-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-body text-center">
-                    <h6 class="text-muted">Tổng hợp đồng</h6>
-                    <h2 class="fw-bold">@Model.Dashboard.TongHopDong</h2>
-                    <a asp-page="/HopDong/Index" class="btn btn-sm btn-outline-dark mt-2">Xem hợp đồng</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3 mb-4">
-            <div class="card shadow-sm border-success h-100">
-                <div class="card-body text-center">
-                    <h6 class="text-muted">Hợp đồng hiệu lực</h6>
-                    <h2 class="fw-bold text-success">@Model.Dashboard.HopDongDangHieuLuc</h2>
-                    
-                    <a asp-page="/HopDong/Index" asp-route-StatusFilter="Còn hạn" class="btn btn-sm btn-outline-success mt-2">
+            <div class="card shadow-sm border-secondary h-100">
+                <div class="card-body text-center d-flex flex-column justify-content-between">
+                    <div>
+                        <h6 class="text-muted mb-2">Tổng hợp đồng</h6>
+                        <div class="text-secondary dashboard-stat">@Model.Dashboard.TongHopDong</div>
+                    </div>
+                    <a asp-page="/HopDong/Index" class="btn btn-sm btn-outline-secondary mt-2 w-100">
                         Xem hợp đồng
                     </a>
                 </div>
@@ -96,64 +104,102 @@
         </div>
 
         <div class="col-md-3 mb-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-body text-center">
-                    <h6 class="text-muted">Tổng hóa đơn</h6>
-                    <h2 class="fw-bold">@Model.Dashboard.TongHoaDon</h2>
-                    <a asp-page="/HoaDon/Index" class="btn btn-sm btn-outline-dark mt-2">Xem hóa đơn</a>
+            <div class="card shadow-sm border-success h-100">
+                <div class="card-body text-center d-flex flex-column justify-content-between">
+                    <div>
+                        <h6 class="text-muted mb-2">Hợp đồng hiệu lực</h6>
+                        <div class="text-success dashboard-stat">@Model.Dashboard.HopDongDangHieuLuc</div>
+                    </div>
+                    <a asp-page="/HopDong/Index" asp-route-StatusFilter="Hiệu lực" class="btn btn-sm btn-outline-success mt-2 w-100">
+                        Xem hợp đồng
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm border-secondary h-100">
+                <div class="card-body text-center d-flex flex-column justify-content-between">
+                    <div>
+                        <h6 class="text-muted mb-2">Tổng hóa đơn</h6>
+                        <div class="text-secondary dashboard-stat">@Model.Dashboard.TongHoaDon</div>
+                    </div>
+                    <a asp-page="/HoaDon/Index" class="btn btn-sm btn-outline-secondary mt-2 w-100">
+                        Xem hóa đơn
+                    </a>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3 mb-4">
             <div class="card shadow-sm border-danger h-100">
-                <div class="card-body text-center">
-                    <h6 class="text-muted">Chưa thanh toán</h6>
-                    <h2 class="fw-bold text-danger">@Model.Dashboard.HoaDonChuaThanhToan</h2>
-                    <a asp-page="/HoaDon/Index" asp-route-trangThai="Chưa thanh toán" class="btn btn-sm btn-outline-danger mt-2">Xem hóa đơn</a>
+                <div class="card-body text-center d-flex flex-column justify-content-between">
+                    <div>
+                        <h6 class="text-muted mb-2">Chưa thanh toán</h6>
+                        <div class="text-danger dashboard-stat">@Model.Dashboard.HoaDonChuaThanhToan</div>
+                    </div>
+                    <a asp-page="/HoaDon/Index" asp-route-StatusFilter="Chưa thanh toán" class="btn btn-sm btn-outline-danger mt-2 w-100">
+                        Xem hóa đơn
+                    </a>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3 mb-4">
             <div class="card shadow-sm border-danger h-100">
-                <div class="card-body text-center">
-                    <h6 class="text-muted">Hóa đơn quá hạn</h6>
-                    <h2 class="fw-bold text-danger">@Model.Dashboard.HoaDonQuaHan</h2>
-                    <a asp-page="/HoaDon/Index" asp-route-trangThai="Quá hạn" class="btn btn-sm btn-outline-danger mt-2">Xem hóa đơn</a>
+                <div class="card-body text-center d-flex flex-column justify-content-between">
+                    <div>
+                        <h6 class="text-muted mb-2">Hóa đơn quá hạn</h6>
+                        <div class="text-danger dashboard-stat">@Model.Dashboard.HoaDonQuaHan</div>
+                    </div>
+                    <a asp-page="/HoaDon/Index" asp-route-StatusFilter="Quá hạn" class="btn btn-sm btn-outline-danger mt-2 w-100">
+                        Xem hóa đơn
+                    </a>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3 mb-4">
             <div class="card shadow-sm border-success h-100">
-                <div class="card-body text-center">
-                    <h6 class="text-muted">Doanh thu kỳ này</h6>
-                    <h2 class="fw-bold text-success" style="font-size: calc(1.2rem + 0.4vw); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                        @Model.Dashboard.DoanhThuThangNay.ToString("N0") VNĐ
-                    </h2>
-                    <a asp-page="/ThanhToan/Index" class="btn btn-sm btn-outline-success mt-2">Xem thanh toán</a>
+                <div class="card-body text-center d-flex flex-column justify-content-between">
+                    <div>
+                        <h6 class="text-muted mb-2">Doanh thu tháng này</h6>
+                        <div class="text-success dashboard-money">@Model.Dashboard.DoanhThuThangNay.ToString("N0")</div>
+                    </div>
+                    <a asp-page="/ThanhToan/Index" class="btn btn-sm btn-outline-success mt-2 w-100">
+                        Xem thanh toán
+                    </a>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3 mb-4">
             <div class="card shadow-sm border-warning h-100">
-                <div class="card-body text-center">
-                    <h6 class="text-muted">Dịch vụ</h6>
-                    <h2 class="fw-bold text-warning">@Model.Dashboard.TongDichVu</h2>
-                    <a asp-page="/DichVu/Index" class="btn btn-sm btn-outline-warning mt-2">Xem dịch vụ</a>
+                <div class="card-body text-center d-flex flex-column justify-content-between">
+                    <div>
+                        <h6 class="text-muted mb-2">Dịch vụ</h6>
+                        <div class="text-warning dashboard-stat">@Model.Dashboard.TongDichVu</div>
+                    </div>
+                    <a asp-page="/DichVu/Index" class="btn btn-sm btn-outline-warning mt-2 w-100">
+                        Xem dịch vụ
+                    </a>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3 mb-4">
             <div class="card shadow-sm border-dark h-100">
-                <div class="card-body text-center">
-                    <h6 class="text-muted">Tài khoản</h6>
-                    <h2 class="fw-bold text-dark">@Model.Dashboard.TongTaiKhoan</h2>
-                    <a asp-page="/TaiKhoan/Index" class="btn btn-sm btn-outline-dark mt-2">Xem tài khoản</a>
+                <div class="card-body text-center d-flex flex-column justify-content-between">
+                    <div>
+                        <h6 class="text-muted mb-2">Tài khoản</h6>
+                        <div class="text-dark dashboard-stat">@Model.Dashboard.TongTaiKhoan</div>
+                    </div>
+                    <a asp-page="/TaiKhoan/Index" class="btn btn-sm btn-outline-dark mt-2 w-100">
+                        Xem tài khoản
+                    </a>
                 </div>
             </div>
         </div>
- </div>
+
+    </div>
+</div>

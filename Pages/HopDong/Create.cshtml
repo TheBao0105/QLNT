@@ -26,23 +26,16 @@
                 <span class="text-danger">*</span>
                 <label asp-for="Input.PhongId" class="control-label">Phòng</label>
 
-                <select asp-for="Input.PhongId" class="form-select">
-                    <option value="">-- Chọn phòng --</option>
+                <select asp-for="Input.PhongId" class="form-control" id="phongSelect">
+                    <option value="" data-gia="">-- Chọn phòng --</option>
 
                     @foreach (var phong in Model.DanhSachPhong)
                     {
-                        if (phong.PhongId == Model.Input.PhongId)
-                        {
-                            <option value="@phong.PhongId" selected>
-                                @phong.TenPhong - @Model.FormatVnd(phong.GiaPhong) VNĐ - @phong.TrangThai
-                            </option>
-                        }
-                        else
-                        {
-                            <option value="@phong.PhongId">
-                                @phong.TenPhong - @Model.FormatVnd(phong.GiaPhong) VNĐ - @phong.TrangThai
-                            </option>
-                        }
+                        <option value="@phong.PhongId"
+                                data-gia="@phong.GiaPhong.ToString(System.Globalization.CultureInfo.InvariantCulture)"
+                                selected="@(phong.PhongId == Model.Input.PhongId)">
+                            @phong.TenPhong - @Model.FormatVnd(phong.GiaPhong) VNĐ - @phong.TrangThai
+                        </option>
                     }
                 </select>
 
@@ -77,20 +70,25 @@
                 <label class="control-label">Tiền cọc</label>
 
                 <div class="input-group">
-                    <input value="@Model.FormatVnd(Model.Input.TienCoc)" class="form-control" readonly />
+                    <input value="@Model.FormatVnd(Model.Input.TienCoc)" class="form-control" id="tienCocHienThi"
+                           readonly />
                     <span class="input-group-text">VNĐ</span>
                 </div>
+
+                <input type="hidden" asp-for="Input.TienCoc" id="tienCocInput" />
             </div>
 
             <div class="form-group mb-3">
                 <label class="control-label">Giá thuê</label>
 
                 <div class="input-group">
-                    <input value="@Model.FormatVnd(Model.Input.GiaThue)" class="form-control" readonly />
+                    <input value="@Model.FormatVnd(Model.Input.GiaThue)" class="form-control" id="giaThueHienThi"
+                           readonly />
                     <span class="input-group-text">VNĐ</span>
                 </div>
-            </div>
 
+                <input type="hidden" asp-for="Input.GiaThue" id="giaThueInput" />
+            </div>
             <div class="form-group mb-3">
                 <label class="control-label">Trạng thái</label>
                 <input value="@Model.Input.TrangThai" class="form-control" readonly />
@@ -103,9 +101,6 @@
             </div>
 
             <div class="form-group mt-3">
-                <button type="submit" name="FormAction" value="preview" class="btn btn-secondary">
-                    Đồng bộ tiền
-                </button>
 
                 <button type="submit" name="FormAction" value="create" class="btn btn-primary">
                     Thêm
@@ -123,4 +118,16 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        document.getElementById("phongSelect").onchange = function () {
+            const gia = this.options[this.selectedIndex].dataset.gia;
+            const hienThi = gia ? Number(gia).toLocaleString("vi-VN") : "";
+
+            document.getElementById("tienCocHienThi").value = hienThi;
+            document.getElementById("giaThueHienThi").value = hienThi;
+
+            document.getElementById("tienCocInput").value = gia;
+            document.getElementById("giaThueInput").value = gia;
+        };
+    </script>
 }
