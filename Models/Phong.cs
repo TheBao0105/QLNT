@@ -26,4 +26,5 @@ public class Phong
 
     // Quan hệ: 1 phòng có nhiều hợp đồng
     public ICollection<HopDong> HopDongs { get; set; } = new List<HopDong>();
+
 }

@@ -41,14 +41,14 @@ namespace QLNT.Pages.Dashboard
                     .CountAsync(p => p.TrangThai == "Trống"),
 
                 PhongDangThue = await _context.Phongs
-                    .CountAsync(p => p.TrangThai == "Đãy thuê"),
+                    .CountAsync(p => p.TrangThai == "Đã thuê"),
 
                 TongNguoiThue = await _context.NguoiThues.CountAsync(),
 
                 TongHopDong = await _context.HopDongs.CountAsync(),
 
                 HopDongDangHieuLuc = await _context.HopDongs
-                    .CountAsync(h => h.TrangThai == "Đang hiệu lực"),
+                    .CountAsync(h => h.TrangThai == "Còn hạn"),
 
                 TongHoaDon = await _context.HoaDons.CountAsync(),
 

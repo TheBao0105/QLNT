@@ -26,4 +26,5 @@ public class NguoiThue
 
     // Quan hệ: 1 người thuê có nhiều hợp đồng
     public ICollection<HopDong> HopDongs { get; set; } = new List<HopDong>();
+
 }

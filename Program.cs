@@ -84,6 +84,7 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

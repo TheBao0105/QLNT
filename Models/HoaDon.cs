@@ -50,4 +50,6 @@ public class HoaDon
     public DateTime? HanThanhToan { get; set; }
     public DateTime? NgayThanhToan { get; set; }
     public ICollection<ThanhToan> ThanhToans { get; set; } = new List<ThanhToan>();
+
 }
+

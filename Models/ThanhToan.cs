@@ -22,4 +22,8 @@ public class ThanhToan
 
     // Navigation property
     public HoaDon? HoaDon { get; set; }
+
+
+    
+    public int IdChuTro { get; set; }
 }

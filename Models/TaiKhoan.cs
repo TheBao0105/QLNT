@@ -30,4 +30,5 @@ public class TaiKhoan
     public string? ResetToken { get; set; }
 
     public DateTime? ResetTokenExpiry { get; set; }
+
 }
