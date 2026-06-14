@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using QLNT;
 using QLNT.Data;
 using System.Globalization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace QLNT.Pages_Phong
 {
+        [Authorize(Roles = "Admin")]
     public class CreateModel : PageModel
     {
         private readonly AppDbContext _context;

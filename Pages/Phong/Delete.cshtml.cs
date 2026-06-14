@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using QLNT;
 using QLNT.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace QLNT.Pages_Phong
 {
+        [Authorize(Roles = "Admin")]
     public class DeleteModel : PageModel
     {
         private readonly QLNT.Data.AppDbContext _context;

@@ -65,7 +65,7 @@ public class RegisterModel : PageModel
             Email = Input.Email,
             MatKhau = Input.Password,
             HoTen = Input.TenDangNhap,
-            VaiTro = "NhanVien",
+            VaiTro = "Admin",
             TrangThai = true
         };
 

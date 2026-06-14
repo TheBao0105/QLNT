@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using QLNT;
 using QLNT.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace QLNT.Pages_NguoiThue
 {

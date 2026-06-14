@@ -7,9 +7,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using QLNT;
 using QLNT.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace QLNT.Pages_TaiKhoan
 {
+    [Authorize(Roles = "Admin")]
+
+
     public class DetailsModel : PageModel
     {
         private readonly QLNT.Data.AppDbContext _context;

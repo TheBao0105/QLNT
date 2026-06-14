@@ -6,9 +6,11 @@ using QLNT;
 using QLNT.Data;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace QLNT.Pages_HopDong
 {
+        [Authorize(Roles = "Admin")]
     public class CreateModel : PageModel
     {
         private readonly AppDbContext _context;

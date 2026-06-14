@@ -4,9 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using QLNT;
 using QLNT.Data;
 using System.Globalization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace QLNT.Pages_HoaDon
 {
+        [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly AppDbContext _context;

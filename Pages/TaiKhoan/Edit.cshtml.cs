@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLNT;
 using QLNT.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace QLNT.Pages_TaiKhoan
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly QLNT.Data.AppDbContext _context;

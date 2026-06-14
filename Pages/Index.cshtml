@@ -22,53 +22,51 @@
                     <span class="home-badge">
                         <i class="bi bi-building"></i> QLNT
                     </span>
-                    <h1 class="home-hero__title">Quản lý nhà trọ<br class="d-none d-sm-block" /> thông minh &amp; gọn
-                        gàng</h1>
-                        <p class="home-hero__lead">
-                            Theo dõi phòng, người thuê, hợp đồng, hóa đơn và thanh toán trên một nền tảng —
-                            tiết kiệm thời gian, giảm sai sót.
-                        </p>
-                        <div class="d-flex flex-wrap gap-2 home-hero__actions">
-                            <a asp-page="/Dashboard/Index" class="btn btn-light btn-lg px-4 shadow-sm">
-                                <i class="bi bi-speedometer2 me-2"></i>Xem dashboard
-                            </a>
-                            <a asp-page="/Phong/Index" class="btn btn-outline-light btn-lg px-4">
-                                <i class="bi bi-door-open me-2"></i>Quản lý phòng
-                            </a>
-                        </div>
+                    <h1 class="home-hero__title">Quản lý nhà trọ<br class="d-none d-sm-block" /> thông minh &amp; gọn gàng</h1>
+                    <p class="home-hero__lead">
+                        Theo dõi phòng, người thuê, hợp đồng, hóa đơn và thanh toán trên một nền tảng —
+                        tiết kiệm thời gian, giảm sai sót.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2 home-hero__actions">
+                        <a asp-page="/Dashboard/Index" class="btn btn-light btn-lg px-4 shadow-sm">
+                            <i class="bi bi-speedometer2 me-2"></i>Xem dashboard
+                        </a>
+                        <a asp-page="/Phong/Index" class="btn btn-outline-light btn-lg px-4">
+                            <i class="bi bi-door-open me-2"></i>Quản lý phòng
+                        </a>
                     </div>
-                    <div class="col-lg-5">
-                        <div class="home-hero-card">
-                            <div class="home-hero-card__header">
-                                <i class="bi bi-pie-chart-fill"></i>
-                                <span>Tình trạng hiện tại</span>
-                            </div>
-                            <div class="home-hero-card__stat">
-                                <span class="home-hero-card__value">@Model.TyLeThue%</span>
-                                <span class="home-hero-card__label">Tỷ lệ lấp đầy phòng</span>
-                            </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="home-hero-card">
+                        <div class="home-hero-card__header">
+                            <i class="bi bi-pie-chart-fill"></i>
+                            <span>Tình trạng hiện tại</span>
+                        </div>
+                        <div class="home-hero-card__stat">
+                            <span class="home-hero-card__value">@Model.TyLeThue%</span>
+                            <span class="home-hero-card__label">Tỷ lệ lấp đầy phòng</span>
+                        </div>
 
-                            <div class="progress home-progress mb-3" role="progressbar" aria-valuenow="@Model.TyLeThue"
-                                 aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: @Model.TyLeThue%"></div>
-                            </div>
+                        <div class="progress home-progress mb-3" role="progressbar" aria-valuenow="@Model.TyLeThue"
+                             aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar" style="width: @Model.TyLeThue%"></div>
+                        </div>
 
-                            <ul class="home-hero-card__list">
-                                <li>
-                                    <span class="dot dot--success"></span>
-                                    @Model.PhongDangThue phòng đang thuê
-                                </li>
+                        <ul class="home-hero-card__list">
+                            <li>
+                                <span class="dot dot--success"></span>
+                                @Model.PhongDangThue phòng đang thuê
+                            </li>
 
-                                <li>
-                                    <span class="dot dot--info"></span>
-                                    @Model.PhongTrong phòng trống
-                                </li>
+                            <li>
+                                <span class="dot dot--info"></span>
+                                @Model.PhongTrong phòng trống
+                            </li>
 
-                                <li>
-                                    <span class="dot dot--warning"></span>
-                                    @Model.HopDongHieuLuc hợp đồng hiệu lực
-                                </li>
-                            </ul>
+                            <li>
+                                <span class="dot dot--warning"></span>
+                                @Model.HopDongHieuLuc hợp đồng hiệu lực
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -88,7 +86,7 @@
                 </div>
             </div>
         }
- *@
+    *@
     <section class="container home-stats">
         <div class="row g-3 g-md-4">
             <div class="col-6 col-lg-3">
@@ -118,17 +116,21 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6 col-lg-3">
-                <div class="home-stat-card home-stat-card--revenue">
-                    <div class="home-stat-card__icon"><i class="bi bi-cash-stack"></i></div>
-                    <div>
-                        <div class="home-stat-card__value home-stat-card__value--sm">
-                            @s.DoanhThuThangNay.ToString("N0")
+            
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="col-6 col-lg-3">
+                    <div class="home-stat-card home-stat-card--revenue">
+                        <div class="home-stat-card__icon"><i class="bi bi-cash-stack"></i></div>
+                        <div>
+                            <div class="home-stat-card__value home-stat-card__value--sm">
+                                @s.DoanhThuThangNay.ToString("N0")
+                            </div>
+                            <div class="home-stat-card__label">Doanh thu tháng (VNĐ)</div>
                         </div>
-                        <div class="home-stat-card__label">Doanh thu tháng (VNĐ)</div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
     </section>
     <section class="home-cta">
@@ -220,16 +222,21 @@
 
         <p class="home-group-label">Hệ thống</p>
         <div class="row g-3 g-md-4">
-            <div class="col-md-6 col-xl-4">
-                <a asp-page="/TaiKhoan/Index" class="home-module-card home-module-card--slate">
-                    <div class="home-module-card__icon"><i class="bi bi-shield-lock-fill"></i></div>
-                    <div class="home-module-card__body">
-                        <h3>Tài khoản</h3>
-                        <p>Quản lý tài khoản đăng nhập và phân quyền hệ thống.</p>
-                        <span class="home-module-card__link">Vào quản lý <i class="bi bi-arrow-right"></i></span>
-                    </div>
-                </a>
-            </div>
+            
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="col-md-6 col-xl-4">
+                    <a asp-page="/TaiKhoan/Index" class="home-module-card home-module-card--slate">
+                        <div class="home-module-card__icon"><i class="bi bi-shield-lock-fill"></i></div>
+                        <div class="home-module-card__body">
+                            <h3>Tài khoản</h3>
+                            <p>Quản lý tài khoản đăng nhập và phân quyền hệ thống.</p>
+                            <span class="home-module-card__link">Vào quản lý <i class="bi bi-arrow-right"></i></span>
+                        </div>
+                    </a>
+                </div>
+            }
+
             <div class="col-md-6 col-xl-4">
                 <a asp-page="/Dashboard/Index" class="home-module-card home-module-card--violet">
                     <div class="home-module-card__icon"><i class="bi bi-graph-up-arrow"></i></div>

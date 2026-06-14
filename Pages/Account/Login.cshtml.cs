@@ -80,6 +80,13 @@ public class LoginModel : PageModel
             await SignInUserAsync(user);
             await HttpContext.SignOutAsync("ExternalCookie");
 
+            // THÊM MỚI: Phân luồng sau khi đăng nhập bằng Google/Facebook thành công
+            if (string.IsNullOrEmpty(ReturnUrl) || ReturnUrl == "/")
+            {
+                if (user.VaiTro == "Admin") return RedirectToPage("/Index");
+                if (user.VaiTro == "NhanVien") return RedirectToPage("/Dashboard/Index");
+            }
+
             return LocalRedirect(ReturnUrl ?? "/");
         }
 
@@ -107,6 +114,20 @@ public class LoginModel : PageModel
         }
 
         await SignInUserAsync(user);
+        
+        // THÊM MỚI: Phân luồng sau khi đăng nhập bằng tài khoản thường thành công
+        if (string.IsNullOrEmpty(ReturnUrl) || ReturnUrl == "/")
+        {
+            if (user.VaiTro == "Admin")
+            {
+                return RedirectToPage("/Index");
+            }
+            else if (user.VaiTro == "NhanVien")
+            {
+                return RedirectToPage("/Dashboard/Index");
+            }
+        }
+
         return LocalRedirect(ReturnUrl ?? "/");
     }
 

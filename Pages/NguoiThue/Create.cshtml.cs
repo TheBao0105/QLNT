@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using QLNT;
 using QLNT.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace QLNT.Pages_NguoiThue
 {
+        [Authorize(Roles = "Admin")]
     public class CreateModel : PageModel
     {
         private readonly QLNT.Data.AppDbContext _context;
